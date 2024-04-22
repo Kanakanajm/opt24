@@ -1,27 +1,20 @@
 \documentclass{article}
 
+% Packages forked from the original template
 \usepackage{fancyhdr}
 \usepackage{extramarks}
-\usepackage{amsmath,siunitx}
+\usepackage{amsmath}
 \usepackage{amsthm}
-\usepackage{bm}
-\usepackage{amssymb}
 \usepackage{amsfonts}
-\usepackage{multirow}
 \usepackage{tikz}
 \usepackage[plain]{algorithm}
 \usepackage{algpseudocode}
-\usepackage{changepage}
+
+% Extra packages
+\usepackage{changepage} % adjustwidth environment
+
 
 \usetikzlibrary{automata,positioning}
-
-%
-% Import the bibliography file 
-% uncomment to use bibliography
-%
-
-% \usepackage{biblatex} 
-% \addbibresource{bibliography.bib}
 
 %
 % Basic Document Settings
@@ -38,7 +31,7 @@
 
 \pagestyle{fancy}
 \lhead{\hmwkAuthorName}
-\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\chead{\hmwkClass: \hmwkTitle}
 \rhead{\firstxmark}
 \lfoot{\lastxmark}
 \cfoot{\thepage}
@@ -101,9 +94,7 @@
 \newcommand{\hmwkTitle}{Assignment 1}
 \newcommand{\hmwkDueDate}{April 30, 2014}
 \newcommand{\hmwkClass}{Continuous Optimization}
-\newcommand{\hmwkClassTime}{}
-\newcommand{\hmwkClassInstructor}{Prof. Dr. Peter Ochs}
-\newcommand{\hmwkAuthorName}{\textbf{Honglu Ma}  \and \textbf{Hiroyasu Akada}}
+\newcommand{\hmwkAuthorName}{ \textbf{Hiroyasu Akada} \and \textbf{Honglu Ma}}
 
 %
 % Title Page
@@ -112,8 +103,7 @@
 \title{
     \vspace{2in}
     \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
-    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 3:10pm}\\
-    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
     \vspace{3in}
 }
 
@@ -147,6 +137,14 @@
 \newcommand{\Cov}{\mathrm{Cov}}
 \newcommand{\Bias}{\mathrm{Bias}}
 
+% Margined Homework Subsection
+\newenvironment{homeworkSubsection}[1]{%
+    \subsection*{#1}%
+    \begin{adjustwidth}{2.5em}{0pt}%
+}{%
+    \end{adjustwidth}%
+}
+
 \begin{document}
 
 \maketitle
@@ -154,7 +152,9 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    
+    \begin{homeworkSubsection}{(a)}
+        Answer to subsection a
+    \end{homeworkSubsection}
 \end{homeworkProblem}
 
 \end{document}
