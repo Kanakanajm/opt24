@@ -153,11 +153,16 @@
 
 \begin{homeworkProblem}
     \begin{homeworkSubsection}{(a)}
+        \textbf{Claim: } $ lim_{k \to \infty} x^{(k)} = \frac{1}{30}$ \\
+        \textbf{Proof: } \\
+        Let $\epsilon > 0$ be given. Choose $N = \max\{\frac{4}{\epsilon}, 8\}$.
+        Assume $n > N$.
         \begin{align*}
-            lim_{k \to \infty} x^{(k)}  &= lim_{k \to \infty} \frac{k^4 - 100}{5k^3 + 30k^4}\\
-                                        &= lim_{k \to \infty} \frac{1 - \frac{100}{k^4}}{\frac{5}{k} + 30}\\
-                                        &= \frac{1 - 0}{0 + 30}\\
-                                        &= \frac{1}{30}
+            \left|\frac{n^4 - 100}{5n^3 + 30k^4} - \frac{1}{30}\right| &= \left|\frac{30n^4 - 3000 - 5n^3 - 30k^4}{150n^3 + 900n^4}\right| \\
+                                                            &= \left|\frac{-3000 - 5n^3}{150n^3 + 900n^4}\right|\\
+                                                            &= \frac{3000 + 5n^3}{150n^3 + 900n^4}\\
+                                                            &= \frac{600 + n^3}{30n^3 + 180n^4}\\
+                                                            &< \frac{2n^3}{\frac{1}{2}n^4} < \frac{4}{n} < \frac{4}{N} < \frac{4}{\frac{4}{\epsilon}} < \epsilon\\
         \end{align*}
     \end{homeworkSubsection}
 \end{homeworkProblem}
