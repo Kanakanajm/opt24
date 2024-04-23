@@ -13,7 +13,6 @@
 % Extra packages
 \usepackage{changepage} % adjustwidth environment
 
-
 \usetikzlibrary{automata,positioning}
 
 %
@@ -137,6 +136,9 @@
 \newcommand{\Cov}{\mathrm{Cov}}
 \newcommand{\Bias}{\mathrm{Bias}}
 
+% Norm
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
 % Margined Homework Subsection
 \newenvironment{homeworkSubsection}[1]{%
     \subsection*{#1}%
@@ -179,6 +181,71 @@
             &< \frac{1}{90N}\\
             &< \frac{1}{\frac{90}{90\epsilon}} = \epsilon
         \end{align*}
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(b)}
+        We have the sequence as such:
+        \[
+            x^{(1)} = \begin{pmatrix}
+                \frac{\sqrt{2}}{2} & -\frac{\sqrt{2}}{2}\\
+                \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}
+            \end{pmatrix}
+            \begin{pmatrix}
+                1\\
+                0
+            \end{pmatrix}
+            = \begin{pmatrix}
+                \frac{\sqrt{2}}{2}\\
+                \frac{\sqrt{2}}{2}
+            \end{pmatrix}, \quad
+            x^{(2)} = \begin{pmatrix}
+                0\\
+                1
+            \end{pmatrix}, \quad
+            x^{(3)} = \begin{pmatrix}
+                -\frac{\sqrt{2}}{2}\\
+                \frac{\sqrt{2}}{2}
+            \end{pmatrix}, \quad
+            x^{(4)} = \begin{pmatrix}
+                -1\\
+                0
+            \end{pmatrix}
+        \]
+        \[
+            x^{(5)} = \begin{pmatrix}
+                -\frac{\sqrt{2}}{2}\\
+                -\frac{\sqrt{2}}{2}
+            \end{pmatrix}, \quad
+            x^{(6)} = \begin{pmatrix}
+                0\\
+                -1
+            \end{pmatrix}, \quad
+            x^{(7)} = \begin{pmatrix}
+                \frac{\sqrt{2}}{2}\\
+                -\frac{\sqrt{2}}{2}
+            \end{pmatrix}, \quad
+            x^{(8)} = \begin{pmatrix}
+                1\\
+                0
+            \end{pmatrix}, \quad\ldots
+        \]
+        We can prove by showing that $x^{(k)}$ is not a cauchy sequence thus does not converges (Proposition A.5, Lecture Script)
+        i.e. $\exists \epsilon > 0$ such that 
+        $\forall N \in \mathbb{N}$, $\exists n, m > N$ such that $\norm{x^{(n)} - x^{(m)}} \geq \epsilon$.\\
+        \textbf{Proof: } \\
+        Let $\epsilon = 1$, for all $N \in \mathbb{N}$, choose $n = 8N$ and $m = 8N+4$. We have
+        \[
+            \norm{x^{(8N)} - x^{(8N+4)}} = \norm{\begin{pmatrix}
+                1\\
+                0
+            \end{pmatrix}-\begin{pmatrix}
+                -1\\
+                0
+            \end{pmatrix}
+            }=2 \geq 1 = \epsilon
+        \]
+        \textcolor{red}{We need to prove by induction that the sequence is periodic.
+        We can determine cluster point by constructing subsequence but how to prove that we have found all of them?
+        }
     \end{homeworkSubsection}
 \end{homeworkProblem}
 
