@@ -155,14 +155,29 @@
     \begin{homeworkSubsection}{(a)}
         \textbf{Claim: } $ lim_{k \to \infty} x^{(k)} = \frac{1}{30}$ \\
         \textbf{Proof: } \\
-        Let $\epsilon > 0$ be given. Choose $N = \max\{\frac{4}{\epsilon}, 8\}$.
-        Assume $n > N$.
+        Let $\epsilon > 0$ be given. Choose $N = \max\{\frac{1}{90\epsilon}, 8\}$.
+        Assume $n > N$. We have 
+        \[
+            n > N
+            \Rightarrow n > 9 > \root{3}\of{600}
+            \Rightarrow n^3 > 600
+            \Rightarrow 5n^3 > 3000
+            \Rightarrow 10n^3 - 5n^3 > 3000
+            \Rightarrow 3000 + 5n^3 < 10n^3
+        \]
+        and obviously
+        \[
+            900n^4 > 150n^3 + 900n^4
+        \]
+        To check the validity of the limit we need to show $\left|x^{(n)} - x^\star\right| < \epsilon$ where $x^\star = \frac{1}{30}$.
         \begin{align*}
-            \left|\frac{n^4 - 100}{5n^3 + 30k^4} - \frac{1}{30}\right| &= \left|\frac{30n^4 - 3000 - 5n^3 - 30k^4}{150n^3 + 900n^4}\right| \\
-                                                            &= \left|\frac{-3000 - 5n^3}{150n^3 + 900n^4}\right|\\
-                                                            &= \frac{3000 + 5n^3}{150n^3 + 900n^4}\\
-                                                            &= \frac{600 + n^3}{30n^3 + 180n^4}\\
-                                                            &< \frac{2n^3}{\frac{1}{2}n^4} < \frac{4}{n} < \frac{4}{N} < \frac{4}{\frac{4}{\epsilon}} < \epsilon\\
+            \left|\frac{n^4 - 100}{5n^3 + 30k^4} - \frac{1}{30}\right| 
+            &= \left|\frac{30n^4 - 3000 - 5n^3 - 30k^4}{150n^3 + 900n^4}\right| \\
+            &= \left|\frac{-3000 - 5n^3}{150n^3 + 900n^4}\right|\\
+            &= \frac{3000 + 5n^3}{150n^3 + 900n^4}\\
+            &< \frac{10n^3}{900n^4} = \frac{1}{90n} \tag*{(by the inequalities above)}\\
+            &< \frac{1}{90N}\\
+            &< \frac{1}{\frac{90}{90\epsilon}} = \epsilon
         \end{align*}
     \end{homeworkSubsection}
 \end{homeworkProblem}
