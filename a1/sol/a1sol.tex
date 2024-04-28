@@ -249,17 +249,16 @@
 \begin{homeworkProblem}
     \begin{homeworkSubsection}{(a)}
         The interior of a set $C$ is defined as the union of all open sets contained in $C$.
-
         The closure of a set $C$ is the set $C$ together with all of its limit points.
-
-        (i)\;Let $C = \mathbb{R}$. 
-        We have $\mathrm{int}(C) = \mathbb{R}$ and $\mathrm{cl}(C) = \mathbb{R}$.
-        It is obvious that $\mathrm{int}(\mathrm{cl}(C)) = \mathrm{int}(C) = \mathbb{R}$.
-
-        (ii)\;Let $C = \mathbb{Q}$. 
-        We have $\mathrm{int}(C) = \emptyset$ and $\mathrm{cl}(C) = \mathbb{R}$.
-        This is because every open interval in $\mathbb{R}$ contains irrational numbers.
-        Thus $\mathrm{int}(\mathrm{cl}(C)) = \mathrm{int}(\mathbb{R}) = \mathbb{R} \neq \mathrm{int}(C) = \emptyset$.
+        \begin{enumerate}
+            \item[(i)]Let $C = \mathbb{R}$. 
+            We have $\mathrm{int}(C) = \mathbb{R}$ and $\mathrm{cl}(C) = \mathbb{R}$.
+            It is obvious that $\mathrm{int}(\mathrm{cl}(C)) = \mathrm{int}(C) = \mathbb{R}$.
+            \item[(ii)]Let $C = \mathbb{Q}$. 
+            We have $\mathrm{int}(C) = \emptyset$ and $\mathrm{cl}(C) = \mathbb{R}$.
+            This is because every open interval in $\mathbb{R}$ contains irrational numbers.
+            Thus $\mathrm{int}(\mathrm{cl}(C)) = \mathrm{int}(\mathbb{R}) = \mathbb{R} \neq \mathrm{int}(C) = \emptyset$.
+        \end{enumerate}
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(b)}
         Consider function $f(x) = \sqrt{||x||_1},\,x \in \mathbb{R}^2$ has sublevel sets $\{x \in \mathbb{R}^2 \mid f(x) \leq \alpha\}$.
@@ -290,7 +289,7 @@
         Check \href{https://www.geogebra.org/3d/aqnq3xcm}{here} for visualization of the sublevel sets.
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(c)}
-        Let $v_{N_A}$ be $v$'s projection onto the null space. 
+        Let $v_{N_A}$ be $v$'s projection onto the null space and $\lambda \in \mathbb{R}^m$.
         We know that $v$ can be decomposite into
         \begin{align*}
             v = A^\top\lambda + v_{N_A}
@@ -307,14 +306,20 @@
         \end{align*}
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(d)}
-        (i) Take $v \in \{x\in E \mid f(x) \geq c\}$ we have 
-        \[
-            f(v) \geq c > c - \frac{1}{k} \text{ for all } k > 1
-        \] 
-        (ii) Take $v \in \{x\in E \mid f(x) > c\}$. Let $f(v) = c + \frac{1}{k}$.
+        \begin{enumerate}
+            \item[(i)] Take $v \in \{x\in E \mid f(x) \geq c\}$ we have 
+            \[
+                f(v) \geq c > c - \frac{1}{k} \text{ for all } k > 1
+            \]
+            This shows that $v \in \{x\in E \mid f(x) > c - \frac{1}{k}\}$ for all $k > 1$.
 
-        We can always pick a $k'$ such that 
-        $k' \geq k$ so that $f(v) = c + \frac{1}{k} \geq c + \frac{1}{k'}$
+            \item[(ii)] Take $v \in \{x\in E \mid f(x) > c\}$. Let $f(v) = c + \frac{1}{k}$.
+
+            We can always pick a $k'$ such that 
+            $k' \geq k$ so that $f(v) = c + \frac{1}{k} \geq c + \frac{1}{k'}$.
+
+            This shows that $\exists k' > 1$ such that $v \in \{x\in E \mid f(x) \geq c + \frac{1}{k'}\}$.
+          \end{enumerate}
     \end{homeworkSubsection}
 \end{homeworkProblem}
 \begin{homeworkProblem}
@@ -359,7 +364,7 @@
         \[
             f(u) = \frac{1}{2}||u - c||^2 + \frac{\mu}{2}||Au||^2
         \]
-        where $u \in \mathbb{R}^n$, $A \in \mathbb{R}^{N-1 \times N}$ and each element at row $i$ and column $j$ is defined as
+        where $u \in \mathbb{R}^n$, $A \in \mathbb{R}^{N \times N}$ and each element at row $i < N$ and column $j$ is defined as
         \[
             A_{ij} := \begin{cases}
                 -1 & \text{if } i = j\\
@@ -367,6 +372,7 @@
                 0 & \text{otherwise}
             \end{cases}
         \]
+        and its last row is defined as $A_{Nj} := 0$
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(b)}
         For each entry of $\nabla f(u)$ we have
