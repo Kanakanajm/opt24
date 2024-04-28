@@ -36,7 +36,8 @@ c = random.normal(0, 0.1, N) + dom - 0.7
 #                                              the form (-1,-1,-1,...,1,1,1).)
 # - Define the sampling rate h.
 #
-# TODO
+mu = 10
+h = 1
 
 
 ### Construct the finite difference matrix D 
@@ -50,8 +51,10 @@ c = random.normal(0, 0.1, N) + dom - 0.7
 #
 # You can use the command np.eye(...).
 #
-# TODO
-
+D1 = -h * np.eye(N, k=0)
+D2 = h * np.eye(N, k=1)
+D = D1 + D2
+D[-1] = 0
 
 ### Solve \nabla f(u) = 0 
 #
@@ -59,13 +62,11 @@ c = random.normal(0, 0.1, N) + dom - 0.7
 # - Write the derivative in in matrix--vector notation. (See exercise sheet.)
 # - Setup the linear system of equations of the form Au = b.
 #
-# TODO
-
+A = np.eye(N) + mu * D.T @ D
 #
 # - solve Au=b using numpy's np.linalg.solve function 
 #
-# TODO
-
+u = np.linalg.solve(A, c)
 
 ### Threshold/cut the solution to [0,1]
 # 
@@ -73,8 +74,8 @@ c = random.normal(0, 0.1, N) + dom - 0.7
 #       z_i = -1, if u_i < 0,
 #       z_i =  0, otherwise.     
 #
-# TODO
 
+z = np.sign(u)
 
 ### Visualize the signals c, u, z using matplotlib as follows
 #
@@ -86,8 +87,17 @@ c = random.normal(0, 0.1, N) + dom - 0.7
 # - modify the vertical axis to show values in [-1.1, 1.1]
 # - Show the figure
 #
-# TODO
-
+plt.figure('Signal Denoising')
+plt.plot(dom, c, label='input')
+plt.plot(dom, u, label='denoised')
+plt.plot(dom, z, label='thresholded')
+plt.xlabel('domain')
+plt.ylabel('signal')
+plt.legend()
+plt.ylim(-1.1, 1.1)
+# uncomment to show plot
+# plt.show()
+plt.savefig(f'out_mu{mu}.png')
 
 
 
