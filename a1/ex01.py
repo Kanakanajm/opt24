@@ -27,9 +27,9 @@ import matplotlib.pyplot as plt
 # - The interval [0,1] is sampled at N points (including the boundary points).
 #   The sampled points are stored in dom.
 #
-N = 100;
-dom = np.linspace(0, 1, N);
-c = random.normal(0, 0.1, N) + dom - 0.7;
+N = 100
+dom = np.linspace(0, 1, N)
+c = random.normal(0, 0.1, N) + dom - 0.7
 #
 # - Define a suitable parameter value for mu. ("Suitable" means: The variable z 
 #                                              that is defined later should have 
