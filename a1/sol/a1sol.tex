@@ -12,6 +12,7 @@
 
 % Extra packages
 \usepackage{changepage} % adjustwidth environment
+\usepackage{hyperref} % href
 
 \usetikzlibrary{automata,positioning}
 
@@ -29,8 +30,7 @@
 \linespread{1.1}
 
 \pagestyle{fancy}
-\lhead{\hmwkAuthorName}
-\chead{\hmwkClass: \hmwkTitle}
+\lhead{\hmwkClass: \hmwkTitle}
 \rhead{\firstxmark}
 \lfoot{\lastxmark}
 \cfoot{\thepage}
@@ -93,7 +93,7 @@
 \newcommand{\hmwkTitle}{Assignment 1}
 \newcommand{\hmwkDueDate}{April 30, 2014}
 \newcommand{\hmwkClass}{Continuous Optimization}
-\newcommand{\hmwkAuthorName}{ \textbf{Hiroyasu Akada} \and \textbf{Honglu Ma}}
+\newcommand{\hmwkAuthorName}{ \textbf{Honglu Ma} \and \textbf{Hiroyasu Akada} \and \textbf{Mathivathana Ayyappan}}
 
 %
 % Title Page
@@ -183,9 +183,9 @@
         \end{align*}
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(b)}
-        We have the sequence as such:
+        We have the following accumulation points:
         \[
-            x^{(1)} = \begin{pmatrix}
+            x^{(8n+1)} = \begin{pmatrix}
                 \frac{\sqrt{2}}{2} & -\frac{\sqrt{2}}{2}\\
                 \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}
             \end{pmatrix}
@@ -197,36 +197,37 @@
                 \frac{\sqrt{2}}{2}\\
                 \frac{\sqrt{2}}{2}
             \end{pmatrix}, \quad
-            x^{(2)} = \begin{pmatrix}
+            x^{(8n+2)} = \begin{pmatrix}
                 0\\
                 1
             \end{pmatrix}, \quad
-            x^{(3)} = \begin{pmatrix}
+            x^{(8n+3)} = \begin{pmatrix}
                 -\frac{\sqrt{2}}{2}\\
                 \frac{\sqrt{2}}{2}
             \end{pmatrix}, \quad
-            x^{(4)} = \begin{pmatrix}
+            x^{(8n+4)} = \begin{pmatrix}
                 -1\\
                 0
             \end{pmatrix}
         \]
         \[
-            x^{(5)} = \begin{pmatrix}
+            x^{(8n+5)} = \begin{pmatrix}
                 -\frac{\sqrt{2}}{2}\\
                 -\frac{\sqrt{2}}{2}
             \end{pmatrix}, \quad
-            x^{(6)} = \begin{pmatrix}
+            x^{(8n+6)} = \begin{pmatrix}
                 0\\
                 -1
             \end{pmatrix}, \quad
-            x^{(7)} = \begin{pmatrix}
+            x^{(8n+7)} = \begin{pmatrix}
                 \frac{\sqrt{2}}{2}\\
                 -\frac{\sqrt{2}}{2}
             \end{pmatrix}, \quad
-            x^{(8)} = \begin{pmatrix}
+            x^{(8n)} = \begin{pmatrix}
                 1\\
                 0
-            \end{pmatrix}, \quad\ldots
+            \end{pmatrix}, \quad
+            n \in \mathbb{N}
         \]
         We can prove by showing that $x^{(k)}$ is not a cauchy sequence thus does not converges (Proposition A.5, Lecture Script)
         i.e. $\exists \epsilon > 0$ such that 
@@ -243,9 +244,178 @@
             \end{pmatrix}
             }=2 \geq 1 = \epsilon
         \]
-        \textcolor{red}{We need to prove by induction that the sequence is periodic.
-        We can determine cluster point by constructing subsequence but how to prove that we have found all of them?
-        }
+    \end{homeworkSubsection}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+    \begin{homeworkSubsection}{(a)}
+        The interior of a set $C$ is defined as the union of all open sets contained in $C$.
+
+        The closure of a set $C$ is the set $C$ together with all of its limit points.
+
+        (i)\;Let $C = \mathbb{R}$. 
+        We have $\mathrm{int}(C) = \mathbb{R}$ and $\mathrm{cl}(C) = \mathbb{R}$.
+        It is obvious that $\mathrm{int}(\mathrm{cl}(C)) = \mathrm{int}(C) = \mathbb{R}$.
+
+        (ii)\;Let $C = \mathbb{Q}$. 
+        We have $\mathrm{int}(C) = \emptyset$ and $\mathrm{cl}(C) = \mathbb{R}$.
+        This is because every open interval in $\mathbb{R}$ contains irrational numbers.
+        Thus $\mathrm{int}(\mathrm{cl}(C)) = \mathrm{int}(\mathbb{R}) = \mathbb{R} \neq \mathrm{int}(C) = \emptyset$.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(b)}
+        Consider function $f(x) = \sqrt{||x||_1},\,x \in \mathbb{R}^2$ has sublevel sets $\{x \in \mathbb{R}^2 \mid f(x) \leq \alpha\}$.
+        The function can also be written as $f(x) = \sqrt{|x_1| + |x_2|},\,x = (x_1, x_2)$.
+
+        Pick two elements $x, y$ from the sublevel set of $\alpha$ such that $f(x) \leq \alpha$ and $f(y) \leq \alpha$. 
+        We have
+        \[
+            f(x) = \sqrt{|x_1| + |x_2|} \leq \alpha \Rightarrow |x_1| + |x_2| \leq \alpha^2
+            \text{ and similarly } |y_1| + |y_2| \leq \alpha^2
+        \]
+        Now take a point $z := \lambda x + (1-\lambda)y,\,\lambda \in [0, 1]$.
+        Also $z_1 = \lambda x_1 + (1-\lambda)y_1,\, z_2 = \lambda x_2 + (1-\lambda)y_2$
+        \begin{align*}
+            |z_1| + |z_2|
+            &= |\lambda x_1 + (1-\lambda)y_1| + |\lambda x_2 + (1-\lambda)y_2|\\
+            &\leq \lambda |x_1| + (1-\lambda)|y_1| + \lambda |x_2| + (1-\lambda)|y_2|\\
+            &\leq \lambda (|x_1| + |x_2|) + (1-\lambda)(|y_1| + |y_2|)\\
+            &\leq \lambda \alpha^2 + (1-\lambda)\alpha^2 = \alpha^2
+        \end{align*}
+        thus $\{x \in \mathbb{R}^2 \mid f(x) \leq \alpha\}$ is a convex set.\\
+        Now we need to show that $f$ is not convex.
+        Let $x = (0, 0),\,y = (1, 0)$ and $\lambda = \frac{1}{2}$.
+        We have $f(x) = 0,\,f(y) = 1$ and
+        \[
+            f(\lambda x + (1-\lambda)y) = \sqrt{\frac{1}{2}} > \lambda f(x) + (1-\frac{1}{2})f(y) = \frac{1}{2}
+        \]
+        Check \href{https://www.geogebra.org/3d/aqnq3xcm}{here} for visualization of the sublevel sets.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(c)}
+        Let $v_{N_A}$ be $v$'s projection onto the null space. 
+        We know that $v$ can be decomposite into
+        \begin{align*}
+            v = A^\top\lambda + v_{N_A}
+            &\Rightarrow Av = A(A^\top\lambda + v_{N_A})\\
+            &\Rightarrow Av = AA^\top\lambda + 0\\
+            &\Rightarrow Av = AA^\top\lambda\\
+            &\Rightarrow (AA^\top)^{-1}Av = \lambda\\
+        \end{align*}
+        Replace $\lambda$ in the original equation we get
+        \begin{align*}
+            v = A^\top(AA^\top)^{-1}Av + v_{N_A}
+            &\Rightarrow v - A^\top(AA^\top)^{-1}Av = v_{N_A}\\
+            &\Rightarrow (I - A^\top(AA^\top)^{-1}A)v = v_{N_A}\\
+        \end{align*}
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(d)}
+        (i) Take $v \in \{x\in E \mid f(x) \geq c\}$ we have 
+        \[
+            f(v) \geq c > c - \frac{1}{k} \text{ for all } k > 1
+        \] 
+        (ii) Take $v \in \{x\in E \mid f(x) > c\}$. Let $f(v) = c + \frac{1}{k}$.
+
+        We can always pick a $k'$ such that 
+        $k' \geq k$ so that $f(v) = c + \frac{1}{k} \geq c + \frac{1}{k'}$
+    \end{homeworkSubsection}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+    \begin{homeworkSubsection}{(i)}
+        \textbf{Proof: } Assume that $\exists A_1, A_2: \mathbb{R}^n \to \mathbb{R}^n$ such that
+        \[
+            \lim_{h \to 0} \frac{||f(x + h) - f(x) - A_1h||}{||h||} = 0
+            \lim_{h \to 0} \frac{||f(x + h) - f(x) - A_2h||}{||h||} = 0
+        \]
+        Subtracting the two equations:
+        \begin{align*}
+            &\lim_{h \to 0} \frac{||f(x + h) - f(x) - A_1h||}{||h||} - \lim_{h \to 0} \frac{||f(x + h) - f(x) - A_2h||}{||h||} = 0\\
+            &\Rightarrow \lim_{h \to 0} \frac{||f(x + h) - f(x) - A_1h - f(x + h) + f(x) + A_2h||}{||h||} = 0\\
+            &\Rightarrow \lim_{h \to 0} \frac{||A_2h - A_1h||}{||h||} = 0\\
+            &\Rightarrow \lim_{h \to 0} \frac{||(A_2- A_1)h||}{||h||} = 0 \\
+            &\Rightarrow \lim_{\alpha \to 0} \frac{||(A_2- A_1)\alpha u||}{||\alpha u||} = 0
+            \tag*{let $\alpha u = h$, $\alpha \in \mathbb{R}$ and $u$ is an unit vector}\\
+            &\Rightarrow \lim_{\alpha \to 0} \frac{\alpha^2||(A_2- A_1)u||}{\alpha^2||u||} = 0\\
+            &\Rightarrow \lim_{\alpha \to 0} \frac{||(A_2- A_1)u||}{||u||} = 0\\
+            &\Rightarrow \frac{||(A_2- A_1)u||}{||u||} = 0\\
+            &\Rightarrow ||(A_2- A_1)u|| = 0\\
+            &\Rightarrow A_2=A_1
+            \tag*{linear transformation is unique}\\
+        \end{align*}
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(ii)}
+        
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(iii)}
+        \[
+            A = \begin{pmatrix}
+                \frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n} \\
+                \vdots & \ddots & \vdots \\
+                \frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
+            \end{pmatrix}
+        \]
+    \end{homeworkSubsection}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+    \begin{homeworkSubsection}{(a)}
+        The function can be rewritten as
+        \[
+            f(u) = \frac{1}{2}||u - c||^2 + \frac{\mu}{2}||Au||^2
+        \]
+        where $u \in \mathbb{R}^n$, $A \in \mathbb{R}^{N-1 \times N}$ and each element at row $i$ and column $j$ is defined as
+        \[
+            A_{ij} := \begin{cases}
+                -1 & \text{if } i = j\\
+                1 & \text{if } i = j+1\\
+                0 & \text{otherwise}
+            \end{cases}
+        \]
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(b)}
+        For each entry of $\nabla f(u)$ we have
+        \[
+            \frac{\partial f}{\partial u_i} = \begin{cases}
+                u_i - c_i + \mu (u_i - u_{i+1}) & \text{if } i = 1\\
+                u_i - c_i + \mu (-u_{i-1} + 2u_i -u_{i+1}) & \text{if } 1 < i < n\\
+                u_i - c_i + \mu (-u_{i-1} + u_i) & \text{if } i = n
+            \end{cases}
+        \]
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(c)}
+        \[
+            \nabla f(u) = u - c + \mu A^\top Au
+        \]
+        which can be verified since each element of $A^\top A$ can be expressed as
+        \begin{align*}
+            (A^\top A)_{1j} &= \begin{cases}
+                1 & \text{if } j = 1\\
+                -1 & \text{if } j = 2\\
+                0 & \text{otherwise}
+            \end{cases}\\
+            (A^\top A)_{ij} &= \begin{cases}
+                -1 & \text{if } j = i-1\\
+                2 & \text{if } j = i\\
+                -1 & \text{if } j = i+1\\
+                0 & \text{otherwise}
+            \end{cases}, 2 \leq i \leq N-2\\
+            (A^\top A)_{Nj} &= \begin{cases}
+                -1 & \text{if } j = N-1\\
+                1 & \text{if } j = N\\
+                0 & \text{otherwise}
+            \end{cases}
+        \end{align*}
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(d)}
+        \begin{align*}
+            \nabla f(u) = 0
+            &\Rightarrow u - c + \mu A^\top Au = 0\\
+            &\Rightarrow (\mu A^\top A + I)u = c\\
+        \end{align*}
+        $\mu A^\top A + I$ is symmetric. if $\det(\mu A^\top A + I) \ne 0 $ then $\mu A^\top A + I$ is invertible
+        and we can write
+        \[
+            u = (\mu A^\top A + I)^-1c
+        \]
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(e)}
+        Argue that if $\mu A^\top A + I$ is invertible then the solution is unique.
     \end{homeworkSubsection}
 \end{homeworkProblem}
 
