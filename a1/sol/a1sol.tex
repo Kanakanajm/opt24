@@ -16,6 +16,14 @@
 
 \usetikzlibrary{automata,positioning}
 
+% Additional commands
+\def\eg{\emph{e.g., }}
+\def\ie{\emph{i.e., }}
+\def\cf{\emph{c.f., }}
+\def\etc{\emph{etc. }}
+\def\wrt{\emph{w.r.t. }}
+\def\etal{\emph{et al. }}
+
 %
 % Basic Document Settings
 %
@@ -421,7 +429,24 @@
         \]
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(e)}
-        Argue that if $\mu A^\top A + I$ is invertible then the solution is unique.
+        % Argue that if $\mu A^\top A + I$ is invertible then the solution is unique.
+        We need to show that the matrix $\mu A^\top A + I$ is invertible, \ie $\mu A^\top A + I$ is positive definite.
+            
+        Let $\lambda$ be an eigenvalue of $\mu A^\top A + I$ and $v$ be the corresponding eigenvector. Then we have
+        
+        \[
+        (\mu A^\top A + I)v = \lambda v.
+        \]
+        By multiplying both sides by $v^\top$, we get
+        \[
+        v^\top(\mu A^\top A + I)v = \lambda v^\top v.
+        \]
+        Since $\mu A^\top A + I$ is symmetric, we have $v^\top(\mu A^\top A + I)v = \mu \|Av\|^{2} + \|v\|^{2}$. 
+        
+        Since $\mu > 0$, we have $\mu \|Av\|^{2} + \|v\|^{2} > 0$ and thus, we get $\lambda > 0$. 
+        
+        This shows that all eigenvalues of $\mu A^\top A + I$ are positive, and hence it is positive definite and invertible.
+        
     \end{homeworkSubsection}
 \end{homeworkProblem}
 
