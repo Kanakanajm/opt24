@@ -332,31 +332,64 @@
 \end{homeworkProblem}
 \begin{homeworkProblem}
     \begin{homeworkSubsection}{(i)}
-        \textbf{Proof: } Assume that $\exists A_1, A_2: \mathbb{R}^n \to \mathbb{R}^n$ such that
+        Suppose each the entry of $h$ is $t$, we have $||h|| = \sqrt{nt^2}$. 
+        To make the derivation cleaner, we represent $f' = f(x + h)$ and $f = f(x)$.
+        We can rewrite the equation in the form of vector entry terms:
+        \begin{align*}
+            &\lim_{t \to 0} \frac{\sqrt{\sum_{i}^{n}(f'_i-f_i-t\sum_{j}^{m}A_{ij})^2}}{\sqrt{nt^2}} = 0\\
+            &\Rightarrow\lim_{t \to 0} \sqrt{\frac{\sum_{i}^{n}(f'_i-f_i-t\sum_{j}^{m}A_{ij})^2}{nt^2}} = 0\\
+            &\Rightarrow\lim_{t \to 0} \frac{\sum_{i}^{n}(f'_i-f_i-t\sum_{j}^{m}A_{ij})^2}{nt^2} = 0\\
+            &\Rightarrow\lim_{t \to 0} \left(\sum_{i}^{n}\frac{(f'_i-f_i-t\sum_{j}^{m}A_{ij})^2}{nt^2}\right) = 0\\
+            &\Rightarrow\lim_{t \to 0} \left(\sum_{i}^{n}\frac{(f'_i-f_i)^2-2t(f'_i-f_i)\sum_{j}^{m}A_{ij}+t^2(\sum_{j}^{m}A_{ij})^2}{nt^2}\right) = 0\\
+            &\Rightarrow\lim_{t \to 0} \left(\sum_{i}^{n}\frac{(f'_i-f_i)^2}{nt^2}-\frac{2(f'_i-f_i)\sum_{j}^{m}A_{ij}}{nt}+\frac{(\sum_{j}^{m}A_{ij})^2}{n}\right) = 0\\
+            &\Rightarrow\lim_{t \to 0} \left(\sum_{i}^{n}\frac{(f'_i-f_i)^2}{nt^2}\right)-\lim_{t \to 0}\left(\sum_{i}^{n}\frac{2(f'_i-f_i)\sum_{j}^{m}A_{ij}}{nt}\right)+\lim_{t \to 0}\left(\sum_{i}^{n}\frac{(\sum_{j}^{m}A_{ij})^2}{n}\right) = 0\\
+            &\Rightarrow\lim_{t \to 0} \left(\frac{1}{nt^2}\sum_{i}^{n}(f'_i-f_i)^2\right)-\lim_{t \to 0}\left(\frac{2}{nt}\sum_{i}^{n}(f'_i-f_i)\sum_{j}^{m}A_{ij}\right)+ \frac{1}{n}\sum_{i}^{n}(\sum_{j}^{m}A_{ij})^2 = 0\\
+        \end{align*}
+        \textbf{Proof: } Assume that $\exists A_1, A_2: \mathbb{R}^n \to \mathbb{R}^m$ such that
         \[
-            \lim_{h \to 0} \frac{||f(x + h) - f(x) - A_1h||}{||h||} = 0
+            \lim_{h \to 0} \frac{||f(x + h) - f(x) - A_1h||}{||h||} = 0 \text{ and }
             \lim_{h \to 0} \frac{||f(x + h) - f(x) - A_2h||}{||h||} = 0
+        \]
+        With the previous derivation, we can write the two equations as such:
+        \[
+            \lim_{t \to 0} \left(\frac{1}{nt^2}\sum_{i}^{n}(f'_i-f_i)^2\right)-\lim_{t \to 0}\left(\frac{2}{nt}\sum_{i}^{n}(f'_i-f_i)\sum_{j}^{m}{A_1}_{ij}\right)+ \frac{1}{n}\sum_{i}^{n}(\sum_{j}^{m}{A_1}_{ij})^2 = 0
+        \]
+        and 
+        \[
+            \lim_{t \to 0} \left(\frac{1}{nt^2}\sum_{i}^{n}(f'_i-f_i)^2\right)-\lim_{t \to 0}\left(\frac{2}{nt}\sum_{i}^{n}(f'_i-f_i)\sum_{j}^{m}{A_2}_{ij}\right)+ \frac{1}{n}\sum_{i}^{n}(\sum_{j}^{m}{A_2}_{ij})^2 = 0
         \]
         Subtracting the two equations:
         \begin{align*}
-            &\lim_{h \to 0} \frac{||f(x + h) - f(x) - A_1h||}{||h||} - \lim_{h \to 0} \frac{||f(x + h) - f(x) - A_2h||}{||h||} = 0\\
-            &\Rightarrow \lim_{h \to 0} \frac{||f(x + h) - f(x) - A_1h - f(x + h) + f(x) + A_2h||}{||h||} = 0\\
-            &\Rightarrow \lim_{h \to 0} \frac{||A_2h - A_1h||}{||h||} = 0\\
-            &\Rightarrow \lim_{h \to 0} \frac{||(A_2- A_1)h||}{||h||} = 0 \\
-            &\Rightarrow \lim_{\alpha \to 0} \frac{||(A_2- A_1)\alpha u||}{||\alpha u||} = 0
-            \tag*{let $\alpha u = h$, $\alpha \in \mathbb{R}$ and $u$ is an unit vector}\\
-            &\Rightarrow \lim_{\alpha \to 0} \frac{\alpha^2||(A_2- A_1)u||}{\alpha^2||u||} = 0\\
-            &\Rightarrow \lim_{\alpha \to 0} \frac{||(A_2- A_1)u||}{||u||} = 0\\
-            &\Rightarrow \frac{||(A_2- A_1)u||}{||u||} = 0\\
-            &\Rightarrow ||(A_2- A_1)u|| = 0\\
-            &\Rightarrow A_2=A_1
-            \tag*{linear transformation is unique}\\
+            &\lim_{t \to 0}\left(\frac{2}{nt}\sum_{i}^{n}(f'_i-f_i)(\sum_{j}^{m}{A_1}_{ij} - \sum_{j}^{m}{A_2}_{ij})\right) + \frac{1}{n}\sum_{i}^{n}(\sum_{j}^{m}{A_1}_{ij})^2 - \frac{1}{n}\sum_{i}^{n}(\sum_{j}^{m}{A_2}_{ij})^2 = 0\\
+            &\Rightarrow\lim_{t \to 0}\left(\sum_{i}^{n}\frac{2(f'_i-f_i)}{nt}(\sum_{j}^{m}{A_1}_{ij} - \sum_{j}^{m}{A_2}_{ij})\right) + \frac{1}{n}\sum_{i}^{n}(\sum_{j}^{m}{A_1}_{ij})^2 - \frac{1}{n}\sum_{i}^{n}(\sum_{j}^{m}{A_2}_{ij})^2 = 0\\
+            &\Rightarrow\sum_{i}^{n}\lim_{t \to 0}\left(\frac{2(f'_i-f_i)}{nt}(\sum_{j}^{m}{A_1}_{ij} - \sum_{j}^{m}{A_2}_{ij})\right) + \frac{1}{n}\sum_{i}^{n}(\sum_{j}^{m}{A_1}_{ij})^2 - \frac{1}{n}\sum_{i}^{n}(\sum_{j}^{m}{A_2}_{ij})^2 = 0\\
+            &\Rightarrow\sum_{i}^{n}\left((\sum_{j}^{m}{A_1}_{ij} - \sum_{j}^{m}{A_2}_{ij})\lim_{t \to 0}\frac{2(f'_i-f_i)}{nt}\right) + \frac{1}{n}\sum_{i}^{n}(\sum_{j}^{m}{A_1}_{ij})^2 - \frac{1}{n}\sum_{i}^{n}(\sum_{j}^{m}{A_2}_{ij})^2 = 0\\
         \end{align*}
+        Observe term $\sum_{i}^{n}\left((\sum_{j}^{m}{A_1}_{ij} - \sum_{j}^{m}{A_2}_{ij})\lim_{t \to 0}\frac{2(f'_i-f_i)}{nt}\right)$.
+        As $t \to 0$, $f'_i-f_i \to 0$, we cannot determine $\lim_{t \to 0}\frac{2(f'_i-f_i)}{nt}$.
+        To make each term of the sum equals to 0, we need $\sum_{j}^{m}{A_1}_{ij} = \sum_{j}^{m}{A_2}_{ij}$ for each row $i$.
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(ii)}
-        
+        If $A = Df(x)$ is admitted as the derivative of $f$ at $x$ then we can write
+        \begin{align*}
+            f(x + h) = f(x) + Ah\\
+            &\Rightarrow \lim_{h \to 0} f(x + h) = \lim_{h \to 0} (f(x) + Ah)\\
+            &\Rightarrow \lim_{h \to 0} f(x + h) = f(x)\\
+            &\Rightarrow \lim_{h \to 0} f(x + h) = f(x)\\
+        \end{align*}
+        which implies continuity of $f$ at $x$.
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(iii)}
+        We can continue to derive from part (i):
+        \begin{align*}
+            &\lim_{t \to 0} \left(\frac{1}{nt^2}\sum_{i}^{n}(f'_i-f_i)^2\right)-\lim_{t \to 0}\left(\frac{2}{nt}\sum_{i}^{n}(f'_i-f_i)\sum_{j}^{m}A_{ij}\right)+ \frac{1}{n}\sum_{i}^{n}(\sum_{j}^{m}A_{ij})^2 = 0\\
+            &\Rightarrow \frac{1}{n}\left(\sum_{i}^{n}\lim_{t \to 0} \frac{(f'_i-f_i)^2}{t^2} - \sum_{i}^{n}2\sum_{j}^{m}A_{ij}\lim_{t \to 0}\frac{f'_i-f_i}{t} + \sum_{i}^{n}(\sum_{j}^{m}A_{ij})^2\right) = 0\\
+            &\Rightarrow \frac{1}{n}\sum_{i}^{n}\left(\lim_{t \to 0} \frac{(f'_i-f_i)^2}{t^2} - 2\sum_{j}^{m}A_{ij}\lim_{t \to 0}\frac{f'_i-f_i}{t} + (\sum_{j}^{m}A_{ij})^2\right) = 0\\
+            &\Rightarrow \frac{1}{n}\sum_{i}^{n}\left(\lim_{t \to 0} \frac{f'_i-f_i}{t} - \sum_{j}^{m}A_{ij}\right)^2 = 0\\
+            &\Rightarrow \lim_{t \to 0} \frac{f'_i-f_i}{t} = \sum_{j}^{m}A_{ij}
+        \end{align*}
+        which implies that the sum of each row $i$ of $A$ is how sensitive $f_i$ is to a small change of $t$.
+        $A$ is the Jacobian matrix of $f$ and is express as:
         \[
             A = \begin{pmatrix}
                 \frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n} \\
