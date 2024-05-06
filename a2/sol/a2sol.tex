@@ -161,4 +161,47 @@
 
 \pagebreak
 
+
+\begin{homeworkProblem}
+    \begin{homeworkSubsection}{(i)}
+        The derivative of the function $f(x)$ at $x^{(k)}$ dotted with the direction $d^{(k)}$ can be expressed as 
+        \[ 
+            \langle \nabla f(x^{(k)}) \; , \; d^{(k)} \rangle = 2x^{(k)} * (-1) = -2x^{(k)} < 0 
+            \text{ for every } 
+            x^{(k)} > 0.
+        \]
+        This shows that $d^{(k)}$ is a descent direction.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(ii)}
+        The descent method updates the current point $x^{(k)}$ based on the following formula:
+        \[ 
+            x^{(k+1)} = x^{(k)} + \tau_k d^{(k)}
+        \]
+        Substituting the given values, we get
+        \[ 
+            x^{(k+1)} = x^{(k)} + 2^{-k-1} * (-1) = x^{(k)} - 2^{-k-1}
+        \]
+        We need to show by induction that $x^{(k)} = 1 + 2^{-k}$ for all $k$.
+        \begin{itemize}
+        \item Base case ($k=0$): $x^{(0)} = 1 + 2^0 = 2$, which is true.
+        
+        \item Inductive step: Assume $x^{(k)} = 1 + 2^{-k}$ is true for some $k$. We need to show that $x^{(k+1)} = 1 + 2^{-(k+1)}$.
+        \begin{align*}
+            x^{(k+1)} &= x^{(k)} - 2^{-k-1} \\
+            &= 1 + 2^{-k} - 2^{-k-1} \\
+            &= 1 + 2*2^{-k-1} - 2^{-k-1} \\
+            &= 1 + (2-1)*2^{-k-1} \\            
+            &= 1 + 2^{-(k+1)} \\
+        \end{align*}
+        By induction, $x^{(k)} = 1 + 2^{-k}$ for all $k$.
+        \end{itemize}
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(iii)}
+    As $k$ approaches infinity, $2^{-k} \to 0$ and $1 + 2^{-k} \to 1$, showing that the sequence $x^{(k)}$ converges to 1, not 0.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(iv)}
+
+    \end{homeworkSubsection}
+\end{homeworkProblem}
+
 \end{document}
