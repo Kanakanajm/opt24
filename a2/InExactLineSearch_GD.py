@@ -38,27 +38,27 @@ def gd(model, options, tol, maxiter, check):
     
     # store options
     if 'storeResidual'  not in options:
-        options['storeResidual']  = False;
+        options['storeResidual']  = False
     if 'storeTime'      not in options:
-        options['storeTime']      = False;
+        options['storeTime']      = False
     if 'storePoints'    not in options:
-        options['storePoints']    = False;
+        options['storePoints']    = False
     if 'storeObjective' not in options:
-        options['storeObjective'] = False;
+        options['storeObjective'] = False
     
 
     # load model parameters
-    a = model['a'];
-    b = model['b'];
-    N = model['N'];
+    a = model['a']
+    b = model['b']
+    N = model['N']
 
     # load parameter
-    tau    = options['stepsize'];
+    tau    = options['stepsize']
 
     # initialization
     #   x_kp1:  initial point (use 'kp1' here, which is set to x_k
     #                         in the beginning of each iteration)
-    #           - given in options['init'];
+    #           - given in options['init']
     #   f_kp1:  initial objective value f(x_kp1)
     #           - needs to be computed here
     #   res0:   initial residual 
@@ -70,30 +70,30 @@ def gd(model, options, tol, maxiter, check):
 
     # recording 
     if options['storeResidual'] == True:
-        seq_res = zeros(maxiter+1);
-        seq_res[0] = res0;
+        seq_res = zeros(maxiter+1)
+        seq_res[0] = res0
     if options['storeTime'] == True:
-        seq_time = zeros(maxiter+1);
-        seq_time[0] = 0;
+        seq_time = zeros(maxiter+1)
+        seq_time[0] = 0
     if options['storePoints'] == True:
-        seq_x = zeros((N,maxiter+1));        
-        seq_x[:,0] = x_kp1;
+        seq_x = zeros((N,maxiter+1))        
+        seq_x[:,0] = x_kp1
     if options['storeObjective'] == True:
-        seq_obj = zeros(maxiter+1);        
-        seq_obj[0] = f_kp1;
-    time = 0;
+        seq_obj = zeros(maxiter+1)        
+        seq_obj[0] = f_kp1
+    time = 0
 
     # solve 
-    breakvalue = 1; # this variable determines the breaking mode of the algorithm
+    breakvalue = 1 # this variable determines the breaking mode of the algorithm
                     # 1: Termination by exceeding the maximal number of iterations.
                     # 2: Tolerance threshold is reached.
     for iter in range(1,maxiter+1):
         
-        stime = clock.time();
+        stime = clock.time()
         
         # update variables
-        x_k = x_kp1.copy();
-        # f_k = f_kp1.copy();
+        x_k = x_kp1.copy()
+        # f_k = f_kp1.copy()
 
         # compute gradient
         ### TODO: Compute the gradient 'grad_k'. 
@@ -115,27 +115,27 @@ def gd(model, options, tol, maxiter, check):
 
 
         if res < tol:
-            breakvalue = 2;
+            breakvalue = 2
 
         # tape residual
-        time = time + (clock.time() - stime);
+        time = time + (clock.time() - stime)
         if options['storeResidual'] == True:
-            seq_res[iter] = res;
+            seq_res[iter] = res
         if options['storeTime'] == True:
-            seq_time[iter] = time;
+            seq_time[iter] = time
         if options['storePoints'] == True:
-            seq_x[:,iter] = x_kp1;
+            seq_x[:,iter] = x_kp1
         if options['storeObjective'] == True:
-            seq_obj[iter] = f_kp1;
+            seq_obj[iter] = f_kp1
 
         # print info
         if (iter % check == 0):
-            print('iter: %d, time: %5f, tau: %f, res: %f' % (iter, time, tau, res));
+            print('iter: %d, time: %5f, tau: %f, res: %f' % (iter, time, tau, res))
     
         # handle breaking condition
         if breakvalue == 2:
-            print('Tolerance value reached!!!');
-            break;
+            print('Tolerance value reached!!!')
+            break
 
     # return results
     output = {
@@ -145,13 +145,13 @@ def gd(model, options, tol, maxiter, check):
     }
 
     if options['storeResidual'] == True:
-        output['seq_res'] = seq_res[0:iter+1];
+        output['seq_res'] = seq_res[0:iter+1]
     if options['storeTime'] == True:
-        output['seq_time'] = seq_time[0:iter+1];
+        output['seq_time'] = seq_time[0:iter+1]
     if options['storePoints'] == True:
-        output['seq_x'] = seq_x[:,0:iter+1];
+        output['seq_x'] = seq_x[:,0:iter+1]
     if options['storeObjective'] == True:
-        output['seq_obj'] = seq_obj[0:iter+1];
+        output['seq_obj'] = seq_obj[0:iter+1]
 
-    return output;
+    return output
 
