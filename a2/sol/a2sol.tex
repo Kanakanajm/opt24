@@ -244,9 +244,21 @@
         \end{itemize}
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(iii)}
-    As $k$ approaches infinity, $2^{-k} \to 0$ and $1 + 2^{-k} \to 1$, showing that the sequence $x^{(k)}$ converges to 1, not 0.
+        As $k$ approaches infinity, $2^{-k} \to 0$ and $1 + 2^{-k} \to 1$, showing that the sequence $x^{(k)}$ converges to 1, not 0.
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(iv)}
+        $f(x)$ has its minimum at $x=0$. That is, while the sequence $x^{(k)}$ converges to 1, this is not the minimizer of $f(x)$.
+        This suggests that the Wolfe’s conditions might not be satisfied. We next check if the conditions holds, which can be shown as
+        \begin{align*}
+            &\langle \nabla f(\overline{x^{(k)}} + \tau_{k} d^{(k)}) \; , \; d^{(k)} \rangle \leq \eta \langle \nabla f(\overline{x^{(k)}}) \; , \; d^{(k)} \rangle 
+            \text{ for some } \eta \in (\gamma, 1) \\
+            &\Rightarrow \langle 2 (\overline{x^{(k)}} + \tau_{k} d^{(k)}) \; , \; d^{(k)} \rangle \leq \eta \langle 2 (\overline{x^{(k)}}) \; , \; d^{(k)} \rangle \\
+            &\Rightarrow \langle 2 (\overline{x^{(k)}} + \tau_{k} (-1)) \; , \; (-1) \rangle \leq \eta \langle 2 (\overline{x^{(k)}}) \; , \; (-1) \rangle \\
+            &\Rightarrow -2 (\overline{x^{(k)}} + \tau_{k} (-1)) \leq -2 \eta (\overline{x^{(k)}}) \\
+            &\Rightarrow \overline{x^{(k)}} - \tau_{k} \geq \eta \overline{x^{(k)}} \\       &\Rightarrow (1-\eta)\overline{x^{(k)}} \geq \tau_{k} \\
+        \end{align*}
+        This inequality does not hold. This is because as $k$ approaches infinity, $\tau_{k} \to 0$ but $(1-\eta)\overline{x^{(k)}} \to (1-\eta)$ that is larger than 0 since $\eta < 0$.
+        Thus, the Wolfe’s conditions are not be satisfied.
 
     \end{homeworkSubsection}
 \end{homeworkProblem}
