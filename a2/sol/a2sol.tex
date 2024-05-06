@@ -161,4 +161,52 @@
 
 \pagebreak
 
+\begin{homeworkProblem}
+    \begin{homeworkSubsection}{(i)}
+        The gradient of $\varphi(x)$ is given by 
+        \begin{align*}
+            \nabla\varphi(x) 
+            &= \frac{1}{2}(A + A^\top)x - b\\
+            &= \frac{1}{2}(2A)x - b\tag*{$A$ is symetric}\\
+            &= Ax - b\\
+        \end{align*}
+        Similarly, the Hessian of $\varphi(x)$ is given by
+        \begin{align*}
+            \nabla^2\varphi(x)
+            &= (D(\nabla \varphi(x)))^\top\\
+            &= (A^\top)^\top = A\\
+        \end{align*}
+        Suppose $\nabla \varphi(x^\star) = 0$ and $\nabla^2 \varphi(x^\star)$ is positive definite,
+        then Theorem 6.9 shows that $x^\star$ is a local minimum of $\varphi(x)$.
+        To meet the condition, we only need to show that $\nabla \varphi(x^\star) = 0$ 
+        because $A$ is positive definite which meets the second part of the condition.
+        Thus we can find the minimizer by solving $Ax = b$.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(ii)}
+        The steepest descent direction is given by
+        \begin{align*}
+            d^{(k)} 
+            &= -\nabla \varphi(x^{(k)})\\
+            &= -Ax^{(k)} + b = r^{(k)}\\
+        \end{align*}
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(iii)}
+        Let $g_k(\tau) = x^{(k)} + \tau r^{(k)}$ be the function that gives $x^{(k+1)}$ given $\tau$ at time step $k$.
+        We can rewrite the objective function as $\underset{\tau > 0}{\min}\,\varphi(g_k(\tau))$ 
+        and to find the minimizer, we can solve $\frac{\partial\varphi}{\partial\tau} = 0$.
+        \begin{align*}
+            \frac{\partial\varphi}{\partial\tau} 
+            &= \frac{\partial g_k}{\partial\tau} \cdot \frac{\partial\varphi}{\partial g_k}\\
+            &= (b - Ax^{(k)})^\top (Ag_k - b)\\
+            &= -b^\top b + (Ax^{(k)})^\top b + b^\top Ag_k - (Ax^{(k)})^\top Ag_k\\
+            &= -b^\top b + (Ax^{(k)})^\top b + b^\top A(x^{(k)} + \tau(b - Ax^{(k)})) - (Ax^{(k)})^\top A(x^{(k)} + \tau(b - Ax^{(k)}))\\
+            &= -b^\top b + 2(Ax^{(k)})^\top b - (Ax^{(k)})^\top Ax^{(k)} + \tau (b - Ax^{(k)})^\top A (b - Ax^{(k)})\\
+            &= -(b - Ax^{(k)})^\top(b - Ax^{(k)}) + \tau (b - Ax^{(k)})^\top A (b - Ax^{(k)}) = 0\\
+            &\Rightarrow \tau = \frac{(b - Ax^{(k)})^\top(b - Ax^{(k)})}{(b - Ax^{(k)})^\top A (b - Ax^{(k)})}
+        \end{align*}
+        
+        
+    \end{homeworkSubsection}
+\end{homeworkProblem}
+
 \end{document}
