@@ -2,6 +2,8 @@ import numpy as np
 from numpy import zeros
 import time as clock
 
+
+
 # Gradient Descent Algorithm
 def gd(model, options, tol, maxiter, check):
     """
@@ -40,7 +42,7 @@ def gd(model, options, tol, maxiter, check):
                             otherwise default values are set and fixed step 
                             size is used througout
     .'backtrackingFactor'   scaling of the step size when backtracking step
-                            is successful or not; value in (0,1)
+                            is successful or not value in (0,1)
     .'Armijoparam'          gamma parameter that appear in the Armijo condition
                             f(x+tau d) <= f(x) + gamma*tau*<grad f(x), d>
         
@@ -48,33 +50,33 @@ def gd(model, options, tol, maxiter, check):
     
     # store options
     if 'storeResidual'  not in options:
-        options['storeResidual']  = False;
+        options['storeResidual']  = False
     if 'storeTime'      not in options:
-        options['storeTime']      = False;
+        options['storeTime']      = False
     if 'storePoints'    not in options:
-        options['storePoints']    = False;
+        options['storePoints']    = False
     if 'storeObjective' not in options:
-        options['storeObjective'] = False;
+        options['storeObjective'] = False
     
     # backtracking options
-    backtrackingMaxiter = 1;   
+    backtrackingMaxiter = 1   
     if 'backtrackingMaxiter' in options:
-        backtrackingMaxiter = options['backtrackingMaxiter'];
-        rho   = options['backtrackingFactor'];
-        gamma = options['Armijoparam'];
+        backtrackingMaxiter = options['backtrackingMaxiter']
+        rho   = options['backtrackingFactor']
+        gamma = options['Armijoparam']
 
     # load model parameters
-    a = model['a'];
-    b = model['b'];
-    N = model['N'];
+    a = model['a']
+    b = model['b']
+    N = model['N']
 
     # load parameter
-    tau    = options['stepsize'];
+    tau    = options['stepsize']
 
     # initialization
     #   x_kp1:  initial point (use 'kp1' here, which is set to x_k
     #                         in the beginning of each iteration)
-    #           - given in options['init'];
+    #           - given in options['init']
     #   f_kp1:  initial objective value f(x_kp1)
     #           - needs to be computed here
     #   res0:   initial residual 
@@ -83,41 +85,50 @@ def gd(model, options, tol, maxiter, check):
     #           - initialize as zero vector
     ### TODO: Initialize the variables as listed above. ###
 
-
+    def f(x):
+        return (a - x[0])**2 + b*(x[1] - x[0]**2)**2
+    
+    def fres(x):
+        return np.linalg.norm(x - np.array([a,a**2]))
+    
+    x_kp1 = options['init']
+    f_kp1 = f(x_kp1)
+    res0 = fres(x_kp1)
+    grad_k = np.zeros(N)
 
     # recording 
     if options['storeResidual'] == True:
-        seq_res = zeros(maxiter+1);
-        seq_res[0] = res0;
+        seq_res = zeros(maxiter+1)
+        seq_res[0] = res0
     if options['storeTime'] == True:
-        seq_time = zeros(maxiter+1);
-        seq_time[0] = 0;
+        seq_time = zeros(maxiter+1)
+        seq_time[0] = 0
     if options['storePoints'] == True:
-        seq_x = zeros((N,maxiter+1));        
-        seq_x[:,0] = x_kp1;
+        seq_x = zeros((N,maxiter+1))        
+        seq_x[:,0] = x_kp1
     if options['storeObjective'] == True:
-        seq_obj = zeros(maxiter+1);        
-        seq_obj[0] = f_kp1;
-    time = 0;
+        seq_obj = zeros(maxiter+1)        
+        seq_obj[0] = f_kp1
+    time = 0
 
     # solve 
-    breakvalue = 1; # this variable determines the breaking mode of the algorithm
+    breakvalue = 1 # this variable determines the breaking mode of the algorithm
                     # 1: Termination by exceeding the maximal number of iterations.
                     # 2: Tolerance threshold is reached.
                     # 3: Maximal number of backtracking iterations exceeded.
     for iter in range(1,maxiter+1):
         
-        stime = clock.time();
+        stime = clock.time()
         
         # update variables
-        x_k = x_kp1.copy();
-        f_k = f_kp1.copy();
+        x_k = x_kp1.copy()
+        f_k = f_kp1.copy()
 
         # compute gradient
         ### TODO: Compute the gradient 'grad_k'. 
         ### - Estimate the expession of the gradient analytically, and compute the
         ### gradient here using this result.
-
+        grad_k = np.array([-2*(a - x_k[0]) - 4*b*x_k[0] * (x_k[1] - x_k[0] ** 2), 2*b*(x_k[1] - x_k[0]**2)])
 
         # backtracking
         ### TODO: Write the code for the backtracking line search for the 
@@ -130,38 +141,55 @@ def gd(model, options, tol, maxiter, check):
         ### - For the first trial step in the backtracking loop, test the step size 
         ### from the previous iteration.
         ### - If the maximal number of backtracking iterations is reached and the Armijo
-        ### condition is not satisfied, then set breakvalue = 3; (see the code for 
+        ### condition is not satisfied, then set breakvalue = 3 (see the code for 
         ### the purpose of the variable 'breakvalue'.
         ### - f_kp1 and x_kp1 need to be computed.
 
+        if backtrackingMaxiter > 1:
+            tau_k = tau
+            for j in range(backtrackingMaxiter):
+                x_kp1 = x_k - tau_k * grad_k
+                f_kp1 = f(x_kp1)
+                if f_kp1 <= f_k - gamma * tau_k * np.linalg.norm(grad_k)**2:
+                    break
+                else:
+                    tau_k = rho * tau_k
+
+            if j == backtrackingMaxiter - 1:
+                breakvalue = 3
+        else:
+            x_kp1 = x_k - tau * grad_k
+            f_kp1 = f(x_kp1)
+        
 
         # check breaking condition
         ### TODO: compute the current residual 'res' (distance to global minimizer)
+        res = fres(x_kp1)
         if res < tol:
-            breakvalue = 2;
+            breakvalue = 2
 
         # tape residual
-        time = time + (clock.time() - stime);
+        time = time + (clock.time() - stime)
         if options['storeResidual'] == True:
-            seq_res[iter] = res;
+            seq_res[iter] = res
         if options['storeTime'] == True:
-            seq_time[iter] = time;
+            seq_time[iter] = time
         if options['storePoints'] == True:
-            seq_x[:,iter] = x_kp1;
+            seq_x[:,iter] = x_kp1
         if options['storeObjective'] == True:
-            seq_obj[iter] = f_kp1;
+            seq_obj[iter] = f_kp1
 
         # print info
         if (iter % check == 0):
-            print 'iter: %d, time: %5f, tau: %f, res: %f' % (iter, time, tau, res);
+            print('iter: %d, time: %5f, tau: %f, res: %f' % (iter, time, tau, res))
     
         # handle breaking condition
         if breakvalue == 2:
-            print('Tolerance value reached!!!');
-            break;
+            print('Tolerance value reached!!!')
+            break
         elif breakvalue == 3:
-            print('Not enough backtracking iterations!!!');
-            break;
+            print('Not enough backtracking iterations!!!')
+            break
 
 
     # return results
@@ -172,13 +200,13 @@ def gd(model, options, tol, maxiter, check):
     }
 
     if options['storeResidual'] == True:
-        output['seq_res'] = seq_res[0:iter+1];
+        output['seq_res'] = seq_res[0:iter+1]
     if options['storeTime'] == True:
-        output['seq_time'] = seq_time[0:iter+1];
+        output['seq_time'] = seq_time[0:iter+1]
     if options['storePoints'] == True:
-        output['seq_x'] = seq_x[:,0:iter+1];
+        output['seq_x'] = seq_x[:,0:iter+1]
     if options['storeObjective'] == True:
-        output['seq_obj'] = seq_obj[0:iter+1];
+        output['seq_obj'] = seq_obj[0:iter+1]
 
-    return output;
+    return output
 
