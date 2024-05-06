@@ -66,8 +66,16 @@ def gd(model, options, tol, maxiter, check):
     #   grad_k: dummy initialization of the gradient variable 
     #           - initialize as zero vector
     ### TODO: Initialize the variables as listed above. ###
-
-
+    def f(x):
+        return (a - x[0])**2 + b*(x[1] - x[0]**2)**2
+    
+    def fres(x):
+        return np.linalg.norm(x - np.array([a,a**2]))
+    
+    x_kp1 = options['init']
+    f_kp1 = f(x_kp1)
+    res0 = fres(x_kp1)
+    grad_k = np.zeros(N)
     # recording 
     if options['storeResidual'] == True:
         seq_res = zeros(maxiter+1)
@@ -100,7 +108,7 @@ def gd(model, options, tol, maxiter, check):
         ### - Estimate the expession of the gradient analytically, and compute the
         ### gradient here using this result.
         ###
-        
+        grad_k = np.array([-2*(a - x_k[0]) - 4*b*x_k[0] * (x_k[1] - x_k[0] ** 2), 2*b*(x_k[1] - x_k[0]**2)])
 
         # line search
         ### TODO: Write the code for Inexact Line Search here.
@@ -108,12 +116,14 @@ def gd(model, options, tol, maxiter, check):
         ### beginning of the file, for which scipy must be installed.
         ### In the minimize function you may use appropriate initialization for tau.
         ### For method parameter, use L-BFGS-B.
-        
+        fun = lambda t: (a - (x_k[0] - grad_k[0]*t))**2 + b*(x_k[1] - grad_k[1]*t - (x_k[0] - grad_k[0]*t)**2)**2
+        tau_k = minimize(fun, tau, method='L-BFGS-B').x[0]
+        x_kp1 = x_k - tau_k * grad_k
 
         # check breaking condition
         ### TODO: compute the current residual (distance to global minimizer)
 
-
+        res = fres(x_kp1)
         if res < tol:
             breakvalue = 2
 

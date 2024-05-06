@@ -76,7 +76,7 @@ nams = []
 # HINT: Test each algorithm by setting to 1 then finally set all of them to 1
 run_gd                  = 1    # Gradient Descent
 run_gd_bt               = 1    # Gradient Descent with backtracking
-run_gd_inexact          = 0    # Gradient Descent with Inexact line search
+run_gd_inexact          = 1    # Gradient Descent with Inexact line search
 
 ################################################################################
 if run_gd: 
@@ -150,6 +150,7 @@ if run_gd_inexact:
 
     options = {
         'init':                 x0,
+        'stepsize':             1,
         'storeResidual':        True,
         'storePoints':          True,
         'storeTime':            True
