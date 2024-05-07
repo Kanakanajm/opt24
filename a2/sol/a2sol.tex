@@ -279,26 +279,8 @@
                 2b(x_2 - x_1^2)
             \end{pmatrix}
         \]
-        and the following Hessian of $f$:
-        \[
-            \nabla^2 f(x_1, x_2) = \begin{pmatrix}
-                2 + 4b(3x_1^2 - x_2) & -4bx_1\\
-                -4bx_1 & 2b
-            \end{pmatrix}
-        \]
-        We find the eigenvalues of the Hessian
-       \begin{align*}
-            &\det(\nabla^2 f(x_1, x_2) - \lambda I) = 0\\
-            &\Rightarrow \begin{pmatrix}
-                2 + 4b(3x_1^2 - x_2) - \lambda & -4bx_1\\
-                -4bx_1 & 2b - \lambda
-            \end{pmatrix} = 0\\
-            &\Rightarrow (2 + 4b(3x_1^2 - x_2) - \lambda)(2b - \lambda) - 16b^2x_1^2 = 0\\
-            &\Rightarrow (2 - \lambda)(2b - \lambda) + 4b(3x_1^2 - x_2)(2b - \lambda) - 16b^2x_1^2 = 0\\
-            &\Rightarrow 4b - (2 + 2b)\lambda + \lambda^2 + (12bx_1^2 - 4bx_2) (2b - \lambda)- 16b^2x_1^2 = 0\\
-            &\Rightarrow 4b - (2 + 2b)\lambda + \lambda^2 + 24b^2x_1^2 - 8b^2x_2 - (12bx_1^2 - 4bx_2)\lambda - 16b^2x_1^2 = 0\\
-            &\Rightarrow \lambda^2 - (2 + 2b + 12bx_1^2 - 4bx_2)\lambda + 4b - 8b^2x_2 - 8b^2x_1^2 = 0
-        \end{align*}      
+        observe that the gradient can be arbitarily large towards infinity,
+        thus there does not exist an upper bound for the gradient.
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(c)}
         Take $x = (-1, 1), y = (0, 0), \lambda = 0.5$ we have
