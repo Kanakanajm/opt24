@@ -186,22 +186,21 @@
         Similar derivation can be shown for the smallest eigenvalue: $\langle x, Qx \rangle  \geq \lambda_{\min}(Q)||x||^2$.
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(b)}
-        We can rewrite $I - \tau Q$ as follows:
+        Suppose $\lambda$ is an eigenvalue of $Q$ with eigenvector $v$. Then, we have
         \begin{align*}
-            I - \tau Q
-            &= I - \tau U\Lambda U^\top\\
-            &= UU^\top - \tau U\Lambda U^\top\\
-            &= (U - \tau U\Lambda) U^\top\\
-            &= (UI - \tau U\Lambda) U^\top\\
-            &= U(I - \tau \Lambda) U^\top\\
+            Qv = \lambda v
+            &\Rightarrow \tau Qv = \tau \lambda v\\
+            &\Rightarrow Iv - \tau Qv = Iv - \tau\lambda v\\
+            &\Rightarrow (I - \tau Q)v = (I - \tau \mathrm{diag}(\lambda)) v\\
+            \intertext{$I - \tau \mathrm{diag}(\lambda)$ is a matrix with same diagonal entries $1 - \tau \lambda$}\\
+            &\Rightarrow (I - \tau Q)v = (1-\tau \lambda)v\\
+            \intertext{Above shows that $1-\tau \lambda$ is an eigenvalue of $I - \tau Q$.}\\
+            &\Rightarrow (I - \tau Q)(I - \tau Q)v = (I - \tau Q)(1-\tau \lambda)v\\
+            &\Rightarrow (I - \tau Q)(I - \tau Q)v = (1-\tau \lambda)(I - \tau Q)v\\
+            &\Rightarrow (I - \tau Q)(I - \tau Q)v = (1-\tau \lambda)(1-\tau \lambda)v\\
+            &\Rightarrow (I - \tau Q)^2v = (1-\tau \lambda)^2v\\
         \end{align*}
-        thus we have
-        \begin{align*}
-            (I - \tau Q)^2
-            &= U(I - \tau \Lambda) U^\top U(I - \tau \Lambda) U^\top\\
-            &= U(I - \tau \Lambda)^2 U^\top\\
-        \end{align*}
-        where $(I - \tau \Lambda)^2$ consists of $(1-\tau\lambda_i)^2$ on the diagonal.
+        Thus $(1-\tau \lambda)^2$ is an eigenvalue of $(I - \tau Q)^2$ for each eigenvalue $\lambda$ of $Q$.
     \end{homeworkSubsection}
 \end{homeworkProblem}
 
