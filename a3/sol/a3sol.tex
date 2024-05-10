@@ -1,0 +1,208 @@
+\documentclass{article}
+
+% Packages forked from the original template
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+% Extra packages
+\usepackage{changepage} % adjustwidth environment
+\usepackage{hyperref} % href
+\usepackage{xcolor} % colored text
+
+\usetikzlibrary{automata,positioning}
+
+% Additional commands
+\def\eg{\emph{e.g., }}
+\def\ie{\emph{i.e., }}
+\def\cf{\emph{c.f., }}
+\def\etc{\emph{etc. }}
+\def\wrt{\emph{w.r.t. }}
+\def\etal{\emph{et al. }}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkClass: \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Exercise \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Exercise \arabic{#1} (continued)}{Exercise \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Exercise \arabic{#1} (continued)}{Exercise \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Exercise \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Exercise \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Exercise \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Assignment 3}
+\newcommand{\hmwkDueDate}{May 14, 2024}
+\newcommand{\hmwkClass}{Continuous Optimization}
+\newcommand{\hmwkAuthorName}{ \textbf{Honglu Ma} \and \textbf{Hiroyasu Akada} \and \textbf{Mathivathana Ayyappan}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+% Norm
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+% Margined Homework Subsection
+\newenvironment{homeworkSubsection}[1]{%
+    \subsection*{#1}%
+    \begin{adjustwidth}{2.5em}{0pt}%
+}{%
+    \end{adjustwidth}%
+}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}[1]
+\end{homeworkProblem}
+\begin{homeworkProblem}[2]
+    \begin{homeworkSubsection}{(a)}
+        Since $Q$ is a square matrix, we can write $Q = U \Lambda U^T$ where $U$ is an orthogonal matrix 
+        and $\Lambda$ is a diagonal matrix with the eigenvalues of $Q$ i.e. $\lambda_i$ on the diagonal.
+        Then, we have
+        \begin{align*}
+            \langle x, Qx \rangle 
+            &= \langle x, U\Lambda U^\top x \rangle\\
+            &= x^\top U\Lambda U^\top x \\
+            &= (U^\top x)^\top\Lambda U^\top x\\
+            &= (U x)^\top\Lambda (Ux) \tag*{$U=U^\top$}\\
+            &= \sum_{i=1}^n \lambda_i (Ux)_i^2\\
+            &\leq  \sum_{i=1}^n \lambda_{\max}(Q) (Ux)_i^2 \tag*{$\lambda_i \leq \lambda_{\max}(Q)$}\\
+            &= \lambda_{\max}(Q) \sum_{i=1}^n (Ux)_i^2\\
+            &= \lambda_{\max}(Q) (Ux)^\top Ux\\
+            &= \lambda_{\max}(Q) x^\top U^\top Ux\\
+            &= \lambda_{\max}(Q) x^\top x \tag*{$U^\top U = I$}\\
+            &= \lambda_{\max}(Q) ||x||^2\\
+        \end{align*}
+        Similar derivation can be shown for the smallest eigenvalue: $\langle x, Qx \rangle  \geq \lambda_{\min}(Q)||x||^2$.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(b)}
+        We can rewrite $I - \tau Q$ as follows:
+        \begin{align*}
+            I - \tau Q
+            &= I - \tau U\Lambda U^\top\\
+            &= UU^\top - \tau U\Lambda U^\top\\
+            &= (U - \tau U\Lambda) U^\top\\
+            &= (UI - \tau U\Lambda) U^\top\\
+            &= U(I - \tau \Lambda) U^\top\\
+        \end{align*}
+        thus we have
+        \begin{align*}
+            (I - \tau Q)^2
+            &= U(I - \tau \Lambda) U^\top U(I - \tau \Lambda) U^\top\\
+            &= U(I - \tau \Lambda)^2 U^\top\\
+        \end{align*}
+        where $(I - \tau \Lambda)^2$ consists of $(1-\tau\lambda_i)^2$ on the diagonal.
+    \end{homeworkSubsection}
+\end{homeworkProblem}
+
+\end{document}
