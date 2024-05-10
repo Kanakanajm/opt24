@@ -13,6 +13,7 @@
 % Extra packages
 \usepackage{changepage} % adjustwidth environment
 \usepackage{hyperref} % href
+\usepackage{xcolor} % colored text
 
 \usetikzlibrary{automata,positioning}
 
@@ -314,24 +315,57 @@
         \end{align*}
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(d)}
+        \textcolor{red}{To show equivalence of two sets $A$ and $B$, we need to show both $A \subseteq B$ and $B \subseteq A$.}
         \begin{enumerate}
-            \item[(i)] Take $v \in \{x\in E \mid f(x) \geq c\}$ we have 
+            \item[(i)] \textcolor{red}{Show $\{x\in E \mid f(x) \geq c\} \subseteq \bigcap_{k = 1}^\infty\{x\in E \mid f(x) > c - \frac{1}{k}\}$}\\
+            Take $v \in \{x\in E \mid f(x) \geq c\}$ we have 
             \[
-                f(v) \geq c > c - \frac{1}{k} \text{ for all } k > 1
+                f(v) \geq c > c - \frac{1}{k} \text{ for all } k \geq 1
             \]
-            This shows that $v \in \{x\in E \mid f(x) > c - \frac{1}{k}\}$ for all $k > 1$.
+            
+            This shows that $v \in \{x\in E \mid f(x) > c - \frac{1}{k}\}$ for all $k \geq 1$, i.e. $v \in \bigcap_{k = 1}^\infty\{x\in E \mid f(x) > c - \frac{1}{k}\}$.
 
-            \item[(ii)] Take $v \in \{x\in E \mid f(x) > c\}$. Let $f(v) = c + \frac{1}{k}$.
+            {
+                \color{red}
+                Show $\bigcap_{k = 1}^\infty\{x\in E \mid f(x) > c - \frac{1}{k}\} \supseteq \{x\in E \mid f(x) \geq c\}$\\
+                \textbf{Proof by contradiction: }\\
+                Take $v \in \bigcap_{k = 1}^\infty\{x\in E \mid f(x) > c - \frac{1}{k}\}$.
+                Assume that $v \notin \{x\in E \mid f(x) \geq c\}$ we have
+                \begin{align*}
+                    f(v) < c
+                    &\Rightarrow c - f(v) > 0\\
+                    &\Rightarrow \exists k \geq 1 \text{ such that } c - f(v) - \frac{1}{k} \geq 0\\
+                    &\Rightarrow c - \frac{1}{k} \geq f(v) \tag*{Contradiction}
+                \end{align*}
+            }
+            \item[(ii)] \textcolor{red}{Show $\{x\in E \mid f(x) > c\} \subseteq \bigcup_{k = 1}^\infty\{x\in E \mid f(x) \geq c + \frac{1}{k}\}$}\\
+            Take $v \in \{x\in E \mid f(x) > c\}$. Let $f(v) = c + \frac{1}{k}$.
 
             We can always pick a $k'$ such that 
             $k' \geq k$ so that $f(v) = c + \frac{1}{k} \geq c + \frac{1}{k'}$.
 
             This shows that $\exists k' > 1$ such that $v \in \{x\in E \mid f(x) \geq c + \frac{1}{k'}\}$.
+
+            {
+                \color{red}
+                Show $\{x\in E \mid f(x) > c\} \supseteq \bigcup_{k = 1}^\infty\{x\in E \mid f(x) \geq c + \frac{1}{k}\}$
+
+                Take $v \in \bigcup_{k = 1}^\infty\{x\in E \mid f(x) \geq c + \frac{1}{k}\}$.
+                \[
+                    f(v) \geq c + \frac{1}{k} > c
+                \]
+            }
           \end{enumerate}
     \end{homeworkSubsection}
 \end{homeworkProblem}
 \begin{homeworkProblem}
     \begin{homeworkSubsection}{(i)}
+        {
+            \color{red}
+            The assumption of $h$ is a vector with same entry is incorrect which leads to a wrong result.
+            Please see the correct answer below.
+        }
+
         Suppose each the entry of $h$ is $t$, we have $||h|| = \sqrt{nt^2}$. 
         To make the derivation cleaner, we represent $f' = f(x + h)$ and $f = f(x)$.
         We can rewrite the equation in the form of vector entry terms:
@@ -368,6 +402,12 @@
         Observe term $\sum_{i}^{n}\left((\sum_{j}^{m}{A_1}_{ij} - \sum_{j}^{m}{A_2}_{ij})\lim_{t \to 0}\frac{2(f'_i-f_i)}{nt}\right)$.
         As $t \to 0$, $f'_i-f_i \to 0$, we cannot determine $\lim_{t \to 0}\frac{2(f'_i-f_i)}{nt}$.
         To make each term of the sum equals to 0, we need $\sum_{j}^{m}{A_1}_{ij} = \sum_{j}^{m}{A_2}_{ij}$ for each row $i$.
+
+        {
+            \color{red}
+            \textbf{Correct Answer}\\
+            No need to expand any term. Just treat $||f(x+h) - f(x) - Ah||$ like $f(x+h) - f(x) - Ah$ without the norm.
+        }
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(ii)}
         If $A = Df(x)$ is admitted as the derivative of $f$ at $x$ then we can write
@@ -378,7 +418,23 @@
             &\Rightarrow \lim_{h \to 0} f(x + h) = f(x)\\
         \end{align*}
         which implies continuity of $f$ at $x$.
-    \end{homeworkSubsection}
+
+        {
+            \color{red}
+            \textbf{Correct Answer}\\
+            Let $h = x- a$.
+            \begin{align*}
+                f(x+h) = f(x) + Df(x)h + o(||h||)
+                &\Rightarrow f(x) = f(a) + Df(a) \cdot (x-a) + o(||x-a||)\\
+                &\Rightarrow \lim_{x\to a}f(x) = \lim_{x\to a}f(a) + \lim_{x\to a}(Df(a) \cdot (x-a)) + \lim_{x\to a}o(||x-a||)\\
+                &\Rightarrow \lim_{x\to a}f(x) = f(a) + Df(a)\cdot\lim_{x\to a}(x-a) + \lim_{x\to a}o(||x-a||)\\
+                &\Rightarrow \lim_{x\to a}f(x) = f(a) + Df(a)\cdot 0 + \lim_{x\to a}o(||x-a||)\\
+                &\Rightarrow \lim_{x\to a}f(x) = f(a) + \lim_{x\to a}o(||x-a||)\\
+                &\Rightarrow \lim_{x\to a}f(x) = f(a) + \lim_{x\to a}\left(\frac{||x - a||o(||x-a||)}{||x - a||}\right)\\
+                &\Rightarrow \lim_{x\to a}f(x) = f(a)\\
+            \end{align*}
+        }   
+     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(iii)}
         We can continue to derive from part (i):
         \begin{align*}
@@ -397,6 +453,24 @@
                 \frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
             \end{pmatrix}
         \]
+        {
+            \color{red}
+            \textbf{Correct Answer}\\
+            Let $h = te_j$ where $e_j$ is the $j$th canonical basis vector.
+            \begin{align*}
+                &f(x + te_j) - f(x) = Df(x)te_j + o(||te_j||)\\
+                &\Rightarrow \frac{f(x + te_j) - f(x)}{t} = \frac{Df(x)te_j}{t} + \frac{o(||te_j||)}{t}\\
+                &\Rightarrow \frac{f(x + te_j) - f(x)}{t} = Df(x)e_j + \frac{o(||te_j||)}{t}\\
+                &\Rightarrow \lim_{t\to 0}\frac{f(x + te_j) - f(x)}{t} = \lim_{t\to 0}Df(x)e_j + \lim_{t\to 0}\frac{o(||te_j||)}{t}\\
+                &\Rightarrow \lim_{t\to 0}\frac{f(x + te_j) - f(x)}{t} = Df(x)e_j + \lim_{t\to 0}\frac{o(||te_j||)}{t}\\
+                &\Rightarrow \lim_{t\to 0}\frac{f(x + te_j) - f(x)}{t} = Df(x)e_j + \lim_{t\to 0}\frac{|t|o(||e_j||)}{t}\\
+                &\Rightarrow \lim_{t\to 0}\frac{f(x + te_j) - f(x)}{t} = Df(x)e_j\\
+            \end{align*}
+            The left hand side denotes the directional derivative of $f$ at $x$ in the direction of $e_j$ while
+            the right hand side is the definition of the $j$th column of the matrix $Df(x)$.
+            Thus each column of $Df(x)$ is the directional derivative of $f$ at $x$ along the direction of the canonical basis vectors
+            i.e. the partial derivatives of $f$ at $x$.
+        }
     \end{homeworkSubsection}
 \end{homeworkProblem}
 \begin{homeworkProblem}
