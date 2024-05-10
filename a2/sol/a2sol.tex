@@ -13,6 +13,7 @@
 % Extra packages
 \usepackage{changepage} % adjustwidth environment
 \usepackage{hyperref} % href
+\usepackage{xcolor} % colored text
 
 \usetikzlibrary{automata,positioning}
 
@@ -263,7 +264,7 @@
     \end{homeworkSubsection}
 \end{homeworkProblem}
 
-\begin{homeworkProblem}
+\begin{homeworkProblem}[3]
     \begin{homeworkSubsection}{(a)}
         To show that $f$ has a global minimizer at $(a, a^2)$ we need to show that $f(a, a^2) \leq f(x_1, x_2)$ for all $(x_1, x_2)$.
         \[
@@ -281,6 +282,38 @@
         \]
         observe that the gradient can be arbitarily large towards infinity,
         thus there does not exist an upper bound for the gradient.
+
+        {
+            \color{red}
+            From the Lipschitz condition 
+            $||\nabla f(x) - \nabla f(y)|| \leq L||x - y|| \Rightarrow \frac{||\nabla f(x) - \nabla f(y)||}{||x - y||} \leq L$
+            we should show $\exists x, y$ such that $\frac{||\nabla f(x) - \nabla f(y)||}{||x - y||}$ is unbounded,
+            intead of showing that the gradient is unbounded.
+
+            \textbf{Correct Answer}\\
+            Let $x = \begin{pmatrix}
+                t\\
+                0
+            \end{pmatrix}$
+            and $y = \begin{pmatrix}
+                0\\
+                0
+            \end{pmatrix}$. We have
+            \[
+                ||x - y|| = t
+            \]
+            \[
+                ||\nabla f(x) - \nabla f(y)|| = \left|\left|\begin{pmatrix}
+                    2t + 4bt^3\\
+                    -2bt^2
+                \end{pmatrix}\right|\right|
+                = 2bt^2
+            \]
+            thus
+            \[
+                \lim_{t\to\infty} \frac{||\nabla f(x) - \nabla f(y)||}{||x - y||} = \lim_{t\to\infty} 2bt \to \infty
+            \]
+        }
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(c)}
         Take $x = (-1, 1), y = (0, 0), \lambda = 0.5$ we have
