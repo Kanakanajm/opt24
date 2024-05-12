@@ -166,41 +166,41 @@
 \end{homeworkProblem}
 \begin{homeworkProblem}[2]
     \begin{homeworkSubsection}{(a)}
-        Since $Q$ is a square matrix, we can write $Q = U \Lambda U^T$ where $U$ is an orthogonal matrix 
-        and $\Lambda$ is a diagonal matrix with the eigenvalues of $Q$ i.e. $\lambda_i$ on the diagonal.
+        Since $\mathbf{Q}$ is a square matrix, we can write $\mathbf{Q} = \mathbf{U} \Lambda \mathbf{U}^\top$ where $\mathbf{U}$ is an orthogonal matrix 
+        and $\Lambda$ is a diagonal matrix with the eigenvalues of $\mathbf{Q}$ i.e. $\lambda_i$ on the diagonal.
         Then, we have
         \begin{align*}
-            \langle x, Qx \rangle 
-            &= \langle x, U\Lambda U^\top x \rangle\\
-            &= x^\top U\Lambda U^\top x \\
-            &= (U^\top x)^\top\Lambda U^\top x\\
-            &= (U x)^\top\Lambda (Ux) \tag*{$U=U^\top$}\\
-            &= \sum_{i=1}^n \lambda_i (Ux)_i^2\\
-            &\leq  \sum_{i=1}^n \lambda_{\max}(Q) (Ux)_i^2 \tag*{$\lambda_i \leq \lambda_{\max}(Q)$}\\
-            &= \lambda_{\max}(Q) \sum_{i=1}^n (Ux)_i^2\\
-            &= \lambda_{\max}(Q) (Ux)^\top Ux\\
-            &= \lambda_{\max}(Q) x^\top U^\top Ux\\
-            &= \lambda_{\max}(Q) x^\top x \tag*{$U^\top U = I$}\\
-            &= \lambda_{\max}(Q) ||x||^2\\
+            \langle \mathbf{x}, \mathbf{Q}\mathbf{x} \rangle 
+            &= \langle \mathbf{x}, \mathbf{U}\Lambda \mathbf{U}^\top \mathbf{x} \rangle\\
+            &= \mathbf{x}^\top \mathbf{U}\Lambda \mathbf{U}^\top \mathbf{x} \\
+            &= (\mathbf{U}^\top \mathbf{x})^\top\Lambda \mathbf{U}^\top \mathbf{x}\\
+            &= (\mathbf{U} \mathbf{x})^\top\Lambda (\mathbf{U}\mathbf{x}) \tag*{$\mathbf{U}=\mathbf{U}^\top$}\\
+            &= \sum_{i=1}^n \lambda_i ((\mathbf{U}\mathbf{x})_i)^2\\
+            &\leq  \sum_{i=1}^n \lambda_{\max}(\mathbf{Q}) ((\mathbf{U}\mathbf{x})_i)^2 \tag*{$\lambda_i \leq \lambda_{\max}(\mathbf{Q})$}\\
+            &= \lambda_{\max}(\mathbf{Q}) \sum_{i=1}^n ((\mathbf{U}\mathbf{x})_i)^2\\
+            &= \lambda_{\max}(\mathbf{Q}) (\mathbf{U}\mathbf{x})^\top \mathbf{U}\mathbf{x}\\
+            &= \lambda_{\max}(\mathbf{Q}) \mathbf{x}^\top \mathbf{U}^\top \mathbf{U}\mathbf{x}\\
+            &= \lambda_{\max}(\mathbf{Q}) \mathbf{x}^\top \mathbf{x} \tag*{$\mathbf{U}^\top \mathbf{U} = I$}\\
+            &= \lambda_{\max}(\mathbf{Q}) ||\mathbf{x}||^2\\
         \end{align*}
-        Similar derivation can be shown for the smallest eigenvalue: $\langle x, Qx \rangle  \geq \lambda_{\min}(Q)||x||^2$.
+        Similar derivation can be shown for the smallest eigenvalue: $\langle \mathbf{x}, \mathbf{Q}\mathbf{x} \rangle  \geq \lambda_{\min}(\mathbf{Q})||\mathbf{x}||^2$.
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(b)}
-        Suppose $\lambda$ is an eigenvalue of $Q$ with eigenvector $v$. Then, we have
+        Suppose $\lambda$ is an eigenvalue of $\mathbf{Q}$ with eigenvector $\mathbf{v}$. Then, we have
         \begin{align*}
-            Qv = \lambda v
-            &\Rightarrow \tau Qv = \tau \lambda v\\
-            &\Rightarrow Iv - \tau Qv = Iv - \tau\lambda v\\
-            &\Rightarrow (I - \tau Q)v = (I - \tau \mathrm{diag}(\lambda)) v\\
-            \intertext{$I - \tau \mathrm{diag}(\lambda)$ is a matrix with same diagonal entries $1 - \tau \lambda$}\\
-            &\Rightarrow (I - \tau Q)v = (1-\tau \lambda)v\\
-            \intertext{Above shows that $1-\tau \lambda$ is an eigenvalue of $I - \tau Q$.}\\
-            &\Rightarrow (I - \tau Q)(I - \tau Q)v = (I - \tau Q)(1-\tau \lambda)v\\
-            &\Rightarrow (I - \tau Q)(I - \tau Q)v = (1-\tau \lambda)(I - \tau Q)v\\
-            &\Rightarrow (I - \tau Q)(I - \tau Q)v = (1-\tau \lambda)(1-\tau \lambda)v\\
-            &\Rightarrow (I - \tau Q)^2v = (1-\tau \lambda)^2v\\
+            \mathbf{Q}\mathbf{v} = \lambda \mathbf{v}
+            &\Rightarrow \tau \mathbf{Q}\mathbf{v} = \tau \lambda \mathbf{v}\\
+            &\Rightarrow \mathbf{I}\mathbf{v} - \tau \mathbf{Q}\mathbf{v} = \mathbf{I}\mathbf{v} - \tau\lambda \mathbf{v}\\
+            &\Rightarrow (\mathbf{I} - \tau \mathbf{Q})\mathbf{v} = (\mathbf{I} - \tau \mathrm{diag}(\lambda)) \mathbf{v}\\
+            \intertext{$\mathbf{I} - \tau \mathrm{diag}(\lambda)$ is a matrix with same diagonal entries $1 - \tau \lambda$}\\
+            &\Rightarrow (\mathbf{I} - \tau \mathbf{Q})\mathbf{v} = (1-\tau \lambda)\mathbf{v}\\
+            \intertext{Above shows that $1-\tau \lambda$ is an eigenvalue of $\mathbf{I} - \tau \mathbf{Q}$.}\\
+            &\Rightarrow (\mathbf{I} - \tau \mathbf{Q})(\mathbf{I} - \tau \mathbf{Q})\mathbf{v} = (\mathbf{I} - \tau \mathbf{Q})(1-\tau \lambda)\mathbf{v}\\
+            &\Rightarrow (\mathbf{I} - \tau \mathbf{Q})(\mathbf{I} - \tau \mathbf{Q})\mathbf{v} = (1-\tau \lambda)(\mathbf{I} - \tau \mathbf{Q})\mathbf{v}\\
+            &\Rightarrow (\mathbf{I} - \tau \mathbf{Q})(\mathbf{I} - \tau \mathbf{Q})\mathbf{v} = (1-\tau \lambda)(1-\tau \lambda)\mathbf{v}\\
+            &\Rightarrow (\mathbf{I} - \tau \mathbf{Q})^2\mathbf{v} = (1-\tau \lambda)^2\mathbf{v}\\
         \end{align*}
-        Thus $(1-\tau \lambda)^2$ is an eigenvalue of $(I - \tau Q)^2$ for each eigenvalue $\lambda$ of $Q$.
+        Thus $(1-\tau \lambda)^2$ is an eigenvalue of $(\mathbf{I} - \tau \mathbf{Q})^2$ for each eigenvalue $\lambda$ of $\mathbf{Q}$.
     \end{homeworkSubsection}
 \end{homeworkProblem}
 \begin{homeworkProblem}[3]
