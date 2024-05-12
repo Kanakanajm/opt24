@@ -205,13 +205,89 @@
 \end{homeworkProblem}
 \begin{homeworkProblem}[3]
     \begin{homeworkSubsection}{(a)}
-        Let $\mathbf{p}$ be the projection of $\mathbf{v}$ onto the column space of $\mathbf{A}$ i.e. $\mathbf{p}\in R(\mathbf{A})$.
-        We know that $\exists\,\mathbf{e}, \mathbf{e} \in N(\mathbf{A}^\top)$ s.t. $\mathbf{v} = \mathbf{p} + \mathbf{e}$.
+        Projection of $\mathbf{v}$ onto the space spanned by the columns of $\mathbf{A}$
+        means that we want to find a point in the column space of $\mathbf{A}$ that is closest to $\mathbf{v}$
+        i.e. for vector $\mathbf{p}$ in the column space we want the distance between $\mathbf{v}$ and $\mathbf{p}$ to be as small as possible
+        \[
+            \underset{p}{\mathrm{argmin}}\;\mathrm{dist}\,(\mathbf{v}, \mathbf{p})
+        \]
+        which is equivalent to
+        \[
+            \underset{p}{\mathrm{argmin}}\;||\mathbf{v} - \mathbf{p}||
+        \]
+        or
+        \[
+            \underset{p}{\mathrm{argmin}}\;\sqrt{\langle\mathbf{v} - \mathbf{p}, \mathbf{v} - \mathbf{p}\rangle}
+        \]
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(b)}
+        In case of $m = 1$, the subspace spanned by $\mathbf{u}$ is just a line $c\mathbf{u}$ for some constant $c \in \mathbb{R}$. 
+        We have
+        \[
+            \underset{c}{\mathrm{argmin}}\;\sqrt{\langle\mathbf{v} - c\mathbf{u}, \mathbf{v} - c\mathbf{u}\rangle}
+        \]
+        which by definition of the inner product, is equivalent to
+        \[
+            \underset{c}{\mathrm{argmin}}\;(\mathbf{v} - c\mathbf{u})^\top \mathbf{Q}(\mathbf{v} - c\mathbf{u})
+        \]
+        To find minimum, we take derivative of function 
+        \[
+            f(c) = (\mathbf{v} - c\mathbf{u})^\top \mathbf{Q}(\mathbf{v} - c\mathbf{u}) 
+            = \mathbf{v}^\top \mathbf{Q}\mathbf{v} - 2(\mathbf{v}^\top \mathbf{Q}\mathbf{u})c + (\mathbf{u}^\top \mathbf{Q}\mathbf{u})c^2 
+        \]
+        We have
+        \[
+            f'(c) = 2(\mathbf{u}^\top \mathbf{Q}\mathbf{u})c - 2(\mathbf{v}^\top \mathbf{Q}\mathbf{u})
+        \]
+        and the second derivative
+        \[
+            f''(c) = 2(\mathbf{u}^\top \mathbf{Q}\mathbf{u}) \geq 0
+        \]
+        which indicate function $f$ is convex now we just have to solve $f'(c) = 0$
         \begin{align*}
-            \mathbf{e} &= \mathbf{v} - \mathbf{p}\\
-            \mathbf{e} &= \mathbf{v} - \mathbf{A}\mathbf{\hat{x}}\tag*{for some $\mathbf{\hat{x}}\in \mathbb{R}^m$}\\
-            0 &= \mathbf{A}^\top (\mathbf{v} - \mathbf{A}\mathbf{\hat{x}})\\
-            0 &= \mathbf{A}^\top \mathbf{v} - \mathbf{A}^\top\mathbf{A}\mathbf{\hat{x}}\\
+            2(\mathbf{u}^\top \mathbf{Q}\mathbf{u})c - 2(\mathbf{v}^\top \mathbf{Q}\mathbf{u}) = 0&\\
+            c = \frac{\mathbf{v}^\top \mathbf{Q}\mathbf{u}}{\mathbf{u}^\top \mathbf{Q}\mathbf{u}}&\\
+        \end{align*}
+        and the projection $\mathbf{p} = \frac{\mathbf{v}^\top \mathbf{Q}\mathbf{u}}{\mathbf{u}^\top \mathbf{Q}\mathbf{u}}\mathbf{u}$
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(c)}
+        In case of $m > 1$, we have a vector $\mathbf{\hat{c}} \in \mathbb{R}^m$ defined by
+        \[
+            \mathbf{\hat{c}} := \begin{pmatrix}
+                c_1\\
+                \vdots\\
+                c_m\\
+            \end{pmatrix}
+        \]
+        where the projection $\mathbf{p} = \mathbf{A}\mathbf{\hat{c}}$. We have
+        \[
+            \underset{\mathbf{\hat{c}}}{\mathrm{argmin}}\;(\mathbf{v} - \mathbf{A}\mathbf{\hat{c}})^\top \mathbf{Q}(\mathbf{v} - \mathbf{A}\mathbf{\hat{c}})
+        \]
+        To find the minimum, similarly, we define a function 
+        \[
+            g(\mathbf{\hat{c}}) = \mathbf{v}^\top \mathbf{Q}\mathbf{v} - 2\mathbf{v}^\top \mathbf{Q}\mathbf{A}\mathbf{\hat{c}} + \mathbf{\hat{c}}^\top\mathbf{A}^\top\mathbf{Q}\mathbf{A}\mathbf{\hat{c}} 
+        \]
+        We calculate its gradient
+        \[
+            \nabla g(\mathbf{\hat{c}}) = -2\mathbf{v}^\top \mathbf{Q}\mathbf{A} + 2\mathbf{A}^\top\mathbf{Q}\mathbf{A}\mathbf{\hat{c}}
+        \]
+        and its Hessian
+        \[
+            \nabla^2 g(\mathbf{\hat{c}}) = 2\mathbf{A}^\top\mathbf{Q}\mathbf{A} = \mathbf{H}
+        \]
+        We can show that $\mathbf{H}$ is positive semi-definite. 
+        Suppose $\lambda$ is an eigenvalue of $\mathbf{H}$ 
+        and with corresponding eigenvector $\mathbf{e}$
+        \begin{align*}
+            \mathbf{H}\mathbf{e} = \lambda\mathbf{e}&\\
+            2\mathbf{A}^\top\mathbf{Q}\mathbf{A}\mathbf{e} = \lambda\mathbf{e}&\\
+            2\mathbf{e}^\top\mathbf{A}^\top\mathbf{Q}\mathbf{A}\mathbf{e} = \lambda\mathbf{e}^\top\mathbf{e}&\\
+            \lambda = \frac{2(\mathbf{A}\mathbf{e})^\top\mathbf{Q}\mathbf{A}\mathbf{e}}{\mathbf{e}^\top\mathbf{e}} \geq 0&\\
+        \end{align*}
+        Thus we can get the minimizer $\mathbf{\hat{c}}$ by solving $\nabla g(\mathbf{\hat{c}}) = 0$
+        \begin{align*}
+            -2\mathbf{v}^\top \mathbf{Q}\mathbf{A} + 2\mathbf{A}^\top\mathbf{Q}\mathbf{A}\mathbf{\hat{c}} = 0&\\
+            \mathbf{A}^\top\mathbf{Q}\mathbf{A}\mathbf{\hat{c}} = \mathbf{v}^\top \mathbf{Q}\mathbf{A}&\\
         \end{align*}
     \end{homeworkSubsection}
 \end{homeworkProblem}
