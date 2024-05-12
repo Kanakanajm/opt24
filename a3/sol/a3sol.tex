@@ -203,5 +203,17 @@
         Thus $(1-\tau \lambda)^2$ is an eigenvalue of $(I - \tau Q)^2$ for each eigenvalue $\lambda$ of $Q$.
     \end{homeworkSubsection}
 \end{homeworkProblem}
+\begin{homeworkProblem}[3]
+    \begin{homeworkSubsection}{(a)}
+        Let $\mathbf{p}$ be the projection of $\mathbf{v}$ onto the column space of $\mathbf{A}$ i.e. $\mathbf{p}\in R(\mathbf{A})$.
+        We know that $\exists\,\mathbf{e}, \mathbf{e} \in N(\mathbf{A}^\top)$ s.t. $\mathbf{v} = \mathbf{p} + \mathbf{e}$.
+        \begin{align*}
+            \mathbf{e} &= \mathbf{v} - \mathbf{p}\\
+            \mathbf{e} &= \mathbf{v} - \mathbf{A}\mathbf{\hat{x}}\tag*{for some $\mathbf{\hat{x}}\in \mathbb{R}^m$}\\
+            0 &= \mathbf{A}^\top (\mathbf{v} - \mathbf{A}\mathbf{\hat{x}})\\
+            0 &= \mathbf{A}^\top \mathbf{v} - \mathbf{A}^\top\mathbf{A}\mathbf{\hat{x}}\\
+        \end{align*}
+    \end{homeworkSubsection}
+\end{homeworkProblem}
 
 \end{document}
