@@ -46,9 +46,11 @@ def gd(model, options,  maxiter, check):
     if 'storePsnrs'    not in options:
         options['storePsnrs']    = False;
 
-    #TODO: load model parameters
-
     A = model['A'] #example
+    K = model['K'] 
+    b = model['b']
+    mu = model['mu']
+    N = model['N']
    
 
     # initialization
@@ -56,12 +58,16 @@ def gd(model, options,  maxiter, check):
     x_bar = options['orig'];
 
     def fun_val_main(x):
-        # TODO: Create a helper function which computes the value 
-        # 0.5*|Ax-z|_2^2 + 0.5*mu*|K*x|_{2}^2 
-        return 
+        # 0.5*|Ax-x_bar|_2^2 + 0.5*mu*|K*x|_{2}^2 
+        return 0.5 * np.linalg.norm(A @ x - x_bar)**2 + 0.5 * mu * np.linalg.norm(K @ x)**2
+    
+    def psnr_val_main(x):
+        # 10*log(255**2/MSE)
+        # MSE = 1/N * |x-x_bar|_2^2
+        return np.linalg.norm(x - x_bar)**2 / N
 
-    fun_val = # todo: compute the function value with the helper function
-    psnr_val = # todo: compute the PSNR value 
+    fun_val = fun_val_main(x_kp1)
+    psnr_val = psnr_val_main(x_kp1)
 
 
     # recording 
