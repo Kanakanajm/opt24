@@ -167,9 +167,6 @@
         \item $f(x) - f(\bar{x}) = \int_{0}^{1}\langle\nabla f(\textcolor{red}{x}+ t(x - \bar{x}), x - \bar{x})\rangle\,dt$
         
         should be $f(x) - f(\bar{x}) = \int_{0}^{1}\langle\nabla f(\bar{x} + t(x - \bar{x}), x - \bar{x})\rangle\,dt$
-        \item $\int_{0}^{1}\langle\nabla f(\bar{x} + t(x - \bar{x}), x - \bar{x})\rangle\,dt \leq \textcolor{red}{\int_{0}^{1}\langle\nabla f(\bar{x}), x - \bar{x}\rangle\,dt} + \hdots$
-        
-        should be $\int_{0}^{1}\langle\nabla f(\bar{x} + t(x - \bar{x}), x - \bar{x})\rangle\,dt \leq - \int_{0}^{1}\langle\nabla f(\bar{x}), x - \bar{x}\rangle\,dt + \hdots$
         \item (continue from the previous equation) $\hdots \textcolor{red}{|}\int_{0}^{1}\langle\nabla f(\bar{x} + t(x - \bar{x}) - \nabla f(\bar{x}), x - \bar{x})\rangle\,dt\textcolor{red}{|}$
         
         should drop the absolute value sign
@@ -189,8 +186,9 @@
             &= \frac{L}{2}||x - \bar{x}||^2
         \end{align*}
         where in the original proof, there is an error at $\hdots \int_{0}^{1}\textcolor{red}{\frac{Lt}{2}}\hdots$
-        \item[6-10.] There are serveral errors in the last part of the proof. In addition to adding a half to $Lt$.
+        \item[5-10.] There are serveral errors in the last part of the proof. In addition to adding a half to $Lt$.
         The derivation also does not follow the correct steps of integration.
+        Item 3 and 4 above show the correct derivation and conclude the proof.
     \end{enumerate}
 \end{homeworkProblem}
 \begin{homeworkProblem}[2]
@@ -359,9 +357,15 @@
         \[
             \nabla L(u) = Q u + b = (A^\top A + \mu D^\top D)u - A^\top f
         \]
-        The step size for exact line search can be defined as:
+        We can find the optimal step size for exact line search by solving the following minimization problem:
         \[
-            \tau_k := \frac{\langle -\nabla L(u^{(k)}), b - Qu^{(k)}\rangle}{\langle-\nabla L(u^{(k)}), -Q\nabla L(u^{(k)})\rangle}\]
+            \underset{\tau_k > 0}{\min}\, L(u^{(k)} - \tau_k\nabla L(u^{(k)}))
+        \]
+        which is the derivation is similar to Exercise 1 in Assignment 2.
+        In the end, we get:
+        \[
+            \tau_k = \frac{\nabla L(u^{(k)})^\top \nabla L(u^{(k)})}{\nabla L(u^{(k)})^\top Q \nabla L(u^{(k)})}
+        \]
     \end{homeworkSubsection}
     \end{homeworkProblem}
 \end{document}
