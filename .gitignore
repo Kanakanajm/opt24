@@ -301,5 +301,5 @@ TSWLatexianTemp*
 #*Notes.bib
 
 # python
-env/
+.venv/
 __pycache__/
