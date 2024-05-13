@@ -163,6 +163,35 @@
 \pagebreak
 
 \begin{homeworkProblem}[1]
+    \begin{enumerate}
+        \item $f(x) - f(\bar{x}) = \int_{0}^{1}\langle\nabla f(\textcolor{red}{x}+ t(x - \bar{x}), x - \bar{x})\rangle\,dt$
+        
+        should be $f(x) - f(\bar{x}) = \int_{0}^{1}\langle\nabla f(\bar{x} + t(x - \bar{x}), x - \bar{x})\rangle\,dt$
+        \item $\int_{0}^{1}\langle\nabla f(\bar{x} + t(x - \bar{x}), x - \bar{x})\rangle\,dt \leq \textcolor{red}{\int_{0}^{1}\langle\nabla f(\bar{x}), x - \bar{x}\rangle\,dt} + \hdots$
+        
+        should be $\int_{0}^{1}\langle\nabla f(\bar{x} + t(x - \bar{x}), x - \bar{x})\rangle\,dt \leq - \int_{0}^{1}\langle\nabla f(\bar{x}), x - \bar{x}\rangle\,dt + \hdots$
+        \item (continue from the previous equation) $\hdots \textcolor{red}{|}\int_{0}^{1}\langle\nabla f(\bar{x} + t(x - \bar{x}) - \nabla f(\bar{x}), x - \bar{x})\rangle\,dt\textcolor{red}{|}$
+        
+        should drop the absolute value sign
+        \item The correct equation consists the previous three errors should be
+        \begin{align*}
+            &f(x) - f(\bar{x}) - \langle\nabla f(\bar{x}), x - \bar{x}\rangle\\
+            &= \int_{0}^{1}\langle\nabla f(\bar{x} + t(x - \bar{x}), x - \bar{x}) - \nabla f(\bar{x}), x - \bar{x}\rangle\,dt\\
+            &\leq \int_{0}^{1}||\nabla f(\bar{x} + t(x - \bar{x})) - \nabla f(\bar{x})||\,||x - \bar{x}||\,dt \tag*{Cauchy Schwarz Inequality}
+        \end{align*}
+        \item Continue with previous derivation we have
+        \begin{align*}
+            &\int_{0}^{1}||\nabla f(\bar{x} + t(x - \bar{x})) - \nabla f(\bar{x})||\,||x - \bar{x}||\,dt\\
+            &\leq \int_{0}^{1}L||\bar{x} + t(x - \bar{x}) - \bar{x}||\,||x - \bar{x}||\,dt \tag*{Lipschitz Continuous Gradient}\\
+            &= \int_{0}^{1}L||t(x - \bar{x})||\,||x - \bar{x}||\,dt\\
+            &= L||x - \bar{x}||^2\int_{0}^{1}t\,dt\\
+            &= L||x - \bar{x}||^2 (\frac{t^2}{2}\rvert_{0}^{1})\\
+            &= \frac{L}{2}||x - \bar{x}||^2
+        \end{align*}
+        where in the original proof, there is an error at $\hdots \int_{0}^{1}\textcolor{red}{\frac{Lt}{2}}\hdots$
+        \item[6-10.] There are serveral errors in the last part of the proof. In addition to adding a half to $Lt$.
+        The derivation also does not follow the correct steps of integration.
+    \end{enumerate}
 \end{homeworkProblem}
 \begin{homeworkProblem}[2]
     \begin{homeworkSubsection}{(a)}
@@ -330,6 +359,9 @@
         \[
             \nabla L(u) = Q u + b = (A^\top A + \mu D^\top D)u - A^\top f
         \]
+        The step size for exact line search can be defined as:
+        \[
+            \tau_k := \frac{\langle -\nabla L(u^{(k)}), b - Qu^{(k)}\rangle}{\langle-\nabla L(u^{(k)}), -Q\nabla L(u^{(k)})\rangle}\]
     \end{homeworkSubsection}
     \end{homeworkProblem}
 \end{document}
