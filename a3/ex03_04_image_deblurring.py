@@ -77,7 +77,6 @@ model = {
 ################################################################################
 ### Run Algorithms #############################################################
 from GradientDescent_ELS import gd as gd_els
-from ConjugateGradient import *
 
 
 # general parameter
@@ -98,7 +97,6 @@ nams = [];
 
 # turn algorithms to be run on or off
 run_gd_els           = 1;    # Gradient Descent with ELS
-run_cg               = 1     # Conjugate Gradient Method
 
 ################################################################################
 
@@ -131,31 +129,6 @@ if run_gd_els:
 
 
 ################################################################################
-if run_cg: 
-    
-    print('');
-    print('********************************************************************************');
-    print('*** Conjugate Gradient ***');
-    print('**************************');
-
-    options = {
-        'init':           x0,
-        'orig':           b,
-        'storeResidual':  True,
-        'storeTime':      True,
-        'storePsnrs':      True,
-    }
-    
-    output = cg(model, options,  maxiter, check);
-    xs.append(output['sol']);
-    rs.append(output['seq_res']);
-    ts.append(output['seq_time']);
-    psnrs.append(output['seq_psnr']);
-    cols.append((0.8,0.6,0,1));
-    legs.append('CG');
-    nams.append('CG');
-
-    mpimg.imsave("deblurred_image_cg.png", output['sol'].reshape(ny,nx), cmap=plt.cm.gray);
 
 
 
