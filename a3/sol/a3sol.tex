@@ -351,7 +351,7 @@
         \begin{align*}
             L(u) &= \frac{1}{2}||\tilde{A}u-\tilde{f}||^2\\
             &= \frac{1}{2}||\tilde{A}u||^2 - \tilde{f}^\top\tilde{A}u + \frac{1}{2}||\tilde{f}||^2\\
-            &= \frac{1}{2}\langle u, \tilde{A} u\rangle + \langle -A^\top f, u\rangle + \frac{1}{2}||f||^2\\
+            &= \frac{1}{2}\langle u, \tilde{A}^\top \tilde{A} u\rangle + \langle -A^\top f, u\rangle + \frac{1}{2}||f||^2\\
         \end{align*}
         with corresponding standard form $L(u) = \frac{1}{2}\langle u, Q u\rangle + \langle b, u\rangle + c$ where
          $Q = \tilde{A}^\top\tilde{A} = A^\top A + \mu D^\top D$, $b =  -A^\top f$ and $c = \frac{1}{2}||f||^2$
