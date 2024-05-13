@@ -291,5 +291,31 @@
         \end{align*}
     \end{homeworkSubsection}
 \end{homeworkProblem}
+\begin{homeworkProblem}
+    \begin{homeworkSubsection}{(a)}
+        Define $\tilde{A}$ and $\tilde{f}$ accordingly:
+        \[
+            \tilde{A} = \begin{pmatrix}
+                A\\
+                \sqrt{\mu}D
+            \end{pmatrix},\quad
+            \tilde{f} = \begin{pmatrix}
+                f\\
+                0
+            \end{pmatrix}
+            \tag*{Note the $0$ in $\tilde{f}$ denotes a zero vector in $\mathbb{R}^{2N}$}
+        \]
+        where $\tilde{A}\in\mathbb{R}^{3N\times N}$ and $\tilde{f}\in\mathbb{R}^{3N}$.
 
+        We can verify that the reconstruction is equivalent to the original problem.
+        \begin{align*}
+            \frac{1}{2}||\tilde{A}u-\tilde{f}||^2
+            &= \frac{1}{2}(||\tilde{A}u||^2 - 2(\tilde{A}u)^\top\tilde{f} + ||\tilde{f}||^2)\\
+            &= \frac{1}{2}(||Au||^2 + ||\sqrt{\mu}Du||^2 - 2(Au)^\top f + ||f||^2 + 0)\\
+            &= \frac{1}{2}(||Au||^2 + \mu||Du||^2 - 2(Au)^\top f + ||f||^2)\\
+            &= \frac{1}{2}(||Au||^2 - 2(Au)^\top f + ||f||^2) + \frac{\mu}{2}||Du||^2\\
+            &= \frac{1}{2}||Au - f||^2 + \frac{\mu}{2}||Du||^2\\
+        \end{align*}
+    \end{homeworkSubsection}
+\end{homeworkProblem}
 \end{document}
