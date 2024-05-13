@@ -38,7 +38,7 @@ k = 10;
 s = 2*k+1;
 filter = np.zeros((s,s));
 
-filter_img = mpimg.imread("filter.png");
+filter_img = mpimg.imread("data/filter.png");
 s = np.shape(filter_img)[0];
 filter = filter_img/np.sum(filter_img);
 
@@ -70,6 +70,7 @@ model = {
          'A':     A,
          'K':     K,
          'b':     b,
+         'N':    N,
          'mu':      mu,
         }
 
@@ -168,4 +169,5 @@ r_2_main = xs[1].reshape(ny,nx)
 ax[3].imshow(r_2_main, cmap=plt.cm.gray)
 ax[3].set_title('Deblurred Image - CG')
 
-plt.show();
+# plt.show();
+plt.savefig('plot.png')

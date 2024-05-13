@@ -48,14 +48,18 @@ def gd(model, options,  maxiter, check):
 
     A = model['A'] #example
     K = model['K'] 
-    b = model['b']
+    # b = model['b'] # extra
     mu = model['mu']
     N = model['N']
-   
+
 
     # initialization
     x_kp1 = options['init'];
     x_bar = options['orig'];
+
+
+    Q = A.T @ A + mu * K.T @ K
+    b = - A.T @ x_bar 
 
     def fun_val_main(x):
         # 0.5*|Ax-x_bar|_2^2 + 0.5*mu*|K*x|_{2}^2 
@@ -65,6 +69,9 @@ def gd(model, options,  maxiter, check):
         # 10*log(255**2/MSE)
         # MSE = 1/N * |x-x_bar|_2^2
         return np.linalg.norm(x - x_bar)**2 / N
+    
+    def grad(x):
+        return Q @ x + b
 
     fun_val = fun_val_main(x_kp1)
     psnr_val = psnr_val_main(x_kp1)
@@ -89,21 +96,23 @@ def gd(model, options,  maxiter, check):
     for iter in range(1,maxiter+1):
         
         stime = clock.time();
-        
+        x_k = x_kp1.copy()
+
         #TODO: update variables
 
+
         #TODO: compute gradient
-       
+        grad_k = grad(x_k)
+
 
         #todo: compute step size
-
+        tau_k = np.dot(grad_k, grad_k) / np.dot(grad_k, Q @ grad_k)
         
         #todo: gradient descent step
+        x_kp1 = x_k - tau_k * grad_k
 
-        fun_val = #todo: compute the current function value (use helper function)
-
-        psnr_val = #todo: compute the psnr value
-
+        fun_val = fun_val_main(x_kp1)
+        psnr_val = psnr_val_main(x_kp1)
         
 
         # tape residual
@@ -119,7 +128,7 @@ def gd(model, options,  maxiter, check):
 
         # print info
         if (iter % check == 0):
-            print('iter: %d, time: %5f, tau: %f, psnr: %f, fun: %f' % (iter, time, tau, psnr_val, fun_val));
+            print('iter: %d, time: %5f, tau: %f, psnr: %f, fun: %f' % (iter, time, tau_k, psnr_val, fun_val));
 
 
     # return results
