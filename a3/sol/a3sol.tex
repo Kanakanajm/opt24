@@ -317,5 +317,19 @@
             &= \frac{1}{2}||Au - f||^2 + \frac{\mu}{2}||Du||^2\\
         \end{align*}
     \end{homeworkSubsection}
-\end{homeworkProblem}
+    \begin{homeworkSubsection}{(b)}
+        We have the following objective function:
+        \begin{align*}
+            L(u) &= \frac{1}{2}||\tilde{A}u-\tilde{f}||^2\\
+            &= \frac{1}{2}||\tilde{A}u||^2 - \tilde{f}^\top\tilde{A}u + \frac{1}{2}||\tilde{f}||^2\\
+            &= \frac{1}{2}\langle u, \tilde{A} u\rangle + \langle -A^\top f, u\rangle + \frac{1}{2}||f||^2\\
+        \end{align*}
+        with corresponding standard form $L(u) = \frac{1}{2}\langle u, Q u\rangle + \langle b, u\rangle + c$ where
+         $Q = \tilde{A}^\top\tilde{A} = A^\top A + \mu D^\top D$, $b =  -A^\top f$ and $c = \frac{1}{2}||f||^2$
+        and its gradient:
+        \[
+            \nabla L(u) = Q u + b = (A^\top A + \mu D^\top D)u - A^\top f
+        \]
+    \end{homeworkSubsection}
+    \end{homeworkProblem}
 \end{document}
