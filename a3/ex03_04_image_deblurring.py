@@ -62,7 +62,7 @@ mpimg.imsave(filename + "blurry.png", b.reshape(ny,nx), cmap=plt.cm.gray);
 
 K = make_derivatives2D(ny, nx); # forward-difference operator
 
-mu = 0.5; #todo: try the vary the regularization parameter.
+mu = 0.001; #changeme: try the vary the regularization parameter.
 
 
 # specify model data
@@ -121,7 +121,8 @@ if run_gd_els:
     rs.append(output['seq_res']);
     ts.append(output['seq_time']);
     psnrs.append(output['seq_psnr']);
-    cols.append((0.5,0,0.5,1));
+    cols.append((0.5,0,0.5,1))
+    cols.append((1,0,0,1))
     legs.append('GD-ELS');
     nams.append('GD-ELS');
 
@@ -133,41 +134,49 @@ if run_gd_els:
 
 
 
-fig = plt.figure();
-j = 0;
-for i in range(2):
-    plt.plot(rs[i], '-', color=cols[i], linewidth=2);
+# fig = plt.figure();
+# j = 0;
+# for i in range(2):
+#     plt.plot(rs[i], '-', color=cols[i], linewidth=2);
+
+plt.plot(range(maxiter+1), rs[0])
 plt.legend(legs);
 plt.xlabel('Iterations');
 plt.ylabel('Function value');
 plt.title('Function vs Iterations');
 
-plt.show(block=False);
+# plt.show(block=False);
+plt.savefig('function_val_plot.png')
 
 
 
 
 
-fig3, ax = plt.subplots(nrows=1, ncols=4, figsize=(12, 8))
+fig3, ax = plt.subplots(nrows=2, ncols=2)
 
-for a in ax:
-    a.axis('off')
+# for a in ax:
+#     a.axis('off')
 
 img_main = img.reshape(ny,nx) 
-ax[0].imshow(img_main, cmap=plt.cm.gray)
-ax[0].set_title('Original Image')
+ax[0, 0].imshow(img_main, cmap=plt.cm.gray)
+ax[0, 0].set_title('Original Image')
+ax[0, 0].axis('off')
 
 b_main = b.reshape(ny,nx)
-ax[1].imshow(b_main, cmap=plt.cm.gray)
-ax[1].set_title('Blurred Image')
+ax[0, 1].imshow(b_main, cmap=plt.cm.gray)
+ax[0, 1].set_title('Blurred Image')
+ax[0, 1].axis('off')
 
 r_1_main = xs[0].reshape(ny,nx) 
-ax[2].imshow(r_1_main, cmap=plt.cm.gray)
-ax[2].set_title('Deblurred Image - ELS')
+ax[1, 0].imshow(r_1_main, cmap=plt.cm.gray)
+ax[1, 0].set_title('Deblurred Image - ELS')
+ax[1, 0].axis('off')
 
-r_2_main = xs[1].reshape(ny,nx) 
-ax[3].imshow(r_2_main, cmap=plt.cm.gray)
-ax[3].set_title('Deblurred Image - CG')
+ax[1, 1].axis('off')
 
+# r_2_main = xs[1].reshape(ny,nx) 
+# ax[3].imshow(r_2_main, cmap=plt.cm.gray)
+# ax[3].set_title('Deblurred Image - CG')
+plt.tight_layout()
 # plt.show();
-plt.savefig('plot.png')
+plt.savefig('img_plot.png')
