@@ -234,4 +234,24 @@
         \frac{4}{\sqrt{17}}
     \end{pmatrix}$.
 \end{homeworkProblem}
+\begin{homeworkProblem}
+    $(\lambda, v)$ is an eigen pair of $M^{-1}A$ i.e.
+    \begin{align*}
+        M^{-1}Av &= \lambda v\\
+        MM^{-1}Av &= \lambda Mv\\
+        IAv &= \lambda Mv\\
+        Av &= \lambda EE^\top v\\
+        E^{-1}Av &= \lambda E^{-1}EE^\top v\\
+        E^{-1}Av &= \lambda IE^\top v\\
+        E^{-1}Av &= \lambda E^\top v\\
+    \end{align*}
+    Let $\hat{v} = E^\top v$ which $v = E^{-\top}\hat{v}$.
+    Subsititue $v$ in the above equation, we have
+    \begin{align*}
+        E^{-1}AE^{-\top}\hat{v} &= \lambda E^\top E^{-\top}\hat{v}\\
+        E^{-1}AE^{-\top}\hat{v} &= \lambda I\hat{v}\\
+        E^{-1}AE^{-\top}\hat{v} &= \lambda \hat{v}\\
+    \end{align*}
+    Therefore, $(\lambda, \hat{v})$ is an eigen pair of $E^{-1}AE^{-\top}$.
+\end{homeworkProblem}
 \end{document}
