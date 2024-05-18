@@ -54,14 +54,14 @@
 %
 
 \newcommand{\enterProblemHeader}[1]{
-    \nobreak\extramarks{}{Exercise \arabic{#1} continued on next page\ldots}\nobreak{}
-    \nobreak\extramarks{Exercise \arabic{#1} (continued)}{Exercise \arabic{#1} continued on next page\ldots}\nobreak{}
+\nobreak\extramarks{}{Exercise \arabic{#1} continued on next page\ldots}\nobreak{}
+\nobreak\extramarks{Exercise \arabic{#1} (continued)}{Exercise \arabic{#1} continued on next page\ldots}\nobreak{}
 }
 
 \newcommand{\exitProblemHeader}[1]{
-    \nobreak\extramarks{Exercise \arabic{#1} (continued)}{Exercise \arabic{#1} continued on next page\ldots}\nobreak{}
-    \stepcounter{#1}
-    \nobreak\extramarks{Exercise \arabic{#1}}{}\nobreak{}
+\nobreak\extramarks{Exercise \arabic{#1} (continued)}{Exercise \arabic{#1} continued on next page\ldots}\nobreak{}
+\stepcounter{#1}
+\nobreak\extramarks{Exercise \arabic{#1}}{}\nobreak{}
 }
 
 \setcounter{secnumdepth}{0}
@@ -79,14 +79,14 @@
 % example.
 %
 \newenvironment{homeworkProblem}[1][-1]{
-    \ifnum#1>0
-        \setcounter{homeworkProblemCounter}{#1}
-    \fi
-    \section{Exercise \arabic{homeworkProblemCounter}}
-    \setcounter{partCounter}{1}
-    \enterProblemHeader{homeworkProblemCounter}
+\ifnum#1>0
+\setcounter{homeworkProblemCounter}{#1}
+\fi
+\section{Exercise \arabic{homeworkProblemCounter}}
+\setcounter{partCounter}{1}
+\enterProblemHeader{homeworkProblemCounter}
 }{
-    \exitProblemHeader{homeworkProblemCounter}
+\exitProblemHeader{homeworkProblemCounter}
 }
 
 %
@@ -109,10 +109,10 @@
 %
 
 \title{
-    \vspace{2in}
-    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
-    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
-    \vspace{3in}
+\vspace{2in}
+\textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+\normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+\vspace{3in}
 }
 
 \author{\hmwkAuthorName}
@@ -150,10 +150,10 @@
 
 % Margined Homework Subsection
 \newenvironment{homeworkSubsection}[1]{%
-    \subsection*{#1}%
-    \begin{adjustwidth}{2.5em}{0pt}%
-}{%
-    \end{adjustwidth}%
+\subsection*{#1}%
+\begin{adjustwidth}{2.5em}{0pt}%
+    }{%
+\end{adjustwidth}%
 }
 
 \begin{document}
@@ -161,5 +161,77 @@
 \maketitle
 
 \pagebreak
-
+\begin{homeworkProblem}[1]
+    The objective function can be rewritten as:
+    \[
+        f(x) = \langle x, Qx\rangle
+    \]
+    where
+    \[
+        Q = \begin{pmatrix}
+            4 & -1\\
+            -1 & 1\\
+        \end{pmatrix}
+    \]
+    We can obtain $\tau_0$ by exact line search i.e. solving the following equation:
+    \begin{align*}
+        \frac{\partial f(x_0 + \tau_0 k_0)}{\partial \tau_0} &= 0\\
+        \langle d_0, \nabla f(x_0 + \tau_0 d_0)\rangle &= 0\\
+        \langle d_0, Q(x_0 + \tau_0 d_0)\rangle &= 0\\
+        \langle d_0, Qx_0\rangle + \tau_0\langle d_0, Qd_0\rangle &= 0\\
+        \tau_0 &= \frac{-\langle d_0, Qx_0\rangle}{\langle d_0, Qd_0\rangle} = \frac{3}{4}\\
+    \end{align*}
+    also
+    \[
+        x_1 = x_0 + \tau_0 d_0 = \begin{pmatrix}
+            -\frac{1}{4}\\
+            -1
+        \end{pmatrix}
+    \]
+    Note $Q \in \mathbb{S}_{++}(2)$ which can be shown by calculating the eigenvalues of $Q$.
+    \begin{align*}
+        \det(Q - \lambda I) &= 0\\
+        \det\begin{pmatrix}
+            4 - \lambda & -1\\
+            -1 & 1 - \lambda\\
+        \end{pmatrix} &= 0\\
+        (4 - \lambda)(1 - \lambda) - 1 &= 0\\
+        \lambda &= \frac{5 \pm \sqrt{13}}{2} > 0
+    \end{align*}
+    We can find an optimal solution by using the conjugate direction method
+    given two $Q$-conjugate directions $d_0$ and $d_1$
+    i.e. $\langle d_0, Qd_1\rangle = 0$. 
+    Let $d_1 = \begin{pmatrix}
+        a\\
+        b
+    \end{pmatrix}
+    $ we have
+    \begin{align*}
+        \begin{pmatrix}
+            a & b
+        \end{pmatrix}
+        \begin{pmatrix}
+            4 & -1\\
+            -1 & 1\\
+        \end{pmatrix}
+        \begin{pmatrix}
+            1\\
+            0    
+        \end{pmatrix} &= 0 \\
+        \begin{pmatrix}
+            a & b
+        \end{pmatrix}
+        \begin{pmatrix}
+            4\\
+            -1    
+        \end{pmatrix} &= 0 \\
+        4a &= b
+    \end{align*}
+    $d_1$ has unit length i.e. $a^2 + b^2 = 1$.
+    Therefore, $a = \frac{1}{\sqrt{17}}$ and $b = \frac{4}{\sqrt{17}}$.
+    We have $d_1 = \begin{pmatrix}
+        \frac{1}{\sqrt{17}}\\
+        \frac{4}{\sqrt{17}}
+    \end{pmatrix}$.
+\end{homeworkProblem}
 \end{document}
