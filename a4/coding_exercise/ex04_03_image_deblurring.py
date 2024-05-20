@@ -155,7 +155,7 @@ if run_exp == 1:
 if run_gd_0:
     # Without pre-conditioning
     # TODO: Compute the preconditioner here and assign it to P (Hint: trivial)
-    
+    P  = np.eye(N)
 
     model['P'] = P
 
@@ -185,12 +185,13 @@ if run_gd_0:
                      output['sol'].reshape(ny, nx), cmap=plt.cm.gray)
 
 ################################################################################
-
+Q = A.T @ A + mu * K.T @ K
 if run_gd_1:
     # With Jacobi pre-conditioning
  
     #TODO: Compute the Jacobi pre-conditioner and assign it to variable P.
-    
+    # P_ii = 1/sqrt(Q_ii)
+    P = np.diag(1/np.sqrt(np.diag(Q.toarray())))
     
     model['P'] = P
 
@@ -227,7 +228,8 @@ if run_gd_2:
     # You may use np.linalg.cholesky to compute cholesky decomposition, which you need to convert the involved matrices to dense format.
     # You may use sparse.csr_matrix to convert a dense matrix to sparse csr matrix.
 
-
+    L = np.linalg.cholesky(sparse.csr_matrix(Q).toarray())
+    P = np.linalg.inv(L).T
 
     model['P'] = P
 
@@ -261,6 +263,7 @@ if run_cg_0:
     # Without pre-conditioning
     # TODO: Compute the preconditioner here and assign it to P (Hint: trivial)
 
+    P  = np.eye(N)
     model['P'] = P
 
     print('')
@@ -292,7 +295,7 @@ if run_cg_0:
 
 if run_exp == 0:
     print('===============================================================')
-    for i in range(7):
+    for i in range(4): # TYPO: range(3) instead of range(7)
         print(legs[i] + ':' + str(rs[i][-1]))
         print('----------------------------------')
 
@@ -308,16 +311,16 @@ if run_exp == 0:
 
 
     # Plotting Conjugate Gradient Methods
-    plt.show(block=False)
+    # plt.show(block=False)
 
-    fig = plt.figure()
-    j = 0
-    for i in range(3, 6):
+    # fig = plt.figure()
+    # j = 0
+    for i in range(3, 4):
         plt.loglog(rs[i], '-', color=cols[i], linewidth=2)
-    plt.legend(legs[3:6])
+    plt.legend(legs[3: 4])
     plt.xlabel('Iterations')
     plt.ylabel('Function value')
     plt.title('Function vs Iterations')
 
     plt.show(block=False)
-
+    input()

@@ -40,32 +40,40 @@ def cg(model, options, maxiter, check):
     if 'storePsnrs'    not in options:
         options['storePsnrs']    = False;
 
-    #TODO: load all the model parameters 
+    # load all the model parameters 
 
     A = model['A'] # example
+    K = model['K']
+    b = model['b']
+    mu = model['mu']
+    img_size = model['img_size']
+    run_exp = model['run_exp']
+    P = model['P']
 
+    Q = A.T @ A + mu * K.T @ K
+    bprime = -A.T @ b
+    N = img_size
 
-
+    grad = lambda x: Q @ x + bprime
     # initialization
     x_kp1 = options['init'];
     x_bar = options['orig']; #x_bar is the noisy blurry image
 
     def fun_val_main(x):
-        # TODO: Create  a helper function which computes the value 
+        # Create a helper function which computes the value 
         # 0.5*|Ax-z|_2^2 + 0.5*mu*|K*x|_{2}^2 
-        return 
-
+        return 0.5 * np.linalg.norm(A @ x - x_bar)**2 + 0.5 * mu * np.linalg.norm(K @ x)**2 
 
     
-    grad_k = #TODO: compute gradient
+    grad_k = grad(x_kp1) # compute gradient
 
     # some example computations (feel free to modify)
-    r_kp1 = -(grad_k);
-    d_kp1 = r_kp1;
-    rr_kp1 = np.dot(r_kp1,r_kp1);
+    r_kp1 = grad_k;
+    d_kp1 = -r_kp1;
 
-    psnr_val = #TODO: compute psnr value x_kp1 with respect to x_bar
-    fun_val =  #TODO: compute the function value (use the helper function)
+    psnr = lambda x: np.linalg.norm(x - x_bar)**2 / img_size
+    psnr_val = psnr(x_kp1) # compute psnr value x_kp1 with respect to x_bar
+    fun_val =  fun_val_main(x_kp1) # compute the function value (use the helper function)
 
     # recording 
     if options['storeResidual'] == True:
@@ -88,14 +96,24 @@ def cg(model, options, maxiter, check):
         stime = clock.time();
         
         # TODO: update variables
-        
+        x_k = x_kp1.copy()
+        d_k = d_kp1.copy()
+        r_k = r_kp1.copy()
+
+
 
         #TODO: update steps of conjugate gradient method
+        tau_k = np.dot(r_k, r_k) / np.dot(d_k, Q @ d_k)
+        x_kp1 = x_k + tau_k * d_k
+
+        r_kp1 = r_k + tau_k * Q @ d_k
+        beta_kp1 = np.dot(r_kp1, r_kp1) / np.dot(r_k, r_k)
+        d_kp1 = -r_kp1 + beta_kp1 * d_k
         
 
 
-        fun_val = #TODO: compute function value (with helper function)
-        psnr_val = #TODO: compute function value (with helper function)
+        fun_val = psnr(x_kp1) # compute function value (with helper function)
+        psnr_val = fun_val =  fun_val_main(x_kp1) # compute function value (with helper function)
 
         # tape residual
         time = time + (clock.time() - stime);
