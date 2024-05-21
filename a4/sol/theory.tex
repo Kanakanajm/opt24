@@ -254,4 +254,30 @@
     \end{align*}
     Therefore, $(\lambda, \hat{v})$ is an eigen pair of $E^{-1}AE^{-\top}$.
 \end{homeworkProblem}
+\begin{homeworkProblem}[3]
+    \textbf{Proof by Induction}
+
+    \textbf{Base Case:} $n = 1$
+
+    $d^{(0)} = -r^{(0)}$ thus $\mathrm{span}\,(d^{(0)}) = \mathrm{span}\,(r^{(0)})$
+    
+    \textbf{Induction Hypothesis:}
+
+    Now suppose the statement is true for $n = k$
+    i.e. $\mathrm{span}\,(d^{(0)}, \ldots, d^{(k-1)}) = \mathrm{span}\,(r^{(0)}, \ldots, r^{(k-1)})$\\
+    \textbf{Inductive Step:}
+
+    We want to show that the statement is true for $n = k + 1$. 
+    We know that $d^{(k)} = -r^{(k)} + \frac{\langle r^{(k)}, r^{(k)}\rangle}{\langle r^{(k-1)}, r^{(k-1)}\rangle}d^{(k-1)}$
+    Take $v \in \mathrm{span}\,(d^{(0)}, \ldots, d^{(k)})$ then we have $v = \sum_{i=0}^{k}c_id^{(i)}$ for some $c_i$.
+    \begin{align*}
+        v &= \sum_{i=0}^{k}c_id^{(i)}\\
+        &= \sum_{i=0}^{k-1}c_id^{(i)} + c_kd^{(k)}\\
+        &= \sum_{i=0}^{k-1}c_id^{(i)} + c_k\left(-r^{(k)} + \frac{\langle r^{(k)}, r^{(k)}\rangle}{\langle r^{(k-1)}, r^{(k-1)}\rangle}d^{(k-1)}\right)\\
+        &= \sum_{i=0}^{k-2}c_id^{(i)} + \left(c_{k-1} + \frac{\langle r^{(k)}, r^{(k)}\rangle}{\langle r^{(k-1)}, r^{(k-1)}\rangle}\right)d^{(k-1)} - c_kr^{(k)}\\
+    \end{align*}
+    The first two term can be seen as a linear combination of $d^{(0)}, \ldots, d^{(k-1)}$
+    which is the same as a linear combination of $r^{(0)}, \ldots, r^{(k-1)}$ by the induction hypothesis.
+    Together with the last term we have that $v$ is a linear combination of $r^{(0)}, \ldots, r^{(k)}$.
+\end{homeworkProblem}
 \end{document}
