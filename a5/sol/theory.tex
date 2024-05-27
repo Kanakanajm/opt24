@@ -281,4 +281,79 @@
     \end{align*}
     by setting parentheses as above, only matrix vector multiplications are evaluated.
 \end{homeworkProblem}
+\begin{homeworkProblem}[4]
+    \begin{homeworkSubsection}{(a)}
+        \[
+            \nabla g(z) = A^\top \nabla f(x)
+        \]
+        \[
+            \nabla^2 g(z) = A^\top \nabla^2 f(x) A
+        \]
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(b)}
+        Apply Newton's method to $g(z)$:
+        \begin{align*}
+            z^{(k+1)} &= z^{(k)} - (\nabla^2 g(z^{(k)}))^{-1} \nabla g(z^{(k)}) \\
+            &= z^{(k)} - (A^\top \nabla^2 f(x) A)^{-1} A^\top \nabla f(x) \\
+            &= z^{(k)} - A^{-1} \nabla^2 f(x)^{-1} A^{-\top} A^\top \nabla f(x) \\
+            &= z^{(k)} - A^{-1} \nabla^2 f(x)^{-1} \nabla f(x) \\
+        \end{align*}
+        We have such identity
+        \begin{align*}
+            x^{(k+1)} &= Az^{(k+1)}+b\\
+            &= A\left(z^{(k)} - A^{-1} \nabla^2 f(x)^{-1} \nabla f(x)\right) + b\\
+            &= Az^{(k)} - AA^{-1} \nabla^2 f(x)^{-1} \nabla f(x) + b\\
+            &= Az^{(k)} + b - \nabla^2 f(x)^{-1} \nabla f(x)\\
+            &= x^{(k)} - \nabla^2 f(x)^{-1} \nabla f(x)\\
+        \end{align*}
+        which is the same as applying Newton's method to $f(x)$.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(c)}
+        Apply BFGS to $g(z)$:
+        In case of $k = 0$, we have
+        \begin{align*}
+            z^{(1)} &= z^{(0)} - \tilde{H}_0\nabla g(z^{(0)})\\
+            &= z^{(0)} - \tilde{H}_0 A^\top \nabla f(x)\\
+            &= z^{(0)} - A^{-1} H_0 \nabla f(x) \tag*{$H_0 = A\tilde{H}_0A^\top$}\\
+        \end{align*}
+        now we have 
+        \begin{align*}
+            x^{(1)} &= Az^{(1)} + b\\
+            &= A\left(z^{(0)} - A^{-1} H_0 \nabla f(x)\right) + b\\
+            &= Az^{(0)} - AA^{-1} H_0 \nabla f(x) + b\\
+            &= Az^{(0)} + b - H_0 \nabla f(x)\\
+            &= x^{(0)} - H_0 \nabla f(x)\\
+        \end{align*}
+        {\bf Induction hypothesis:} assume $x^{(k)} = x^{(k-1)} - H_{(k-1)}\nabla f(x)$ 
+        We want to show it is also the case for $x^{(k+1)}$.
+
+        {\bf Inductive step:}
+        we have such identity
+        \begin{align*}
+            s^{(k)} &= x^{(k+1)} - x^{(k)} = A(z^{(k+1)} - z^{(k)}) = A\tilde{s}^{(k)} \tag*{where $z^{(k+1)} - z^{(k)}$}\\
+            y^{(k)} &= \nabla g(z^{(k+1)}) - \nabla g(z^{(k)}) = A^\top \nabla f(x^{(k+1)}) - A^\top \nabla f(x^{(k)}) = A^\top \tilde{y}^{(k)} \tag*{where $\nabla f(x^{(k+1)}) - \nabla f(x^{(k)})$}
+        \end{align*}
+        We can try to show this identity holds: $H_k = A\tilde{H}_kA^\top$.
+        \begin{align*}
+            H_1 &= (I - \rho_0 s^{(0)}(y^{(0)})^\top) H_0 (I - \rho_0 y^{(0)}(s^{(0)})^\top) + \rho_0 s^{(0)}(s^{(0)})^\top\\
+            &= (I - \rho_0 s^{(0)}(y^{(0)})^\top) A\tilde{H}_0A^\top(I - \rho_0 y^{(0)}(s^{(0)})^\top) + \rho_0 s^{(0)}(s^{(0)})^\top\\
+            &= A (I - \rho_0 A\tilde{s}^{(0)}(A^\top \tilde{y}^{(0)})^\top) \tilde{H}_0(I - \rho_0 A^\top \tilde{y}^{(0)}(A\tilde{s}^{(0)})^\top)A^\top + \rho_0 A\tilde{s}^{(0)}(A\tilde{s}^{(0)})^\top\\
+            &= A (I - \rho_0 A\tilde{s}^{(0)}(A^\top \tilde{y}^{(0)})^\top) \tilde{H}_0(I - \rho_0 A^\top \tilde{y}^{(0)}(A\tilde{s}^{(0)})^\top)A^\top + \rho_0 A\tilde{s}^{(0)}(\tilde{s}^{(0)})^\top A^\top\\
+        \end{align*}
+        We have the update formular for $z^{(k+1)}$
+        \begin{align*}
+            z^{(k+1)} &= z^{(k)} - \tilde{H}_k\nabla g(z^{(k)})\\
+            &= z^{(k)} - \tilde{H}_k A^\top \nabla f(x)\\
+            &= z^{(k)} - A^{-1} H_k \nabla f(x)\\
+        \end{align*}
+        Now we have
+        \begin{align*}
+            x^{(k+1)} &= Az^{(k+1)} + b\\
+            &= A\left(z^{(k)} - A^{-1} H_k \nabla f(x)\right) + b\\
+            &= Az^{(k)} - AA^{-1} H_k \nabla f(x) + b\\
+            &= Az^{(k)} + b - H_k \nabla f(x)\\
+            &= x^{(k)} - H_k \nabla f(x)\\
+        \end{align*}
+    \end{homeworkSubsection}
+\end{homeworkProblem}
 \end{document}
