@@ -162,4 +162,17 @@
 
 \pagebreak
 
+\begin{homeworkProblem}[1]
+    Consider quadratic function $f(x) = \frac{1}{2}x^\top Qx + b^\top x$
+    where $Q$ is a symmetric positive definite matrix.
+    Using Newton's method we obtain
+    \begin{align*}
+        x^{(1)} &= x^{(0)} - (\nabla^2f(x^{(0)}))^{-1}\,\nabla f(x^{(0)}) \\
+        &= x^{(0)} - Q^{-1}(Qx^{(0)} + b) \\
+        &= x^{(0)} - Q^{-1}Qx^{(0)} + Q^{-1}b \\
+        &= x^{(0)} - x^{(0)} + Q^{-1}b \\
+        &= Q^{-1}b \\
+    \end{align*}
+    $\nabla f(x^{(1)}) = -QQ^{-1}b +b = 0 \Rightarrow x^{(1)}$ is the global minimizer
+\end{homeworkProblem}
 \end{document}
