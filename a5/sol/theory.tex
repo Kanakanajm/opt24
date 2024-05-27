@@ -175,4 +175,96 @@
     \end{align*}
     $\nabla f(x^{(1)}) = -QQ^{-1}b +b = 0 \Rightarrow x^{(1)}$ is the global minimizer
 \end{homeworkProblem}
+
+\begin{homeworkProblem}[2]
+    \begin{homeworkSubsection}{(a)}
+        $Q \in \mathbb{S}_{++}(n)$ with eigenvectors $(v_1, \ldots, v_n)$.
+        We want to show $v_i^\top Qv_j = 0$ for any $i \neq j$.
+        We know $Q = U\Lambda U^\top$ where
+        \[
+            U = \begin{pmatrix}
+                \mid &  & \mid \\
+                v_{1} & \cdots & v_{n}\\
+                \mid & & \mid \\
+            \end{pmatrix}
+        \]
+        $U$ is an orthogonal matrix i.e. $UU^\top = I$.
+
+        For any $i \neq j$, we have
+        \begin{align*}
+            v_i^\top Qv_j &= v_i^\top U\Lambda U^\top v_j \\
+            &= v_i^\top \begin{pmatrix}
+                \mid &  & \mid \\
+                v_{1} & \cdots & v_{n}\\
+                \mid & & \mid \\
+            \end{pmatrix}
+            \begin{pmatrix}
+                \lambda_1 & & 0 \\
+                & \ddots & \\
+                0 & & \lambda_n \\
+            \end{pmatrix}
+            \begin{pmatrix}
+                \mid &  & \mid \\
+                v_{1} & \cdots & v_{n}\\
+                \mid & & \mid \\
+            \end{pmatrix}^\top v_j \\
+            &= \begin{pmatrix}
+                0 & \cdots & v_i^\top v_i & \cdots & 0
+            \end{pmatrix}
+            \begin{pmatrix}
+                \lambda_1 & & 0 \\
+                & \ddots & \\
+                0 & & \lambda_n \\
+            \end{pmatrix}
+            \begin{pmatrix}
+                0 \\
+                \vdots \\
+                v_j^\top v_j \\
+                \vdots \\
+                0
+            \end{pmatrix} \\
+            &= \begin{pmatrix}
+                0 & \cdots & \lambda_i v_i^\top v_i & \cdots & 0
+            \end{pmatrix}
+            \begin{pmatrix}
+                0 \\
+                \vdots \\
+                v_j^\top v_j \\
+                \vdots \\
+                0
+            \end{pmatrix} \\
+            &= 0
+        \end{align*}
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(b)}
+        $\{d^{(0)}, \cdots, d^{(k)}\}$ are conjugate directions w.r.t. $Q$.
+        We have $d_i^\top Qd_j = 0$ for any $i \neq j$.
+
+        {\bf Proof by Contradiction:}
+
+        Assume that $\{d^{(0)}, \cdots, d^{(k)}\}$ is not a linearly independent set.
+        Then there exists a non-zero vector $d_j$ such that $d_j$ can be expressed as a linear combination of some other vectors in the set
+        i.e. $d_j = \sum_{i \neq j} \delta_i d_i$. 
+        Take $d_m$ that is part of the linear combination. We have
+        \begin{align*}
+            d_j^\top Qd_m &= \left(\sum_{i \neq j} \delta_i d_i\right)^\top Qd_m \\
+            &= \delta_m d_m^\top Qd_m + \left(\sum_{i \neq j, i \neq m} \delta_i d_i\right)^\top Qd_m \\
+            &= \delta_m d_m^\top Qd_m \tag*{Property of Conjugate Directions} \\
+            &\neq 0 \tag*{$Q \in \mathbb{S}_{++}(n)$} \\
+        \end{align*}
+        which is a contradiction.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(c)}
+        \begin{align*}
+            \langle d^{(i)}, \nabla f(x^{(k)}) \rangle &= \langle d^{(i)}, Q x^{(k)} - b \rangle\\
+            &= \langle Qx^{(k)}, d^{(i)} \rangle - \langle b, d^{(i)} \rangle\\
+            &= \langle Q\left( x^{(i+1)} + \sum_{j=i+1}^{k-1} \tau_j d^{(j)}\right), d^{(i)} \rangle - \langle b, d^{(i)} \rangle\\
+            &= \langle Qx^{(i+1)} , d^{(i)} \rangle + \sum_{j=i+1}^{k-1} \langle \tau_j d^{(j)}, Qd^{(i)} \rangle - \langle b, d^{(i)} \rangle\\
+            &= \langle Qx^{(i+1)} , d^{(i)} \rangle - \langle b, d^{(i)} \rangle \tag*{Property of Conjugate Directions}\\
+            &= \langle Qx^{(i+1)} - b , d^{(i)} \rangle \\
+            &= \langle  \nabla f(x^{(i+1)}), d^{(i)} \rangle \\
+            &= 0 \tag*{Exact line search optimal condition} \\
+        \end{align*}
+    \end{homeworkSubsection}
+\end{homeworkProblem}
 \end{document}
