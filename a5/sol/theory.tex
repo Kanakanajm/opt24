@@ -268,4 +268,17 @@
         \end{align*}
     \end{homeworkSubsection}
 \end{homeworkProblem}
+\begin{homeworkProblem}[3]
+    We expand the BFGS update formula:
+    \begin{align*}
+        H_{k+1} &= (I - \rho_k s^{(k)}(y^{(k)})^\top) H_k (I - \rho_k y^{(k)}(s^{(k)})^\top) + \rho_k s^{(k)}(s^{(k)})^\top\\
+        &= (H_k  - \rho_k s^{(k)}(y^{(k)})^\top H_k)(I - \rho_k y^{(k)}(s^{(k)})^\top) + \rho_k s^{(k)}(s^{(k)})^\top\\
+        &= H_k 
+        - \rho_k\left(H_k y^{(k)}\right)(s^{(k)})^\top
+        - \rho_k s^{(k)}\left((y^{(k)})^\top H_k\right)
+        + \rho_k^2  y^{(k)}(s^{(k)})^\top \left(\left(H_k y^{(k)}\right)(s^{(k)})^\top\right)
+        + \rho_k s^{(k)}(s^{(k)})^\top\\
+    \end{align*}
+    by setting parentheses as above, only matrix vector multiplications are evaluated.
+\end{homeworkProblem}
 \end{document}
