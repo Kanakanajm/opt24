@@ -59,6 +59,13 @@ def newton(model, options,  maxiter, check):
     img_size = model['img_size']
     run_exp = model['run_exp']
 
+    Q = A.T @ A + mu * K.T @ K
+    Q_inv = np.linalg.inv(Q.toarray())
+    bprime = -A.T @ b
+    N = img_size
+    grad = lambda x: Q @ x + bprime
+
+
     # initialization
     x_kp1 = options['init']
     x_bar = options['orig']
@@ -66,7 +73,7 @@ def newton(model, options,  maxiter, check):
     def fun_val_main(x):
         # todo: create a helper function to compute the function value
         #  0.5*|Ax-x_bar|_2^2 + 0.5*mu*|K*x|_{2}^2
-        return  # todo
+        return 0.5 * np.linalg.norm(A @ x - x_bar)**2 + 0.5 * mu * np.linalg.norm(K @ x)**2
 
     fun_val = fun_val_main(x_kp1)
 
@@ -88,16 +95,18 @@ def newton(model, options,  maxiter, check):
         stime = clock.time()
 
         # todo: update variables
+        x_k = x_kp1.copy()
 
         # todo: compute gradient
-        
-        # todo: compute step size
+        grad_k = grad(x_kp1)
 
+        # todo: compute step size
+        tau = 1
         # todo: implement newton method 
         # IMP: check for efficient implementation rather than taking inverse.
-
+        x_kp1 = x_k - tau * Q_inv @ grad_k
         # todo: compute function value and assign to fun_val variable
-
+        fun_val = fun_val_main(x_kp1)
         # track time
         time = time + (clock.time() - stime)
 

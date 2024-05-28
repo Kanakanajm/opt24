@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
+import subprocess
 
 mpl.use('TkAgg') # probably not everyone requires this, feel free to remove it
 
@@ -14,19 +15,21 @@ time_values = []
 time_values_1 = []
 for i in img_sizes_to_check:
 
-	command_to_exec = 'python3 ex04_02_image_deblurring_sol.py ' + \
-            '--img_size=' + str(i) + \
-         			' --run_exp_option=' + str(1)
+	command_to_exec = ['python', 'ex04_03_image_deblurring.py',
+					'--img_size=' + str(i),
+         			'--run_exp_option=' + str(1)]
 
-	print("Command executing is " + command_to_exec)
+	print("Command executing is " + " ".join(command_to_exec))
 
-    # todo: Execute the command in command_to_exec onto the terminal 
+    # Execute the command in command_to_exec onto the terminal 
     # from python itself (Hint: Check subprocess package details.)
 
+	subprocess.run(command_to_exec)
 
     
 	try:
-		a = # todo: load files for Newton method and image size i (check NewtonMethod.py)
+		# load files for Newton method and image size i (check NewtonMethod.py)
+		a = np.loadtxt('results/newton_time_'+ str(i) + '.txt')
 		time_taken = a
 	except:
 		time_taken = 20
@@ -34,8 +37,8 @@ for i in img_sizes_to_check:
 	time_values += [time_taken]
 
 	try:
-		# todo: load files for Gradient Descent method and image size i  (check GradientDescent.py)
-		a = 
+		# load files for Gradient Descent method and image size i  (check GradientDescent.py)
+		a = a = np.loadtxt('results/cg_time_'+ str(i) + '.txt')
 		time_taken = a
 	except:
 		time_taken = 20  # maximum time

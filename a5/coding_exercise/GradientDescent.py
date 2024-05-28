@@ -51,14 +51,31 @@ def gd(model, options,  maxiter, check):
 
     # load model parameters
 
-    # todo: load all necessary parameters.
+    # load all necessary parameters.
+    A = model['A']
+    K = model['K']
+    b = model['b']
+    mu = model['mu']
+    img_size = model['img_size']
+    run_exp = model['run_exp']
+    P = model['P']
 
-    # todo:  compute the step-size and also make sure it convert it to real value 
+    Q = A.T @ A + mu * K.T @ K
+    bprime = -A.T @ b
+    N = img_size
+    grad = lambda x: Q @ x + bprime
+
+    # compute the step-size and also make sure it convert it to real value 
     # with np.real command if required. You may use eigs command for computing 
     # the eigen values.
+    
+    L = np.real(eigs(P.T @ Q @ P, k=1, which='LR')[0])
+    m = np.real(eigs(P.T @ Q @ P, k=1, which='SR')[0])
+    tau = 2/(L+m)
 
-    # todo: calculate D= PP^T
-
+    # calculate D= PP^T
+    D = P @ P.T
+    
     # initialization
     x_kp1 = options['init']
     x_bar = options['orig']
@@ -66,7 +83,7 @@ def gd(model, options,  maxiter, check):
     def fun_val_main(x):
         # todo: create a helper function to compute the function value
         #  0.5*|Ax-x_bar|_2^2 + 0.5*mu*|K*x|_{2}^2
-        return #todo
+        return 0.5 * np.linalg.norm(A @ x - x_bar)**2 + 0.5 * mu * np.linalg.norm(K @ x)**2
 
     fun_val = fun_val_main(x_kp1)
 
@@ -88,13 +105,13 @@ def gd(model, options,  maxiter, check):
         stime = clock.time()
 
         # todo: update variables
-
+        x_k = x_kp1.copy()
         # todo: compute gradient
-
+        grad_k = grad(x_kp1)
         # todo:  gradient descent step (hint: use D)
-
+        x_kp1 = x_k - tau * D @ grad_k
         # todo:  check function value
-        
+        fun_val = fun_val_main(x_kp1)
         # track time
         time = time + (clock.time() - stime)
 

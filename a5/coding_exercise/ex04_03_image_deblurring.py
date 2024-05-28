@@ -53,7 +53,7 @@ else:
 
     img = rgb2gray(img)
 
-    img.resize((img_size, img_size))    # resizing the image
+    img.resize((img_size, img_size), refcheck=False)    # resizing the image
 
 (ny, nx) = np.shape(np.asarray(img))
 print("image dimensions: ", np.shape(img))
@@ -149,10 +149,10 @@ if run_exp == 1:
     
     # NOTE: DO NOT CHANGE THE VALUES
 
-    run_gd_0 = 1        # Gradient Descent without Pre-conditioner.
+    run_gd_0 = 0        # Gradient Descent without Pre-conditioner.
     run_gd_1 = 0
     run_gd_2 = 0
-    run_cg_0 = 0
+    run_cg_0 = 1
     run_cg_1 = 0
     run_cg_2 = 0
     run_newton = 1     # Newton's Method
@@ -163,7 +163,7 @@ if run_exp == 1:
 if run_gd_0:
     # Without pre-conditioning
     # TODO: Compute the preconditioner here and assign it to P (Hint: trivial)
-    
+    P  = np.eye(N)
 
     model['P'] = P
 
@@ -193,12 +193,13 @@ if run_gd_0:
                      output['sol'].reshape(ny, nx), cmap=plt.cm.gray)
 
 ################################################################################
-
+Q = A.T @ A + mu * K.T @ K
 if run_gd_1:
     # With Jacobi pre-conditioning
  
     #TODO: Compute the Jacobi pre-conditioner and assign it to variable P.
-    
+    # P_ii = 1/sqrt(Q_ii)
+    P = np.diag(1/np.sqrt(np.diag(Q.toarray())))
     
     model['P'] = P
 
@@ -235,7 +236,8 @@ if run_gd_2:
     # You may use np.linalg.cholesky to compute cholesky decomposition, which you need to convert the involved matrices to dense format.
     # You may use sparse.csr_matrix to convert a dense matrix to sparse csr matrix.
 
-
+    L = np.linalg.cholesky(sparse.csr_matrix(Q).toarray())
+    P = np.linalg.inv(L).T
 
     model['P'] = P
 
@@ -252,7 +254,7 @@ if run_gd_2:
         'storePsnrs':      True
     }
 
-    output = gd(model, options, maxiter, check)
+    output = gd(model, options, 1, check)
     xs.append(output['sol'])
     rs.append(output['seq_res'])
     ts.append(output['seq_time'])
@@ -268,7 +270,7 @@ if run_gd_2:
 if run_cg_0:
     # Without pre-conditioning
     # TODO: Compute the preconditioner here and assign it to P (Hint: trivial)
-
+    P  = np.eye(N)
     model['P'] = P
 
     print('')
@@ -299,7 +301,8 @@ if run_cg_0:
 if run_cg_1:
     # With Jacobi pre-conditioning
     #TODO: Compute the Jacobi pre-conditioner and assign it to variable P.
-
+    # P_ii = 1/sqrt(Q_ii)
+    P = np.diag(1/np.sqrt(np.diag(Q.toarray())))
     model['P'] = P
     print('')
     print('********************************************************************************')
@@ -332,8 +335,8 @@ if run_cg_2:
     # TODO: Compute P from Cholesky decomposition
     # You may use np.linalg.cholesky to compute cholesky decomposition, which you need to convert the involved matrices to dense format.
     # You may use sparse.csr_matrix to revert back a dense matrix to sparse csr matrix.
-
-
+    L = np.linalg.cholesky(sparse.csr_matrix(Q).toarray())
+    P = np.linalg.inv(L).T
 
     model['P'] = P
 
@@ -350,7 +353,7 @@ if run_cg_2:
         'storePsnrs':      True,
     }
 
-    output = cg(model, options,  maxiter, check)
+    output = cg(model, options,  1, check)
     xs.append(output['sol'])
     rs.append(output['seq_res'])
     ts.append(output['seq_time'])
