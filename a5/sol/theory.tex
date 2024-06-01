@@ -333,20 +333,14 @@
             s^{(k)} &= x^{(k+1)} - x^{(k)} = A(z^{(k+1)} - z^{(k)}) = A\tilde{s}^{(k)} \tag*{where $z^{(k+1)} - z^{(k)}$}\\
             y^{(k)} &= \nabla g(z^{(k+1)}) - \nabla g(z^{(k)}) = A^\top \nabla f(x^{(k+1)}) - A^\top \nabla f(x^{(k)}) = A^\top \tilde{y}^{(k)} \tag*{where $\nabla f(x^{(k+1)}) - \nabla f(x^{(k)})$}
         \end{align*}
-        We can try to show this identity holds: $H_k = A\tilde{H}_kA^\top$.
-        \begin{align*}
-            H_1 &= (I - \rho_0 s^{(0)}(y^{(0)})^\top) H_0 (I - \rho_0 y^{(0)}(s^{(0)})^\top) + \rho_0 s^{(0)}(s^{(0)})^\top\\
-            &= (I - \rho_0 s^{(0)}(y^{(0)})^\top) A\tilde{H}_0A^\top(I - \rho_0 y^{(0)}(s^{(0)})^\top) + \rho_0 s^{(0)}(s^{(0)})^\top\\
-            &= A (I - \rho_0 A\tilde{s}^{(0)}(A^\top \tilde{y}^{(0)})^\top) \tilde{H}_0(I - \rho_0 A^\top \tilde{y}^{(0)}(A\tilde{s}^{(0)})^\top)A^\top + \rho_0 A\tilde{s}^{(0)}(A\tilde{s}^{(0)})^\top\\
-            &= A (I - \rho_0 A\tilde{s}^{(0)}(A^\top \tilde{y}^{(0)})^\top) \tilde{H}_0(I - \rho_0 A^\top \tilde{y}^{(0)}(A\tilde{s}^{(0)})^\top)A^\top + \rho_0 A\tilde{s}^{(0)}(\tilde{s}^{(0)})^\top A^\top\\
-        \end{align*}
-        We have the update formular for $z^{(k+1)}$
+        We can try to show by induction that this identity holds: $H_k = A\tilde{H}_kA^\top$.
+        and the update formular for $z^{(k+1)}$ as such
         \begin{align*}
             z^{(k+1)} &= z^{(k)} - \tilde{H}_k\nabla g(z^{(k)})\\
             &= z^{(k)} - \tilde{H}_k A^\top \nabla f(x)\\
             &= z^{(k)} - A^{-1} H_k \nabla f(x)\\
         \end{align*}
-        Now we have
+        Then
         \begin{align*}
             x^{(k+1)} &= Az^{(k+1)} + b\\
             &= A\left(z^{(k)} - A^{-1} H_k \nabla f(x)\right) + b\\
