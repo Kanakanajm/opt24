@@ -203,4 +203,46 @@
     which is the same as the secant equation, but also by setting $B_{k+1} s^{(k)}-y^{(k)}$ to be orthogonal to $s^{(k)}$.
     This gives more degree of freedom of choosing $B_{k+1}$.
 \end{homeworkProblem}
+\begin{homeworkProblem}[3]
+    
+\end{homeworkProblem}
+\begin{homeworkProblem}[4]
+    \begin{homeworkSubsection}{(a)}
+        An useful identity:
+        \[
+            1 - h_w(x) = \frac{e^{-\langle w, x\rangle}}{1 + e^{-\langle w, x\rangle}} = h_w(x) \cdot e^{-\langle w, x\rangle}
+        \]
+        We first calculate $\frac{\partial h_w(x)}{\partial w}$:
+        \begin{align*}
+            \frac{\partial h_w(x)}{\partial w}
+            &= (1 + e^{-\langle w, x\rangle})^{-2} \cdot e^{-\langle w, x\rangle} \cdot x\\
+            &= h_w(x)^2 \cdot e^{-\langle w, x\rangle} \cdot x\\
+            &= h_w(x)\cdot(1-h_w(x)) \cdot x\\
+        \end{align*}
+        Using chain rule, we can calculate $\frac{\partial f(w)}{\partial w}$:
+        \begin{align*}
+            \frac{\partial f(w)}{\partial w}
+            &= -\frac{1}{m}\sum_{i=1}^{m}\left( y_i\cdot \frac{\partial \log(h_w(x_i))}{\partial w} + (1-y_i) \cdot \frac{\partial \log(1-h_w(x_i))}{\partial w}\right)\\
+            &= -\frac{1}{m}\sum_{i=1}^{m}\left( y_i\cdot \frac{1}{h_w(x_i)}\cdot\frac{\partial h_w(x_i)}{\partial w}
+            - (1-y_i) \cdot \frac{1}{1-h_w(x_i)} \cdot \frac{\partial h_w(x_i)}{\partial w}\right)\\
+            &= -\frac{1}{m}\sum_{i=1}^{m} \left(y_i\cdot \frac{1}{h_w(x_i)}\cdot h_w(x_i)\cdot(1-h_w(x_i)) \cdot x_i
+            - (1-y_i) \cdot \frac{1}{1-h_w(x_i)} \cdot h_w(x_i)\cdot(1-h_w(x_i)) \cdot x_i\right)\\
+            &= -\frac{1}{m}\sum_{i=1}^{m} \left(y_i\cdot (1-h_w(x_i)) \cdot x_i
+            - (1-y_i) \cdot h_w(x_i) \cdot x_i\right)\\
+            &= -\frac{1}{m}\sum_{i=1}^{m} \left((y_i\cdot (1-h_w(x_i)) - (1-y_i) \cdot h_w(x_i))\cdot x_i \right)\\
+            &= -\frac{1}{m}\sum_{i=1}^{m} \left((y_i -y_i\cdot h_w(x_i) - h_w(x_i)+y_i \cdot h_w(x_i))\cdot x_i \right)\\
+            &= -\frac{1}{m}\sum_{i=1}^{m} \left((y_i - h_w(x_i))\cdot x_i \right)\\
+        \end{align*}
+        Now we calculate the Hessian $\frac{\partial \frac{\partial f(w)}{\partial w}}{\partial w}$
+        \begin{align*}
+            \frac{\partial \frac{\partial f(w)}{\partial w}}{\partial w}
+            &= \frac{1}{m}\sum_{i=1}^{m} \left(h_w(x_i)\cdot(1-h_w(x_i))\cdot x_i \cdot x_i^T \right)\\
+        \end{align*}
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(b)}
+        Observe that $0 < h_w(x_i) < 1$ for all $i = 1 \cdots m$ which means $h_w(x_i) > 0$ and $1 - h_w(x_i) > 0$.
+        Furthermore, the term $x_i \cdot x_i^\top$ results in the a matrix which each entry is the square of the entries in $x_i$.
+        This shows that the Hessian is positive semi-definite thus function is convex.
+    \end{homeworkSubsection}
+\end{homeworkProblem}
 \end{document}
