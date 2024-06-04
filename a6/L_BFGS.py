@@ -89,7 +89,7 @@ def l_bfgs(model, options,  maxiter, check):
         seq_time = zeros(maxiter+1)
         seq_time[0] = 0
     if options['storePoints'] == True:
-        seq_x = zeros((N, maxiter+1))
+        seq_x = zeros((m, maxiter+1))
         seq_x[:, 0] = x_kp1
 
     time = 0
@@ -100,17 +100,24 @@ def l_bfgs(model, options,  maxiter, check):
     # 3: Maximal number of backtracking iterations exceeded.
 
     # todo: set the backtracking options for the backtracking step in L-BFGS step
-
+    tau_0 = 18 # init time step
+    decay = 0.5 # time step decay factor
+    backtrackingMaxiter =5 # maxiter
+    gamma = 1e-4 # armijo param
+    eta = 0.9 # wolfe param
 
     for iter in range(1, maxiter+1):
 
         stime = clock.time()
 
         # todo: update variables
-        
+        x_k = x_kp1.copy()
+        f_k = f_kp1.copy()
+        grad_k = grad_kp1.copy()
+        H_k = H_kp1.copy()
 
         # todo: compute step size
-        
+        tau = tau_0
 
         # todo: implement the L-BFGS method
         
@@ -119,6 +126,7 @@ def l_bfgs(model, options,  maxiter, check):
         # that residual is <1e-12.  See below regarding residual.
 
         for iterbt in range(0, backtrackingMaxiter):
+            pass
             # todo: Complete the backtracking to check Armijo  and Wolfe conditions.
 
             # todo: gradient descent like step using the descent direction
@@ -131,12 +139,12 @@ def l_bfgs(model, options,  maxiter, check):
 
 
         # todo: Compute the function value using f_func function in my_functions.py
-        fun_val =
+        fun_val = f_func(X, y, x_kp1)
 
         # todo: check breaking condition by computing residual which is
         # squared gradient norm. Make sure to store the residual
         #  into the variable 'res'
-
+        res = np.linalg.norm(grad_func(X,  y, x_kp1))**2
         ################
         if res < 1e-12:
             breakvalue = 2

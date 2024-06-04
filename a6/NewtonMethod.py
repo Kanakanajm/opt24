@@ -51,6 +51,7 @@ def newton(model, options,  maxiter, check):
 
     X = model['X']
     y = model['y']
+    N = X.shape[1]
 
     # initialization
     x_kp1 = options['init']
@@ -78,22 +79,27 @@ def newton(model, options,  maxiter, check):
         stime = clock.time()
 
         # todo: update variables
+        x_k = x_kp1.copy()
 
         # todo: compute gradient using grad_func function in my_functions.py file
+        grad_k = grad_func(X, y, x_k)
 
         # todo: compute step size
-
+        tau = 1
+        
         # todo: compute the Hessian matrix
+        hess_k = hessian_func(X, x_k)
 
         # todo: implement the Newton's method update
+        x_kp1 = x_k - tau*np.linalg.inv(hess_k).dot(grad_k)
 
         # todo: compute the function value 
-        fun_val = 
+        fun_val = f_func(X, y, x_kp1)
 
         # todo: check breaking condition by computing residual which is
         # squared gradient norm. Make sure to store the residual
         #  into the variable 'res'
-
+        res = np.linalg.norm(grad_k)**2
 
         ################
         if res < 1e-12:

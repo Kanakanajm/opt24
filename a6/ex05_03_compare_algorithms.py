@@ -71,7 +71,7 @@ funcs = []
 run_bfgs = 1        # BFGS method
 run_l_bfgs = 1      # L-BFGS method
 run_newton = 1      # Newton Method
-run_gd = 1          # Gradient Descent
+run_gd = 1      # Gradient Descent
 
 
 

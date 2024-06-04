@@ -60,6 +60,16 @@ def bfgs(model, options,  maxiter, check):
     # load data 
     X = model['X']
     y = model['y']
+    N = X.shape[1]
+
+    # initialize parameters for backtracking
+    tau_0 = 18 # init time step
+    decay = 0.5 # time step decay factor
+    backtrackingMaxiter =5 # maxiter
+    gamma = 1e-4 # armijo param
+    eta = 0.9 # wolfe param
+
+
 
     #  initialization (this is the w according to the problem description)
     x_kp1 = options['init']
@@ -72,7 +82,7 @@ def bfgs(model, options,  maxiter, check):
 
 
     # todo: hessian inverse approximation initialization 
-    H_kp1 = 
+    H_kp1 = np.eye(n)
 
 
 
@@ -107,41 +117,63 @@ def bfgs(model, options,  maxiter, check):
         # the below given template.
 
         # todo: update variables
-
-
+        x_k = x_kp1.copy()
+        grad_k = grad_kp1.copy()
+        H_k = H_kp1.copy()
+        f_k = f_kp1.copy()
+        
         # todo: compute step size
-
         
         # todo: obtain the descent direction
-
+        d_k = -H_k.dot(grad_k)
         # todo: loop for backtracking 
         # todo: choose appropriate backtracking parameters such
         # that residual is <1e-12.  See below regarding residual.
-
+        tau_k = tau_0
         for iterbt in range(0, backtrackingMaxiter):
+
             # todo: Complete the backtracking to check Armijo  and Wolfe conditions.
-
+            
             # todo: gradient descent like step using the descent direction
-
+            x_kp1 = x_k + tau_k*d_k
             # todo: compute new value  of objective
-
+            f_kp1 = f_func(X, y, x_kp1)
+            grad_kp1 = grad_func(X, y, x_kp1)
 
             # todo: check Armijo  and Wolfe condition
+            if f_kp1 <= f_k + gamma*tau_k*grad_k.T @ d_k and grad_kp1.T @ d_k >= eta*grad_k.T @ d_k:
+                break
+
+            tau_k = decay*tau_k
+            # if tau_k < min_tau:
+            #     print("Couldn't find tau within range")
+            #     break
             # break the loop if the conditions are satisfied.
             # use breakvalue 3 if you maximum iterations are reached.
-
+        if iterbt == backtrackingMaxiter-1:
+            breakvalue = 3
 
         # todo: Implement the BFGS method updates.
-        
+        # x_kp1 = x_k + tau_k*d_k
+        # grad_kp1 = grad_func(X, y, x_kp1)
+
+        s_k = x_kp1 - x_k
+        y_k = grad_kp1 - grad_k
+        rho_k = 1/(y_k.T @ s_k)
+
+        H_kp1 = H_k - np.outer(rho_k * s_k, H_k.T @ y_k - s_k) - np.outer(H_k @ y_k, rho_k * s_k) + (y_k.T @ H_k @ y_k) * np.outer(rho_k * s_k, rho_k * s_k)
+
+
+        # H_kp1 = left_k @ H_k @ right_k + rho_k*s_k @ s_k.T
 
         # todo: Compute the function value using f_func function in my_functions.py
-        fun_val = 
+        fun_val = f_kp1
 
         # todo: check breaking condition by computing residual which is 
         # squared gradient norm. Make sure to store the residual
         #  into the variable 'res'
         
-
+        res = np.linalg.norm(grad_kp1)**2
 
         ################
         # Residual check
@@ -164,6 +196,7 @@ def bfgs(model, options,  maxiter, check):
             seq_x[:, iter] = x_kp1
 
         # print info
+        tau = tau_k
         if (iter % check == 0):
             print('iter: %d, time: %5f, tau: %f, fun: %f' %
                   (iter, time, tau,  fun_val))
