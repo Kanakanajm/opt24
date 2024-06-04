@@ -63,9 +63,9 @@ def bfgs(model, options,  maxiter, check):
     N = X.shape[1]
 
     # initialize parameters for backtracking
-    tau_0 = 18 # init time step
+    tau_0 = 100 # init time step
     decay = 0.5 # time step decay factor
-    backtrackingMaxiter =5 # maxiter
+    backtrackingMaxiter =20 # maxiter
     gamma = 1e-4 # armijo param
     eta = 0.9 # wolfe param
 
@@ -141,7 +141,7 @@ def bfgs(model, options,  maxiter, check):
             grad_kp1 = grad_func(X, y, x_kp1)
 
             # todo: check Armijo  and Wolfe condition
-            if f_kp1 <= f_k + gamma*tau_k*grad_k.T @ d_k and grad_kp1.T @ d_k >= eta*grad_k.T @ d_k:
+            if f_kp1 <= f_k + gamma*tau_k*np.dot(grad_k, d_k) and np.dot(grad_kp1, d_k) >= eta*np.dot(grad_k, d_k):
                 break
 
             tau_k = decay*tau_k
@@ -161,8 +161,7 @@ def bfgs(model, options,  maxiter, check):
         y_k = grad_kp1 - grad_k
         rho_k = 1/(y_k.T @ s_k)
 
-        H_kp1 = H_k - np.outer(rho_k * s_k, H_k.T @ y_k - s_k) - np.outer(H_k @ y_k, rho_k * s_k) + (y_k.T @ H_k @ y_k) * np.outer(rho_k * s_k, rho_k * s_k)
-
+        H_kp1 = H_k + rho_k ** 2 * (rho_k + np.dot(y_k, H_k @ y_k)) * np.outer(s_k, s_k) - rho_k * (H_k @ np.outer(y_k, s_k) + np.outer(s_k, y_k) @ H_k)
 
         # H_kp1 = left_k @ H_k @ right_k + rho_k*s_k @ s_k.T
 

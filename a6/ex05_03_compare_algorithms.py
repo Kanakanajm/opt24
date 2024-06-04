@@ -69,9 +69,9 @@ funcs = []
 # turn algorithms to be run on or off
 
 run_bfgs = 1        # BFGS method
-run_l_bfgs = 1      # L-BFGS method
-run_newton = 1      # Newton Method
-run_gd = 1      # Gradient Descent
+run_l_bfgs = 0      # L-BFGS method
+run_newton = 0      # Newton Method
+run_gd = 0          # Gradient Descent
 
 
 
@@ -183,7 +183,7 @@ if run_gd:
     nams.append('Gradient Descent')
 
     gd_sol = output['sol']
-
+exit()
 print('===============================================================')
 for i in range(4):
     print(legs[i] + ':' + str(rs[i][-1]))
