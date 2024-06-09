@@ -273,7 +273,16 @@
                 \frac{\partial f}{\partial x_3} &= 8\bar{x}_3^3\cos(\bar{x}_3^4)\exp(2(\bar{x}_1^2\cdot \bar{x}_2^3 + \sin(\bar{x}_3^4)))
             \end{align*}
         \end{enumerate}
-        
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{Backward Mode}
+        Backward mode has the same equation as forward mode but the order of the operations is reversed.
+        We can only start backpropagating after evaluating all intermediate functions (because we need the value for the last node)
+        as such
+        \begin{align*}
+            \frac{\partial f}{\partial x_1} &= \left(\frac{\partial f}{\partial x_{11}}\frac{\partial x_{11}}{\partial x_{10}}\right)\frac{\partial x_{10}}{\partial x_9}\frac{\partial x_9}{\partial x_6}\frac{\partial x_6}{\partial x_4}\frac{\partial x_4}{\partial x_1}\\
+        \end{align*}
+        the partial derivatives are all evaluated with the previous intermediate nodes values.
+        This will give us the same result as the forward mode.
     \end{homeworkSubsection}
 
 \end{homeworkProblem}
