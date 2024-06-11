@@ -44,13 +44,47 @@ A = lambda theta, t1, t2: np.array([np.cos(theta), np.sin(theta), -np.sin(theta)
 # P is constructed with smaller matrices P_i where P_i = [[P_[1, i], 0, P_[2, i], 0, -1, 0], [0, P_[1, i], 0, P_[2, i], 0, -1]]
 P = np.zeros((2*n, 6))
 for i in range(n):
-    P[2*i:2*i+2, :] = np.array([[P_[0, i], 0, P_[1, i], 0, -1, 0], [0, P_[0, i], 0, P_[1, i], 0, -1]])
+    P[2*i:2*i+2, :] = np.array([[P_[0, i], 0, P_[1, i], 0, 1, 0], [0, P_[0, i], 0, P_[1, i], 0, 1]])
 
 # Q is constructed with smaller matrices Q_i where Q_i = [Q_[1, i], Q_[2, i]]
-Q = Q_.flatten()
+# NOTE
+# ndarray.flatten('F') flattens the array in column-major order which is ideal for our case
+Q = Q_.flatten('F')
 
 F = lambda x: P @ A(x[0], x[1], x[2]) - Q
-tau = 0.01
+
+def DF(x):
+    J = np.zeros((2*n, 3))
+    
+    theta = x[0]
+    for i in range(0, 2*n, 2):
+        # dF/dtheta
+        J[i, 0] = -P_[0, i//2] * np.sin(theta) - P_[1, i//2] * np.cos(theta)
+        J[i+1, 0] = P_[0, i//2] * np.cos(theta) - P_[1, i//2] * np.sin(theta)
+
+        # dF/dt1
+        J[i, 1] = 1
+        J[i+1, 1] = 0
+
+        # dF/dt1
+        J[i, 2] = 0
+        J[i+1, 2] = 1
+    return J
+
+def DF_forward_diff(x):
+    J = np.zeros((2*n, 3))
+    h = 1e-6
+    for i in range(3):
+        x_ = x.copy()
+        x_[i] += h
+        J[:, i] = (F(x_) - F(x)) / h
+    return J
+
+        
+    
+    
+
+tau = 1
 
 ################################################################################
 ### Section 1: Run Gauss-Newton Method ####################################################
@@ -87,14 +121,9 @@ for iter in range(1,maxiter+1):
     F_k = F(x_k)
 
     # compute the Jacobian of F with forward differences
-    JF_k = np.zeros((2*n, 3))
-    h = 1e-6
-    for i in range(3):
-        x = x_k.copy()
-        x[i] += h
-        JF_k[:, i] = (F(x) - F_k) / h
+    DF_k = DF(x_k)
     
-    grad_F_k = JF_k.T
+    grad_F_k = DF_k.T
 
     # solve linear subproblem using np.linalg.solve
     # TODO
@@ -162,14 +191,9 @@ for iter in range(1, maxiter+1):
     F_k = F(x_k)
 
     # compute the Jacobian of F with forward differences
-    JF_k = np.zeros((2*n, 3))
-    h = 1e-6
-    for i in range(3):
-        x = x_k.copy()
-        x[i] += h
-        JF_k[:, i] = (F(x) - F_k) / h
+    DF_k = DF(x_k)
     
-    grad_F_k = JF_k.T
+    grad_F_k = DF_k.T
 
     # solve linear subproblem using np.linalg.solve
 

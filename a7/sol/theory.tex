@@ -309,8 +309,8 @@
         $\tilde{P}_j \in \mathbb{R}^{2\times 6}$
         \[
             \tilde{P}_j := \begin{pmatrix}
-                P_{1j} & 0 & P_{2j} & 0 & -1 & 0\\
-                0 & P_{1j} & 0 & P_{2j} & 0 & -1
+                P_{1j} & 0 & P_{2j} & 0 & 1 & 0\\
+                0 & P_{1j} & 0 & P_{2j} & 0 & 1
             \end{pmatrix}
         \] 
         and we have $\tilde{P} \in \mathbb{R}^{2n\times 6}$ as following
@@ -346,6 +346,14 @@
             \quad
             F(P, Q) := \tilde{P}A(x) - \tilde{Q}
         \] with $\tilde{P}$ and $\tilde{Q}$ defined in (a).
+        
+        The linear system of equations that need to be solved is 
+        \[
+            \nabla F(x^{(k)})\nabla F(x^{(k)})^\top d^{(k)} = - \nabla F(x^{(k)})F(x^{(k)})
+        \]
+        in order to calculate the descent direction $d^{(k)}$.
+        $\nabla F(x^{(k)})$ can be calculated analytically. 
+        It can also be approximated by finite difference.
     \end{homeworkSubsection}
 \end{homeworkProblem}
 \end{document}
