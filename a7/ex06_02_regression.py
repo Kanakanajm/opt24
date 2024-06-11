@@ -99,13 +99,10 @@ for iter in range(1,maxiter+1):
     # solve linear subproblem using np.linalg.solve
     # TODO
     ###################
-    assert grad_F_k.shape == (3, 2*n)
-    print(F_k.shape)
-    assert F_k.shape == (2*n,)
+
     d_k = np.linalg.solve(grad_F_k @ grad_F_k.T, -np.dot(grad_F_k, F_k))
 
     x_kp1 = x_k + tau * d_k
-
 
     print(x_kp1)
 
@@ -126,7 +123,6 @@ for iter in range(1,maxiter+1):
 
 gauss_newton_sol = x_kp1.copy()
 
-exit()
 ################################################################################
 ### Section 2: Run Levenberg-Marquardt Method
 #####################################################
@@ -145,6 +141,7 @@ theta = 0.0
 t1 = 0.0
 t2 = 0.0
 x_kp1 = np.array([theta, t1, t2])
+alpha = 0.5
 
 time = 0
 breakvalue = 1
@@ -162,12 +159,27 @@ for iter in range(1, maxiter+1):
     # TODO
     # This part is same as that of Gauss-Newton Method.
     ###################
+    F_k = F(x_k)
 
+    # compute the Jacobian of F with forward differences
+    JF_k = np.zeros((2*n, 3))
+    h = 1e-6
+    for i in range(3):
+        x = x_k.copy()
+        x[i] += h
+        JF_k[:, i] = (F(x) - F_k) / h
+    
+    grad_F_k = JF_k.T
 
     # solve linear subproblem using np.linalg.solve
 
     # TODO
     ###################
+    I = np.eye(3)
+    d_k = np.linalg.solve(I + alpha* grad_F_k @ grad_F_k.T, -alpha*np.dot(grad_F_k, F_k))
+
+    x_kp1 = x_k + tau * d_k
+
     print(x_kp1)
 
     # check breaking condition
