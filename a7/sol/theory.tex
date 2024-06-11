@@ -302,7 +302,50 @@
         \end{enumerate}
         Similarly we can calculate the other partial derivatives. The result is the same as the forward mode.
     \end{homeworkSubsection}
-
 \end{homeworkProblem}
-
+\begin{homeworkProblem}[2]
+    \begin{homeworkSubsection}{(a)}
+        We construct a matrix $\tilde{P}_j$ for each column $j$ of $P$ such that 
+        $\tilde{P}_j \in \mathbb{R}^{2\times 6}$
+        \[
+            \tilde{P}_j := \begin{pmatrix}
+                P_{1j} & 0 & P_{2j} & 0 & -1 & 0\\
+                0 & P_{1j} & 0 & P_{2j} & 0 & -1
+            \end{pmatrix}
+        \] 
+        and we have $\tilde{P} \in \mathbb{R}^{2n\times 6}$ as following
+        \[
+            \tilde{P} := \begin{pmatrix}
+                \tilde{P}_1\\
+                \vdots\\
+                \tilde{P}_n
+            \end{pmatrix}
+        \]
+        At last, we construct $\tilde{Q} \in \mathbb{R}^{2n\times 1}$:
+        \[
+            \tilde{Q} := \begin{pmatrix}
+                Q_1\\
+                \vdots\\
+                Q_n
+            \end{pmatrix}
+        \]
+        where $Q_j$ denotes the $j$-th column of $Q$.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(b)}
+        The linear least squares problem can be formulated as
+        \[
+            \min_{x\in\mathbb{R}^3} \frac{1}{2}\norm{F(P, Q)}^2
+        \]
+        where 
+        \[
+            x:= \begin{pmatrix}
+                t_1\\
+                t_2\\
+                \theta
+            \end{pmatrix}
+            \quad
+            F(P, Q) := \tilde{P}A(x) - \tilde{Q}
+        \] with $\tilde{P}$ and $\tilde{Q}$ defined in (a).
+    \end{homeworkSubsection}
+\end{homeworkProblem}
 \end{document}
