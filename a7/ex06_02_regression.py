@@ -39,7 +39,18 @@ n  = data['n'];
 #
 # TODO
 ###################
+A = lambda theta, t1, t2: np.array([np.cos(theta), np.sin(theta), -np.sin(theta), np.cos(theta), t1, t2])
 
+# P is constructed with smaller matrices P_i where P_i = [[P_[1, i], 0, P_[2, i], 0, -1, 0], [0, P_[1, i], 0, P_[2, i], 0, -1]]
+P = np.zeros((2*n, 6))
+for i in range(n):
+    P[2*i:2*i+2, :] = np.array([[P_[0, i], 0, P_[1, i], 0, -1, 0], [0, P_[0, i], 0, P_[1, i], 0, -1]])
+
+# Q is constructed with smaller matrices Q_i where Q_i = [Q_[1, i], Q_[2, i]]
+Q = Q_.flatten()
+
+F = lambda x: P @ A(x[0], x[1], x[2]) - Q
+tau = 0.01
 
 ################################################################################
 ### Section 1: Run Gauss-Newton Method ####################################################
@@ -73,10 +84,29 @@ for iter in range(1,maxiter+1):
     # using the matrices Q and P from above.
     # TODO
     ###################
+    F_k = F(x_k)
+
+    # compute the Jacobian of F with forward differences
+    JF_k = np.zeros((2*n, 3))
+    h = 1e-6
+    for i in range(3):
+        x = x_k.copy()
+        x[i] += h
+        JF_k[:, i] = (F(x) - F_k) / h
+    
+    grad_F_k = JF_k.T
 
     # solve linear subproblem using np.linalg.solve
     # TODO
     ###################
+    assert grad_F_k.shape == (3, 2*n)
+    print(F_k.shape)
+    assert F_k.shape == (2*n,)
+    d_k = np.linalg.solve(grad_F_k @ grad_F_k.T, -np.dot(grad_F_k, F_k))
+
+    x_kp1 = x_k + tau * d_k
+
+
     print(x_kp1)
 
     # check breaking condition
@@ -96,7 +126,7 @@ for iter in range(1,maxiter+1):
 
 gauss_newton_sol = x_kp1.copy()
 
-
+exit()
 ################################################################################
 ### Section 2: Run Levenberg-Marquardt Method
 #####################################################
