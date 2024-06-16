@@ -505,4 +505,69 @@
         
     \end{homeworkSubsection}
     \end{homeworkProblem}
+    \begin{homeworkProblem}[3]
+        We are given the set $C$ defined as
+        \[
+            C = \left\{\begin{pmatrix}
+                x_1 \\ x_2
+            \end{pmatrix}\in \mathbb{R}^2 \;:\; F(x_1, x_2) \in D\right\}
+        \]
+        where
+        \[
+            F(x_1, x_2) = \begin{pmatrix}
+                x_1^2 + 3x_2^2 + 2x_2 \\ 3x_1^4 + 2x_2^3 + x_1 + x_2
+            \end{pmatrix}
+        \]
+        and
+        \[
+            D := \left\{\begin{pmatrix}
+                z_1 \\ z_2
+            \end{pmatrix} \in \mathbb{R}^2 \;:\;z_1^2 + z_2^2 \leq 1\right\}
+        \]
+        By Theorem 15.15 (change of coordinates), we know that for a point $\bar{x} \in C$
+        and $\bar{z} = F(\bar{x}) \in D$ we can calculate the normal cone of $C$ at $\bar{x}$ as
+        \[
+            N_C(\bar{x}) = DF(\bar{x})^T N_D(\bar{z})
+        \]
+        where $DF(\bar{x})$ is the Jacobian matrix of $F$ at $\bar{x}$ and $N_D(\bar{z})$ is the normal cone of $D$ at $\bar{z}$
+        and $DF(\bar{x})$ is required to have full rank.
+
+        The Jacobian of $F$ is given by
+        \[
+            DF(x) = \begin{pmatrix}
+                2x_1 & 6x_2 + 2 \\
+                12x_1^3 + 1 & 6x_2^2 + 1
+            \end{pmatrix}
+        \]
+        If $\bar{z}$ is in the interior of $D$, then the normal cone of $D$ at $\bar{z}$ is $\{0\}$.
+        To be inside of the unit circle, we have $z_1^2 + z_2^2 < 1$.
+
+        If $\bar{z}$ is on the boundary of $D$, then the normal cone of $D$ at $\bar{z}$ is
+        \[
+            N_D(\bar{z}) = \left\{n\bar{z} \;:\; n \in \mathbb{R}\,,\,n \geq 0\right\}
+        \]
+        Thus, the normal cone of $C$ at $\bar{x}$ is
+        \begin{align*}
+            N_C(\bar{x}) &= n\begin{pmatrix}
+                2x_1 & 6x_2 + 2 \\
+                12x_1^3 + 1 & 6x_2^2 + 1
+            \end{pmatrix}^\top \begin{pmatrix}
+                x_1^2 + x_2^2 + 2x_2 \\ 3x_1^4 + 2x_2^3 + x_1 + x_2
+            \end{pmatrix}\\
+            &= n\begin{pmatrix}
+                2x_1 & 12x_1^3 + 1 \\
+                6x_2 + 2 & 6x_2^2 + 1
+            \end{pmatrix} \begin{pmatrix}
+                x_1^2 + x_2^2 + 2x_2 \\ 3x_1^4 + 2x_2^3 + x_1 + x_2
+            \end{pmatrix}\\
+            &= n\begin{pmatrix}
+                2x_1(x_1^2 + x_2^2 + 2x_2) + (12x_1^3 + 1)(3x_1^4 + 2x_2^3 + x_1 + x_2)\\
+                (6x_2 + 2)(x_1^2 + x_2^2 + 2x_2) + (6x_2^2 + 1)(3x_1^4 + 2x_2^3 + x_1 + x_2)
+            \end{pmatrix}\\
+            &= n\begin{pmatrix}
+                2x_1^3 + 2x_1x_2^2 + 4x_1x_2 + 36x_1^7 + 24x_1^3x_2^3 + 12x_1^4 + 12x_1^3x_2 + 3x_1^4 + 2x_2^3 + x_1 + x_2\\
+                (6x_2 + 2)(x_1^2 + x_2^2 + 2x_2) + (6x_2^2 + 1)(3x_1^4 + 2x_2^3 + x_1 + x_2)
+            \end{pmatrix}\\
+        \end{align*}
+    \end{homeworkProblem}
 \end{document}
