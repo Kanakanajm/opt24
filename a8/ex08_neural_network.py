@@ -29,8 +29,7 @@ mpl.use('TkAgg')
 # where  W_1 in R^{10 x30}, b_1 in R^{10},  W_2 in R^{1 x10},
 # b_2 in R, xin R^{30} and sigma is applied element wise.
 #
-# Based on the before mentioned functions, your task is to solve
-# the following optimization problem
+# Based on the before mentioned functions, your task is to solveOthe following optimization problem
 # \min_{W_1, b_1, W_2, b_2 in R} f(W_1, b_1, W_2,  b_2)
 # using Gradient Descent algorithm with Backtracking Line Search method,
 # by filling in the TODOs given in this file.
@@ -65,6 +64,10 @@ def sigmoid_derivative(x):
     y = 1/(1 + np.exp(-x))
     return y*(1-y)
 
+def sigmoid(x):
+    # sigmoid function
+    return 1/(1 + np.exp(-x))
+
 
 # Dimensions for reference
 # X => 569 X 30
@@ -90,7 +93,8 @@ def loss_func_and_classification_error(W_1, b_1, W_2, b_2, X, Y):
         # By forward pass, we mean to evaluate the expression 
         # sigma(W_2*sigma(W_1x + b_1) + b_2)
         
-
+        a_2 = sigmoid(W_2 @ sigmoid(W_1 @ x + b_1) + b_2)
+        assert a_2.shape == (1,)
 
         # prediction
         p = a_2
@@ -111,7 +115,7 @@ def loss_func_and_classification_error(W_1, b_1, W_2, b_2, X, Y):
     return loss[0], error/m  # dividing by m to normalize
 
 
-max_iter = 100
+max_iter = 1000
 backtrackingMaxiter = 10
 
 # Initialization of the variables
@@ -155,12 +159,25 @@ for iter in range(max_iter):
 
         ## TODO: Forward pass for input x and store the output to a_2
         ## you might need to keep track of intermediate variables
-        
+
+        z_1 = W_1_k @ x + b_1_k
+        a_1 = sigmoid(z_1)
+        z_2 = W_2_k @ a_1 + b_2_k
+        a_2 = sigmoid(z_2)
 
         ## TODO: Evaluate the gradient with reverse mode automatic differentiation
         ## the derivatives with respect to W_1 must be stored in d_w_1, 
         # similarly for b_1 use d_b_1, for w_2 use d_w_2, for b_2 use d_b_2.
         ## Make sure to consider (1/m) factor in f.
+
+        d_a_2 = -1/(m)*(Y[i]/a_2 - (1-Y[i])/(1-a_2))
+        d_z_2 = d_a_2 * sigmoid_derivative(z_2)
+        d_w_2 = np.outer(d_z_2, a_1)
+        d_b_2 = d_z_2
+        d_a_1 = W_2_k.T @ d_z_2
+        d_z_1 = d_a_1 * sigmoid_derivative(z_1)
+        d_w_1 = np.outer(d_z_1, x)
+        d_b_1 = d_z_1
         
         # accumulate the gradient for each sample
         grad_W_1 = grad_W_1 + d_w_1
@@ -179,6 +196,10 @@ for iter in range(max_iter):
         # b_1_k, W_2_k, b_2_k and store it in b_1_kp, W_2_kp, b_2_kp respectively. 
         # For all the variables, use 'tau' as step-size.
 
+        W_1_kp = W_1_k - tau*grad_W_1
+        b_1_kp = b_1_k - tau*grad_b_1
+        W_2_kp = W_2_k - tau*grad_W_2
+        b_2_kp = b_2_k - tau*grad_b_2
 
         # squared grad norm
         squared_grad_norm = np.linalg.norm(grad_W_1)**2\
