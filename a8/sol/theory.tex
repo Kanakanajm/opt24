@@ -524,6 +524,31 @@
                 z_1 \\ z_2
             \end{pmatrix} \in \mathbb{R}^2 \;:\;z_1^2 + z_2^2 \leq 1\right\}
         \]
+        Given $\bar{x} := \begin{pmatrix}
+            \bar{x}_1 \\ \bar{x}_2
+        \end{pmatrix}$ s.t. $4\bar{x}_1(6\bar{x}_2^2 + 1) > (6\bar{x}_2 + 2)(12\bar{x}_1^3 + 1)$,
+        we want to find $N_C(\bar{x})$.
+
+        The question we should ask is whether $\bar{x} \in C$
+        and if so,
+        does the result of transformation $F(\bar{x})$ lies on the boundary of the unit circle
+        or it is in the interior of the unit circle?
+
+        Take the point $\bar{x} = \begin{pmatrix}
+            1 \\ -1
+        \end{pmatrix}$ as an example. One can verify that $\bar{x}$ satisfies the inequality condition
+        but it is not in $C$ because the $F(\bar{x}) = \begin{pmatrix}
+            2 \\ 1
+        \end{pmatrix}$ which is not in $D$.
+
+        \pagebreak
+
+        Let's assume that indeed, $\bar{x} \in C$ and there will be two cases to consider:
+        \begin{enumerate}[label=\roman*.]
+            \item $\bar{z} = F(\bar{x})$ is in the interior of $D$
+            \item $\bar{z} = F(\bar{x})$ is on the boundary of $D$
+        \end{enumerate}
+
         By Theorem 15.15 (change of coordinates), we know that for a point $\bar{x} \in C$
         and $\bar{z} = F(\bar{x}) \in D$ we can calculate the normal cone of $C$ at $\bar{x}$ as
         \[
@@ -539,35 +564,35 @@
                 12x_1^3 + 1 & 6x_2^2 + 1
             \end{pmatrix}
         \]
-        If $\bar{z}$ is in the interior of $D$, then the normal cone of $D$ at $\bar{z}$ is $\{0\}$.
-        To be inside of the unit circle, we have $z_1^2 + z_2^2 < 1$.
 
-        If $\bar{z}$ is on the boundary of $D$, then the normal cone of $D$ at $\bar{z}$ is
-        \[
-            N_D(\bar{z}) = \left\{n\bar{z} \;:\; n \in \mathbb{R}\,,\,n \geq 0\right\}
-        \]
-        Thus, the normal cone of $C$ at $\bar{x}$ is
-        \begin{align*}
-            N_C(\bar{x}) &= n\begin{pmatrix}
-                2x_1 & 6x_2 + 2 \\
-                12x_1^3 + 1 & 6x_2^2 + 1
-            \end{pmatrix}^\top \begin{pmatrix}
-                x_1^2 + x_2^2 + 2x_2 \\ 3x_1^4 + 2x_2^3 + x_1 + x_2
-            \end{pmatrix}\\
-            &= n\begin{pmatrix}
-                2x_1 & 12x_1^3 + 1 \\
-                6x_2 + 2 & 6x_2^2 + 1
-            \end{pmatrix} \begin{pmatrix}
-                x_1^2 + x_2^2 + 2x_2 \\ 3x_1^4 + 2x_2^3 + x_1 + x_2
-            \end{pmatrix}\\
-            &= n\begin{pmatrix}
-                2x_1(x_1^2 + x_2^2 + 2x_2) + (12x_1^3 + 1)(3x_1^4 + 2x_2^3 + x_1 + x_2)\\
-                (6x_2 + 2)(x_1^2 + x_2^2 + 2x_2) + (6x_2^2 + 1)(3x_1^4 + 2x_2^3 + x_1 + x_2)
-            \end{pmatrix}\\
-            &= n\begin{pmatrix}
-                2x_1^3 + 2x_1x_2^2 + 4x_1x_2 + 36x_1^7 + 24x_1^3x_2^3 + 12x_1^4 + 12x_1^3x_2 + 3x_1^4 + 2x_2^3 + x_1 + x_2\\
-                (6x_2 + 2)(x_1^2 + x_2^2 + 2x_2) + (6x_2^2 + 1)(3x_1^4 + 2x_2^3 + x_1 + x_2)
-            \end{pmatrix}\\
-        \end{align*}
+        \begin{homeworkSubsection}{(i) $\bar{z} = F(\bar{x})$ is in the interior of $D$}
+            If $\bar{z}$ is in the interior of $D$, then the normal cone of $D$ at $\bar{z}$ is $\{0\}$.
+            Thus, 
+            \[
+                N_C(\bar{x}) = DF(\bar{x})^T \cdot \{0\} = \{0\}
+            \]
+        \end{homeworkSubsection}
+        \begin{homeworkSubsection}{(ii) $\bar{z} = F(\bar{x})$ is on the boundary of $D$}
+            If $\bar{z}$ is on the boundary of $D$, then the normal cone of $D$ at $\bar{z}$ is
+            \[
+                N_D(\bar{z}) = \left\{n\bar{z} \;:\; n \in \mathbb{R}\,,\,n \geq 0\right\}
+            \]
+            Thus, the normal cone of $C$ at $\bar{x}$ is
+            \begin{align*}
+                N_C(\bar{x}) &= n\begin{pmatrix}
+                    2x_1 & 6x_2 + 2 \\
+                    12x_1^3 + 1 & 6x_2^2 + 1
+                \end{pmatrix}^\top \begin{pmatrix}
+                    x_1^2 + 3x_2^2 + 2x_2 \\ 3x_1^4 + 2x_2^3 + x_1 + x_2
+                \end{pmatrix}\\
+                &= n\begin{pmatrix}
+                    2x_1 & 12x_1^3 + 1 \\
+                    6x_2 + 2 & 6x_2^2 + 1
+                \end{pmatrix} \begin{pmatrix}
+                    x_1^2 + 3x_2^2 + 2x_2 \\ 3x_1^4 + 2x_2^3 + x_1 + x_2
+                \end{pmatrix}
+            \end{align*}
+            where $n \in \mathbb{R}$ and $n \geq 0$.
+        \end{homeworkSubsection}
     \end{homeworkProblem}
 \end{document}
