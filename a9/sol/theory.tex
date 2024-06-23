@@ -289,15 +289,19 @@
     Plug $x$ back into the constraint $g(x) = 1$, we have
     \begin{align*}
         g(\begin{pmatrix}
-            \tau\lambda - c_i + \bar{x}_i\\
+            \tau(\lambda - c_i) + \bar{x}_i\\
             \vdots\\
-            \tau\lambda - c_n + \bar{x}_n
+            \tau(\lambda - c_n) + \bar{x}_n
         \end{pmatrix}) = 1\\
-        \sum_{i=1}^{n} \tau\lambda - c_i + \bar{x}_i = 1\\
-        n\tau\lambda - \sum_{i=1}^{n} c_i + \sum_{i=1}^{n} \bar{x}_i = 1\\
-        n\tau\lambda - g(c) + g(\bar{x}) = 1\\
-        \lambda  = \frac{1 + g(c) - g(\bar{x})}{n\tau}\\
+        \sum_{i=1}^{n} \tau(\lambda - c_i) + \bar{x}_i = 1\\
+        n\tau\lambda - \tau\sum_{i=1}^{n} c_i + \sum_{i=1}^{n} \bar{x}_i = 1\\
+        n\tau\lambda - \tau g(c) + g(\bar{x}) = 1\\
+        \lambda  = \\
     \end{align*}
-    Now that $\lambda$ is determined, we can calculate $x$ with the formula we derived earlier.
+    Now that $\lambda$ is determined, we can calculate $x$ with the formula we derived earlier
+    \begin{align*}
+        x &= \tau (\frac{1 + \tau g(c) - g(\bar{x})}{n\tau} \mathbf{1} - c) + \bar{x}\\
+        &= (\frac{1 + \tau g(c) - g(\bar{x})}{n} \mathbf{1} - c) + \bar{x}
+    \end{align*}
 \end{homeworkProblem}
 \end{document}
