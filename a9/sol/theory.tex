@@ -162,4 +162,35 @@
 
 \pagebreak
 
+\begin{homeworkProblem}[2]
+    The minimization problem is given by
+    \[
+        \min_{x \in \mathbb{R}^n} ||x||^2 \quad \text{s.t.} \quad Ax = b
+    \]
+    It is equivalent to
+    \[
+        \min_{x \in \mathbb{R}^n} \frac{1}{2} ||x||^2 \quad \text{s.t.} \quad Ax = b
+    \]
+    Let $f(x) = \frac{1}{2} ||x||^2$ and $c_i(x) = a_i^\top x$
+    where $a_i$ is the $i$-th row of $A$.
+
+    The constraint $Ax = b$ can be rewritten as $m$ smaller constraints: $c_i(x) = b_i$ for $i = 1, \ldots, m$.
+    
+    Using the Lagrange multiplier method, we compose such equation:
+    \begin{align*}
+        \nabla f(x) &= \sum_{i=1}^m \lambda_i \nabla c_i(x)\\
+        x &= \sum_{i=1}^m \lambda_i a_i\\
+        x &= A^\top \lambda
+    \end{align*}
+    where $\lambda_i$ is the Lagrange multiplier for the $i$-th constraint
+    and $\lambda$ is a column vector consists of all multipliers.
+    
+    We also have the constraint level sets:
+    \begin{align*}
+        Ax &= b\\
+        AA^\top \lambda &= b\\
+        \lambda &= (AA^\top)^{-1} b\\
+        \Rightarrow x &= A^\top (AA^\top)^{-1} b
+    \end{align*}
+\end{homeworkProblem}
 \end{document}
