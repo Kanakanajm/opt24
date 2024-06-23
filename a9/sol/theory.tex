@@ -162,6 +162,82 @@
 
 \pagebreak
 
+\begin{homeworkProblem}[1]
+    The problem of finding the clostest point to another point can be formulated as
+    \[
+        \min_{x \in \mathbb{R}^3} ||x - p||^2 \quad \text{s.t.} \quad ||x||^2 = 4
+    \]    
+    while the problem of finding the farthest point can be formulated as
+    \[
+        \max_{x \in \mathbb{R}^3} ||x - p||^2 \quad \text{s.t.} \quad ||x||^2 = 4
+    \]
+    which is equivalent to
+    \[
+        \min_{x \in \mathbb{R}^3} -||x - p||^2 \quad \text{s.t.} \quad ||x||^2 = 4
+    \]
+    where $p = (2, 4, 2)^\top$
+    \begin{homeworkSubsection}{Closest Point}
+        We want the constraint levelset to be tangent to the curve of the objective function 
+        at the optimal point i.e.
+        \[
+        \]
+        where $f(x) = ||x - p||^2$ and $g(x) = ||x||^2$ satisfying $g(x) = 4$.
+        
+        After calculating the gradients, we have
+        \begin{align*}
+            2(x - p) &= 2\lambda x\\
+            x - p &= \lambda x\\
+            x &= \frac{1}{1 - \lambda} p
+        \end{align*}
+        $x$ still has to satisfy the constraint $||x||^2 = 4$.
+        \begin{align*}
+            \frac{1}{(1 - \lambda)^2} ||p||^2 &= 4\\
+            \frac{24}{(1 - \lambda)^2} &= 4\\
+            \frac{6}{(1 - \lambda)^2} &= 1\\
+            1 - \lambda &= \pm \sqrt{6}\\
+            \lambda &= 1 \pm \sqrt{6}
+        \end{align*}
+        We have two solutions for $x$:
+        \[
+            x = \pm\frac{1}{\sqrt{6}}p
+        \]
+        The Langrange multiplier method gives us only the stationary points
+        and we have to determine the minimum by checking which solution results in a smaller objective function value.
+        \[ 
+            ||x - p||^2 = \frac{1+\sqrt{6}}{-\sqrt{6}}||p||^2 \text{ or } \frac{1-\sqrt{6}}{\sqrt{6}}||p||^2
+        \]
+        Apparently, the latter is smaller.
+
+        Thus, the closest point is $-\frac{1}{\sqrt{6}}\begin{pmatrix}
+            2\\4\\2
+        \end{pmatrix}$.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{Farthest Point}
+        Similarly, we have 
+        \begin{align*}
+            2(x - p) &= -2\lambda x\\
+            x - p &= -\lambda x\\
+            x &= \frac{1}{1 + \lambda} p\\
+        \end{align*}
+        with constraint
+        \begin{align*}
+            ||\frac{1}{1 + \lambda} p||^2 &= 4\\
+            \frac{24}{(1 + \lambda)^2} &= 4\\
+            \lambda &= -1 \pm \sqrt{6}
+        \end{align*}
+        We have two solutions for $x$:
+        \[
+            x = \pm\frac{1}{\sqrt{6}}p
+        \]
+        Which is the same as the ones we calculated for the closest point.
+        Thus, the farthest point is $\frac{1}{\sqrt{6}}\begin{pmatrix}
+            2\\4\\2
+        \end{pmatrix}$.
+    \end{homeworkSubsection}
+    
+
+\end{homeworkProblem}
+
 \begin{homeworkProblem}[2]
     The minimization problem is given by
     \[
