@@ -269,4 +269,35 @@
         \Rightarrow x &= A^\top (AA^\top)^{-1} b
     \end{align*}
 \end{homeworkProblem}
+
+\begin{homeworkProblem}[3]
+    We have the following optimization problem:
+    \[
+        \min_{x \in \mathbb{R}^n} f(x) \quad \text{s.t.} \quad g(x) = 1
+    \]
+    with $f(x) = c^\top x + \frac{1}{2\tau}||x - \bar{x}||^2$ and $g(x) = \sum_{i=1}^{n} x_i$
+    
+    where $x_i$ is the $i$-th element of $x$.
+
+    Using the Lagrange multiplier method, we have
+    \begin{align*}
+        \nabla f(x) &= \lambda \nabla g(x)\\
+        c + \frac{1}{\tau}(x - \bar{x}) &= \lambda \mathbf{1}
+        \tag*{observe that $\nabla g(x) = \mathbf{1}$ which is a column vector of $1$s}\\
+        x &= \tau (\lambda \mathbf{1} - c) + \bar{x}
+    \end{align*}
+    Plug $x$ back into the constraint $g(x) = 1$, we have
+    \begin{align*}
+        g(\begin{pmatrix}
+            \tau\lambda - c_i + \bar{x}_i\\
+            \vdots\\
+            \tau\lambda - c_n + \bar{x}_n
+        \end{pmatrix}) = 1\\
+        \sum_{i=1}^{n} \tau\lambda - c_i + \bar{x}_i = 1\\
+        n\tau\lambda - \sum_{i=1}^{n} c_i + \sum_{i=1}^{n} \bar{x}_i = 1\\
+        n\tau\lambda - g(c) + g(\bar{x}) = 1\\
+        \lambda  = \frac{1 + g(c) - g(\bar{x})}{n\tau}\\
+    \end{align*}
+    Now that $\lambda$ is determined, we can calculate $x$ with the formula we derived earlier.
+\end{homeworkProblem}
 \end{document}
