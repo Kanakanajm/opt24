@@ -304,4 +304,26 @@
         &= (\frac{1 + \tau g(c) - g(\bar{x})}{n} \mathbf{1} - c) + \bar{x}
     \end{align*}
 \end{homeworkProblem}
+\begin{homeworkProblem}[4]
+    \begin{homeworkSubsection}{(a)}
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(b)}
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(c)}
+        We know that
+        \[
+            \lambda_1 = \min_{x \in \mathbb{R}^n} f(x) \quad \text{s.t.} \quad c_1(x) = 1
+        \]
+        where $f(x) = \langle x, Qx \rangle$ and $c_1(x) = ||x||^2$.
+        
+        Apply the Lagrange multiplier method, we have
+        \begin{align*}
+            \nabla f(x) &=  \tilde{\lambda}_1\nabla c_1(x)\\
+            Qx &= \tilde{\lambda}_1 x\\
+        \end{align*}
+        with Lagrange multiplier $\tilde{\lambda}_1$ and constraint $c_1(x) = 1$.
+        
+        One can interpret this as $\tilde{\lambda}_1$ being the eigenvalue of $Q$ and $x$ being the eigenvector.
+    \end{homeworkSubsection}
+\end{homeworkProblem}
 \end{document}
