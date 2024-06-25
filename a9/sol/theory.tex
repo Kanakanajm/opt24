@@ -326,4 +326,48 @@
         One can interpret this as $\tilde{\lambda}_1$ being the eigenvalue of $Q$ and $x$ being the eigenvector.
     \end{homeworkSubsection}
 \end{homeworkProblem}
+\begin{homeworkProblem}[5]
+    \begin{homeworkSubsection}{(a)}
+        We can find the projection of $\bar{x}$ onto set 
+        $C = \{x \in \mathbb{R}^n \mid \langle a, x\rangle \leq b \}$
+        by solving a constrained optimization problem:
+        \[
+            \min_{x \in \mathbb{R}^n} ||x - \bar{x}||^2 \quad \text{s.t.} \quad \langle a, x \rangle = b
+        \]
+        We have the following two conditions:
+        \begin{enumerate}
+            \item $\hat{x} \in C$
+            \item $\hat{x} \notin C$
+        \end{enumerate}
+        By Fermat's Rule, we know that $-\nabla f(\hat{x}) = N_C(\hat{x})$.
+
+        If $\hat{x} \in C$, then $N_C(\hat{x}) = \{0\}$.
+        We have 
+        \begin{align*}
+            -\nabla f(\hat{x}) &= 0 \\
+            \bar{x} - \hat{x} &= 0 \\
+            \hat{x} &= \bar{x}
+        \end{align*}
+
+        If $\hat{x} \notin C$, then $N_C(\hat{x}) = \{\hat{x} + t\frac{a}{||a||}\mid t \geq 0\}$. We have
+        \begin{align*}
+            -\nabla f(\hat{x}) &= \hat{x} + t\frac{a}{||a||}\\
+            \bar{x} - \hat{x} &= \hat{x} + t\frac{a}{||a||}\\
+            \hat{x} &= \frac{1}{2}(\bar{x} - t\frac{a}{||a||})
+        \end{align*}
+        We also know that $\hat{x} \in C$ i.e. 
+        \begin{align*}
+            \langle a, \hat{x} \rangle &= b\\
+            \langle a, \frac{1}{2}(\bar{x} - t\frac{a}{||a||}) \rangle &= b\\
+            \langle a, \bar{x} \rangle - t||a|| &= 2b\\
+            t &= \frac{\langle a, \bar{x} \rangle - 2b}{||a||}
+        \end{align*}
+        Plug $t$ back into the formula of $\hat{x}$, we have
+        \[
+            \hat{x} = \bar{x} - \frac{\langle a, \bar{x} \rangle}{||a||^2}a
+        \]
+        In both condition $\hat{x}$ is expressed as a function of $\bar{x}$
+        which shows that the projection is singleton.
+    \end{homeworkSubsection}
+\end{homeworkProblem}
 \end{document}
