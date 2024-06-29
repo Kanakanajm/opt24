@@ -305,10 +305,47 @@
     \end{align*}
 \end{homeworkProblem}
 \begin{homeworkProblem}[4]
-    \begin{homeworkSubsection}{(a)}
-    \end{homeworkSubsection}
-    \begin{homeworkSubsection}{(b)}
-    \end{homeworkSubsection}
+    {
+        \color{red}
+        \begin{homeworkSubsection}{(a)}
+            We can express the constrained set for each problem as such:
+            \[
+                C_k = \{x \in \mathbb{R}^n \mid ||x||^2 = 1 \text{ and } \langle v_i, x\rangle \text{ for all } i = 1, \ldots, k-1\}
+            \]
+            for $k = 1, \ldots, n$.
+            The problem can be thus reformulated as
+            \[
+                \lambda_i = \min_{x \in C_i} \langle x, Qx \rangle \text{ and } v_i \in \underset{x \in C_i}{\mathrm{argmin}} \langle x, Qx \rangle
+            \]
+            where $i = 1, \ldots, n$.
+            Observe that
+            \[
+                C_n \subset C_{n-1} \subset \ldots \subset C_1
+            \]
+            We know that for any set $A$ and $B$, if $A \subset B$, then
+            \[
+                \inf_{x\in D} f(x) \leq \inf_{x\in C} f(x)
+            \]
+            which in our case, implies \[
+                \lambda_1 \leq \lambda_2 \leq \ldots \leq \lambda_n
+            \]
+        \end{homeworkSubsection}
+        \begin{homeworkSubsection}{(b)}
+            \textbf{Proof by Contradiction}
+    
+            Assume that set $V := \{v_1, v_2, \ldots, v_n\}$ is not a linearly independent set
+            i.e. there exists $v_k \in V$ s.t $v_k = \sum_{i\neq k} \mu_iv_i$.
+            We also know by the constraint, that $\langle v_i, v_j\rangle = 0\;\forall i, j \in \{1,\ldots,n\}, i\neq j$ 
+            Take any $v_j$ from $V$ s.t. $j \neq k$ we have
+            \begin{align*}
+                \langle v_k, v_j \rangle
+                &= \langle \sum_{i\neq k} \mu_iv_i, v_j \rangle\\
+                &= \langle \sum_{i\neq k, i\neq j} \mu_iv_i, v_j \rangle + \langle v_j, v_j\rangle\\
+                &= 0 + \langle v_j, v_j\rangle\\
+                &= \langle v_j, v_j\rangle \neq 0\\
+            \end{align*}
+        \end{homeworkSubsection}    
+    }
     \begin{homeworkSubsection}{(c)}
         We know that
         \[
