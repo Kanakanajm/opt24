@@ -260,5 +260,42 @@
     \end{align*}
     Solve for each column in $X$ and we have the solution to the original problem.
 \end{homeworkProblem}
+\begin{homeworkProblem}[3]
+    Observe that the shape of the constraint set $C$ is like a box (as in $\mathbb{R}^3$)
+    \begin{homeworkSubsection}{(a)}
+        The Conditional Gradient Method first finds
+        \[
+            \tilde{x}^{(k)} \in \mathrm{argmin}_{x\in C} \langle \nabla f(x^{(k)}), x - x^{(k)}\rangle
+        \]
+        and the descend direction is defined as $d^{(k)} = \tilde{x}^{(k)} - x^{(k)}$.
+        The time step $\tau_k$ is determined by the backtracking line search that satisfies the Armijo condition with parameter $\gamma$.
+        At last, the next point is updated by $x^{(k+1)} = x^{(k)} + \tau_k d^{(k)}$.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(b)}
+        The Projected Gradient Method first find a point $\bar{x}^{(k)} := x^{(k)} - \alpha\nabla f(x^{(k)})$
+        and calculate the its projection onto the feasible set $C$ by $\tilde{x}^{(k)} := \mathrm{proj}_C(\bar{x}^{(k)})$.
+        Then the desend direction is the difference between the projected point and the current point
+        i.e. $d^{(k)} = \tilde{x}^{(k)} - x^{(k)}$
+        and the time step $\tau_k$ is determined by the backtracking line search that satisfies the Armijo condition with paramter $\gamma$.
+        At last, the next point is updated by $x^{(k+1)} = x^{(k)} + \tau_k d^{(k)}$.
 
+        The only step that we need to derive is the projection onto the feasible set $C$
+        which is defined by the following minimization problem:
+        \[
+            \tilde{x}^{(k)} = \mathrm{argmin}_{x\in C} ||x - \bar{x}^{(k)}||^2
+        \]
+        by the optimality condition, we have
+        \[
+            \tilde{x}^{(k)}  - \bar{x}^{(k)} \in N_C(\tilde{x}^{(k)}),\,\tilde{x}^{(k)} \in C
+        \]
+        and the projection is given by
+        \[
+            \tilde{x}^{(k)}_i = \begin{cases}
+                q_i & \text{if } \bar{x}^{(k)}_i \geq q_i\\
+                p_i & \text{if } \bar{x}^{(k)}_i \leq p_i\\
+                \bar{x}^{(k)}_i & \text{otherwise}
+            \end{cases}
+        \]
+    \end{homeworkSubsection}
+\end{homeworkProblem}
 \end{document}
