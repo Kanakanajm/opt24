@@ -14,6 +14,8 @@
 \usepackage{changepage} % adjustwidth environment
 \usepackage{hyperref} % href
 \usepackage{xcolor} % colored text
+\usepackage{bbm} % bold numbers
+
 
 \usetikzlibrary{automata,positioning}
 
@@ -205,6 +207,58 @@
     \[
         c = A^\top\lambda + \mu
     \]
+\end{homeworkProblem}
+
+\begin{homeworkProblem}[2]
+    Note that
+    \[
+        \mathrm{tr}(B^\top X) = \sum_{i=1}^n \langle B^\top_{i,} X_{,i} \rangle
+    \]
+    where $B^\top_{i,}$ denotes the $i$-th row of $B^\top$
+    and $X_{,i}$ denotes the $i$-th column of $X$
+    which can also just be seen as a sum of dot products between each column of $B$ and $X$
+    i.e. $\sum_{i=1}^n\langle b_i, x_i\rangle$
+    where $b_i$ is the $i$-th column of $B$ and $x_i$ is the $i$-th column of $X$.
+
+    To find the minimum of a sum is the same as finding the minimum of each term in the sum
+    i.e. instead of $1$ objective function $f(x) = \sum_{i=1}^n\langle b_i, x_i\rangle$,
+    we have $n$ objective functions $f_i(x) = \langle b_i, x_i\rangle$
+    with same constraints on $x_i$ as such
+    \[
+        \min_{x_i \in \mathbb{R}^n} \langle b_i, x_i\rangle
+        \quad \text{s.t.} \quad
+        \sum_{j=1}^n {x_i}_j = 1
+        \quad \text{and} \quad
+        \forall j \in \{1, \ldots, n\}: {x_i}_j \geq 0
+    \]
+    for all $i\in\{1,\ldots,n\}$
+
+    The Lagrangian for the $i$-th objective function is (to simplify notation, we will drop the $i$ subscript from now on)
+    \begin{align*}
+        L(x, \lambda, \mu) &= \langle b, x\rangle - \lambda\left(\sum_{j=1}^n x_j - 1\right) - \sum_{j=1}^n \mu_j x_j\\
+        &= \langle b, x\rangle - \lambda\left(\sum_{j=1}^n x_j - 1\right) - \langle \mu, x\rangle
+    \end{align*}
+    where
+    \[ 
+        \mu = \begin{cases}
+            0 & \text{if } x_j > 0\\
+            \mu_j > 0 & \text{if } x_j = 0
+        \end{cases}
+    \]
+    We take the derivative of the Lagrangian with respect to $x$, $\lambda$ and $\mu$ respectively:
+    \begin{align*}
+        &\nabla_x L(x, \lambda, \mu) = b - \lambda \mathbbm{1} - \mu = 0 \Leftrightarrow \mu_j = b_j - \lambda,\,\forall j\in\{1,\ldots,n\}\\
+        &\nabla_\lambda L(x, \lambda, \mu) = -\left(\sum_{j=1}^n x_j - 1\right) = 0 \Leftrightarrow \sum_{j=1}^n x_j = 1\\
+        &\nabla_\mu L(x, \lambda, \mu) = -x \leq 0 \Leftrightarrow x \geq 0\\
+        &\mu \geq 0\\
+        &\mu_j \cdot x_j = 0,\,\forall j\in\{1,\ldots,n\}\\
+    \end{align*}
+    We have such system of equations ($n+1$ unknowns and $n+1$ equations)
+    \begin{align*}
+        \mu_j \cdot x_j &= 0\\
+        \sum_{j=1}^n x_j &= 1\\
+    \end{align*}
+    Solve for each column in $X$ and we have the solution to the original problem.
 \end{homeworkProblem}
 
 \end{document}
