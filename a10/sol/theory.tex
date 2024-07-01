@@ -162,4 +162,49 @@
 
 \pagebreak
 
+\begin{homeworkProblem}[1]
+    We can reformulate the problem as follows:
+    \[
+        \min_{x \in \mathbb{R}^n} \langle c, x\rangle
+        \quad \text{s.t.} \quad
+        \forall i \in \{1, \ldots, m\}: b_i - \langle a_i, x\rangle = 0
+        \quad \text{and} \quad
+        \forall j \in \{1, \ldots, n\}: -x_j \leq 0
+    \]
+    where $a_i$ is the $i$-th row of $A$, $b_i$ is the $i$-th element of $b$
+    and $x_j$ is the $j$-th element of $x$.
+
+    We can name the objective function as $f(x) = \langle c, x\rangle$,
+    the equality constraints as $f_i(x) = b_i - \langle a_i, x\rangle,\,\forall i \in \{1, \ldots, m\}$
+    and the inequality constraints as $g_j(x) = -x_j,\,\forall j \in \{1, \ldots, n\}$
+    such that we have a problem that fits the general form provided in Corollary 15.19, namely:
+    \[
+        \min_{x \in \mathbb{R}^n} f(x)
+        \quad \text{s.t.} \quad
+        f_i(x) = 0, i\in\mathcal{E}
+        \quad \text{and} \quad
+        g_j(x) \leq 0, j\in\mathcal{I}
+    \]
+    By Corollary 15.19, we know that at optimal $x^\star$, we have
+    \begin{align*}
+        \nabla f(x^\star) + \sum_{i\in\mathcal{E}} \lambda_i \nabla f_i(x^\star) + \sum_{j\in\mathcal{A}(x^\star)} \mu_j \nabla g_j(x^\star) &= 0\\
+        c - \sum_{i=1}^m \lambda_i a_i - \sum_{j\in\mathcal{A}(x^\star)} \mu_j e_j &= 0\\
+        c - A^\top\lambda - \mu &= 0
+    \end{align*}
+    where 
+    \[
+        \mu = \begin{cases}
+            0 & \text{if } x_j^\star > 0\\
+            \mu_j > 0 & \text{if } x_j^\star = 0
+        \end{cases}
+    \]
+    observe that $\mu \geq 0$ which is the fouth KKT condition
+    and $\mu_j x_j^\star = 0,\,\forall j\in\{1,\ldots,n\}$
+    which is the fifth KKT condition a.k.a the complementary condition.
+    Also by reformulate the equation we derivate at optimal, we have the first KKT condition:
+    \[
+        c = A^\top\lambda + \mu
+    \]
+\end{homeworkProblem}
+
 \end{document}
