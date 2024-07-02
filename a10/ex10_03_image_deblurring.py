@@ -95,7 +95,7 @@ nams = [];
 
 # turn algorithms to be run on or off
 run_pgm           = 1;    # Projected Gradient Method
-run_cgm           = 1     # Conjugate Gradient Method
+run_cgm           = 0     # Conjugate Gradient Method
 
 ################################################################################
 
@@ -166,7 +166,7 @@ if run_cgm:
 
 fig = plt.figure();
 j = 0;
-for i in range(2):
+for i in range(1):
     plt.plot(rs[i], '-', color=cols[i], linewidth=2);
 plt.legend(legs);
 plt.xlabel('Iterations');
@@ -176,7 +176,7 @@ plt.title('Function vs Iterations');
 plt.show(block=False);
 
 
-fig3, ax = plt.subplots(nrows=1, ncols=4, figsize=(12, 8))
+fig3, ax = plt.subplots(nrows=1, ncols=3, figsize=(12, 8))
 
 for a in ax:
     a.axis('off')
@@ -193,8 +193,8 @@ r_1_main = xs[0].reshape(ny,nx)
 ax[2].imshow(r_1_main, cmap=plt.cm.gray)
 ax[2].set_title('Deblurred Image - PGM')
 
-r_2_main = xs[1].reshape(ny,nx) 
-ax[3].imshow(r_2_main, cmap=plt.cm.gray)
-ax[3].set_title('Deblurred Image - CGM')
+# r_2_main = xs[1].reshape(ny,nx) 
+# ax[3].imshow(r_2_main, cmap=plt.cm.gray)
+# ax[3].set_title('Deblurred Image - CGM')
 
 plt.show();

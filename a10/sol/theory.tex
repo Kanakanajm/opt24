@@ -298,4 +298,18 @@
         \]
     \end{homeworkSubsection}
 \end{homeworkProblem}
+\begin{homeworkProblem}[4]
+    The objective function is given by
+    \[ 
+        J(u) = \frac{1}{2}||Au - f||^2 + \mu \sum_{i=1}^{N} \sqrt{(Du)_i^2 + (Du)_{i+N}^2 + \epsilon^2}
+    \]
+    which is the same as
+    \[ 
+        J(u) = \frac{1}{2}||Au - f||^2 + \mu \sum_{i=1}^{N} \sqrt{\langle D_i, u\rangle^2 + \langle D_{i+N}, u\rangle^2 + \epsilon^2}
+    \]
+    The gradient of the objective function can be calculated as follows:
+    \[
+        \nabla J(u) = A^\top(Au - f) + \mu \sum_{i=1}^{N} \frac{(\langle D_i, u\rangle D_i + \langle D_{i+N}, u\rangle D_{i+N})}{\sqrt{\langle D_i, u\rangle^2 + \langle D_{i+N}, u\rangle^2 + \epsilon^2}}
+    \]
+\end{homeworkProblem}
 \end{document}
