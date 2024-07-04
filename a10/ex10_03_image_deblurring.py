@@ -23,6 +23,7 @@ img = rgb2gray(img);
 (ny,nx) = np.shape(img);
 print ("image dimensions: ", np.shape(img))
 N = nx*ny;
+# if image does not exist, save it
 mpimg.imsave(filename + "ground_truth.png", img, cmap=plt.cm.gray);
 
 ### construction of blurr kernel ###
@@ -56,7 +57,7 @@ mpimg.imsave(filename + "blurry.png", b.reshape(ny,nx), cmap=plt.cm.gray);
 
 K = make_derivatives2D(ny, nx)  # forward difference operator
 
-mu = 0.5; #TODO: Tune this parameter til the reconstruction is reasonable.
+mu = 0.1; #TODO: Tune this parameter til the reconstruction is reasonable.
 eps = 1.0;
 
 

@@ -1,6 +1,7 @@
 import numpy as np
 from numpy import zeros
 import time as clock
+from scipy.sparse import diags
 
 # Projected Gradient Method
 def pgm(model, options,  maxiter, check):
@@ -49,7 +50,9 @@ def pgm(model, options,  maxiter, check):
     x_bar = options['orig'];
     Lip = options['Lip'] # Lipschitz constant of the gradient
 
-    alpha = 0.5/Lip # half way between 0 and 2/Lip
+    alpha = 1/Lip # half way between 0 and 2/Lip
+
+    # vec_eps = np.ones(N) * eps
 
     def project_onto_box(x, p = 0, q = 1):
         return np.minimum(np.maximum(x, p), q)
@@ -61,17 +64,17 @@ def pgm(model, options,  maxiter, check):
         Kx2 = Kx[N:]
 
         return 0.5 * np.linalg.norm(A @ x - b) ** 2 + mu * np.sum(np.sqrt(Kx1**2 + Kx2**2 + eps**2))
-    
+
     def grad_val(x):
         Kx = K @ x
         # split Kx into two parts
         Kx1 = Kx[:N]
         Kx2 = Kx[N:]
-        denominator = np.sqrt(Kx1**2 + Kx2**2 + eps**2)
 
-        grad_partial = (Kx1 / denominator) * K[:N] + (Kx2 / denominator) * K[N:]
-
-        return A.T @ (A @ x - b) + mu * grad_partial
+        tv_term_grads = diags(1/np.sqrt(Kx1**2 + Kx2**2 + eps**2)) @ (diags(Kx1) @ K[:N, :] + diags(Kx2) @ K[N:, :])
+        assert tv_term_grads.shape == (N, N)
+        
+        return A.T @ (A @ x - b) + mu * tv_term_grads.sum(axis=0).A.squeeze() # sum all rows
 
 
     fun_val = fun_val_main(x_kp1)
@@ -107,12 +110,16 @@ def pgm(model, options,  maxiter, check):
         tau = 1
         # TODO: projected gradient update step 
 
-        x_kp1 = project_onto_box(x_k - alpha * grad_k)
+        x_tilde = project_onto_box(x_k - alpha * grad_k)
+
+        d_k = x_tilde - x_k
+
+        x_kp1 = x_k + tau * d_k
 
         # compute function value
         fun_val = fun_val_main(x_kp1)
 
-        psnr_val = 10 * np.log10( 255*255 / np.mean(np.square(x_kp1-x_bar)) )
+        psnr_val = 10 * np.log10(255*255 / np.mean(np.square(x_kp1-x_bar)) )
 
         # tape residual
         time = time + (clock.time() - stime);
