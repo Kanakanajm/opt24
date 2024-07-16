@@ -15,6 +15,7 @@
 \usepackage{hyperref} % href
 \usepackage{xcolor} % colored text
 \usepackage{enumerate}
+\usepackage{graphicx}
 
 \usetikzlibrary{automata,positioning}
 
@@ -206,7 +207,7 @@
         \end{enumerate}
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{3}
-        
+        See appendix
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{4}
         \begin{align*}
@@ -266,9 +267,7 @@
                 \end{pmatrix}\\
                 &= \begin{pmatrix}
                     -1 \\ 1
-                \end{pmatrix}
-            \end{align*}
-            \begin{align*}
+                \end{pmatrix}\\
                 \tau_0 &= \frac{\langle r^{(0)}, r^{(0)}\rangle}{\langle d^{(0)}, Qd^{(0)}\rangle}\\
                 &= \frac{1}{2}
             \end{align*}
@@ -282,9 +281,7 @@
                 \end{pmatrix}\\
                 &= \begin{pmatrix}
                     -\frac{1}{2} \\ \frac{1}{2}
-                \end{pmatrix}
-            \end{align*}
-            \begin{align*}
+                \end{pmatrix}\\
                 r^{(1)} &= r^{(0)} + \tau_0 Qd^{(0)}\\
                 &= \begin{pmatrix}
                     -1 \\ 1
@@ -296,13 +293,9 @@
                 \end{pmatrix}\\
                 &= \begin{pmatrix}
                     \frac{3}{2} \\ -\frac{5}{2}
-                \end{pmatrix}
-            \end{align*}
-            \begin{align*}
+                \end{pmatrix}\\
                 \beta_1 &= \frac{\langle r^{(1)}, r^{(1)}\rangle}{\langle r^{(0)}, r^{(0)}\rangle}\\
-                &= \frac{17}{4}
-            \end{align*}
-            \begin{align*}
+                &= \frac{17}{4}\\
                 d^{(1)} &= -r^{(1)} + \beta_1 d^{(0)}\\
                 &= \begin{pmatrix}
                     \frac{11}{4}\\ -\frac{7}{4}
@@ -311,4 +304,50 @@
         \end{enumerate}
     \end{homeworkSubsection}
 \end{homeworkProblem}
+\begin{homeworkProblem}[3]
+    See \nameref{appendixA}
+\end{homeworkProblem}
+\begin{homeworkProblem}[4]
+    \begin{homeworkSubsection}{(A)}
+        The optimality condition is
+        \begin{align*}
+            \nabla f(x^\star) + \lambda^\star \nabla g(x^\star) + \langle \mu^\star, \nabla h(x^\star)\rangle &= 0\\
+            \Rightarrow -(\alpha + x^\star)^{-1} + \lambda^\star x^\star - \mu^\star &= 0\\
+            x^\star &\geq 0\\
+            \mu^\star &\geq 0\\
+            \langle \mu^\star, x^\star\rangle &= 0
+        \end{align*}
+        where $f(x) = \sum_{i=1}^{n} -\log(\alpha + x_i)$, $g(x) = \sum_{i=1}^{n} x_i - 1$ and $h(x) = -x$.
+        Note $(v^{-1})_i = \frac{1}{v_i}$ for $v \in \mathbb{R}^n$.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(B)}
+        In each time step $k$, we first compute a point $\tilde{x}^{(k)} = x^{(k)} - \alpha \nabla f(x^{(k)})$.
+        Then we project $\tilde{x}^{(k)}$ onto the feasible set $C = \{x \in \mathbb{R}^n \mid \alpha^\top x = \beta\}$.
+        We know that $C$ is a hyperplane and the projection has closed form:
+        \[
+            \hat{x}^{(k)} = \mathrm{proj}_{C}(\tilde{x}^{(k)}) = \tilde{x}^{(k)} - \frac{\alpha^\top \tilde{x}^{(k)} - \beta}{\norm{\alpha}_2^2}\alpha
+        \]
+        Then we can update compute the next time step by
+        \[
+            x^{(k+1)} = x^{(k)} + \tau_k(\hat{x}^{(k)} - x^{(k)})
+        \]
+        with $\tau_k$ that satisfies the Armijo condition.
+    \end{homeworkSubsection}
+\end{homeworkProblem}
+
+\appendix
+\section{Appendix A: Handwritten Solution for Exercise 3}\label{appendixA}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/ex3_statement.jpeg}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/ex3_forward_mode_1.jpeg}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/ex3_forward_mode_2.jpeg}
+\end{figure}
+
 \end{document}
