@@ -14,6 +14,7 @@
 \usepackage{changepage} % adjustwidth environment
 \usepackage{hyperref} % href
 \usepackage{xcolor} % colored text
+\usepackage{enumerate}
 
 \usetikzlibrary{automata,positioning}
 
@@ -162,4 +163,152 @@
 
 \pagebreak
 
+\begin{homeworkProblem}[1]
+    \begin{homeworkSubsection}{1}
+        \begin{enumerate}[(i)]
+            \item Not convex. Consider $p = 3$ we have $f(x) = x^3$ and $f''(x) = 6x \leq 0$ when $x \leq 0$.
+            \item Convex. $f''(x) = x^{-2} \geq 0$
+            \item Convex. $f''(x) = \alpha^2 e^{\alpha x} \geq 0$
+            \item Convex. $f''(x) = \frac{1}{(1-x)} \geq 0$ when $x \in (0, 1)$
+        \end{enumerate}
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{2}
+        \begin{enumerate}[(i)]
+            \item Convex. 
+            
+            Take $x, y \in C$. 
+
+            Consider $||(1-\lambda)x+\lambda y||_2 \overset{Cauchy-Schwarz}{\leq} ||(1-\lambda)x||_2 + ||\lambda y||_2 = (1-\lambda)||x||_2 + \lambda||y||_2 \leq 1$.
+            \item Not convex. Consider
+            $x = \begin{pmatrix}
+                0 \\ 1 
+            \end{pmatrix}$, 
+            $y = \begin{pmatrix}
+                1 \\ 0 
+            \end{pmatrix}$
+            and $\lambda = \frac{1}{2}$.
+
+            Clearly $||(1-\lambda)x + \lambda y||_2 = \frac{\sqrt{2}}{2}\neq 1$.
+            \item Not convex. Consider
+            $x = \begin{pmatrix}
+                1 \\ 1 
+            \end{pmatrix}$, 
+            $y = \begin{pmatrix}
+                -1 \\ -1
+            \end{pmatrix}$
+            and $\lambda = \frac{1}{2}$.
+
+            Clearly $||(1-\lambda)x + \lambda y||_{\infty} = ||\begin{pmatrix}
+                0 \\ 0
+            \end{pmatrix}||_{\infty} = 0 \neq 1$.
+            \item Convex.
+            Similar to (i).
+        \end{enumerate}
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{3}
+        
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{4}
+        \begin{align*}
+            T_C(\begin{pmatrix}
+                1 & 1
+            \end{pmatrix}^\top) &= \left\{
+                \begin{pmatrix}
+                    x_1 \\ x_2
+                \end{pmatrix} \in \mathbb{R}^2 \mid x_1 \leq 1, x_2 \leq 1
+            \right\}\\
+            N_C(\begin{pmatrix}
+                1 & 1
+            \end{pmatrix}^\top) &= \left\{
+                \begin{pmatrix}
+                    x_1 \\ x_2
+                \end{pmatrix} \in \mathbb{R}^2 \mid x_1 \geq 1, x_2 \geq 1
+            \right\}\\
+        \end{align*}
+    \end{homeworkSubsection}
+\end{homeworkProblem}
+\begin{homeworkProblem}[2]
+    \begin{homeworkSubsection}{(A)}
+        In steepest descent method, we have
+        $x^{(k+1)} = x^{(k)} - \alpha \nabla f(x^{(k)})$.
+        We can approximate $f(x^{(k+1)})$ with its second order Taylor expansion around $x^{(k)}$.
+        \begin{align*}
+            f(x^{(k+1)}) &\approx f(x^{(k)}) + \nabla f(x^{(k)})^\top (x^{(k+1)} - x^{(k)}) + \frac{1}{2} (x^{(k+1)} - x^{(k)})^\top \nabla^2 f(x^{(k)}) (x^{(k+1)} - x^{(k)})\\
+            &= f(x^{(k)}) - \alpha \nabla f(x^{(k)})^\top \nabla f(x^{(k)}) + \frac{\alpha^2}{2} \nabla f(x^{(k)})^\top \nabla^2 f(x^{(k)}) \nabla f(x^{(k)}) =: g(\alpha)\\
+        \end{align*}
+        We can find the optimal $\alpha$ by solving $\frac{dg}{d\alpha} = 0$.
+        \begin{align*}
+            \frac{dg}{d\alpha} &= -\nabla f(x^{(k)})^\top \nabla f(x^{(k)}) + \alpha \nabla f(x^{(k)})^\top \nabla^2 f(x^{(k)}) \nabla f(x^{(k)}) = 0\\
+            \nabla f(x^{(k)})^\top \nabla f(x^{(k)}) &= \nabla f(x^{(k)})^\top (\alpha\nabla^2 f(x^{(k)})) \nabla f(x^{(k)})
+        \end{align*}
+        By choosing $\alpha = (\nabla^2 f(x^{(k)}))^{-1}$, we can cancel the affect of rescaling of the Hessian matrix.
+        
+        Thus we arrive at the Newton's method: $x^{(k+1)} = x^{(k)} - (\nabla^2 f(x^{(k)}))^{-1} \nabla f(x^{(k)})$.
+    \end{homeworkSubsection}
+    \begin{homeworkSubsection}{(B)}
+        \begin{enumerate}[Step 1]
+            \setcounter{enumi}{-1}
+            \item Let $x^{(0)} := \begin{pmatrix}
+                0 \\ 0
+            \end{pmatrix}$
+            \begin{align*}
+                d^{(0)} = r^{(0)}
+                &= -\nabla f(x^{(0)})\\
+                &= -b - Qx^{(0)}\\
+                &= -\begin{pmatrix}
+                    1 \\ -1
+                \end{pmatrix}
+                - \begin{pmatrix}
+                    4 & 3\\
+                    3 & 6
+                \end{pmatrix}\begin{pmatrix}
+                    0 \\ 0
+                \end{pmatrix}\\
+                &= \begin{pmatrix}
+                    -1 \\ 1
+                \end{pmatrix}
+            \end{align*}
+            \begin{align*}
+                \tau_0 &= \frac{\langle r^{(0)}, r^{(0)}\rangle}{\langle d^{(0)}, Qd^{(0)}\rangle}\\
+                &= \frac{1}{2}
+            \end{align*}
+            \item 
+            \begin{align*}
+                x^{(1)} &= x^{(0)} + \tau_0 d^{(0)}\\
+                &= \begin{pmatrix}
+                    0 \\ 0
+                \end{pmatrix} + \frac{1}{2}\begin{pmatrix}
+                    -1 \\ 1
+                \end{pmatrix}\\
+                &= \begin{pmatrix}
+                    -\frac{1}{2} \\ \frac{1}{2}
+                \end{pmatrix}
+            \end{align*}
+            \begin{align*}
+                r^{(1)} &= r^{(0)} + \tau_0 Qd^{(0)}\\
+                &= \begin{pmatrix}
+                    -1 \\ 1
+                \end{pmatrix} + \frac{1}{2}\begin{pmatrix}
+                    4 & 3\\
+                    3 & 6
+                \end{pmatrix}\begin{pmatrix}
+                    -1 \\ 1
+                \end{pmatrix}\\
+                &= \begin{pmatrix}
+                    \frac{3}{2} \\ -\frac{5}{2}
+                \end{pmatrix}
+            \end{align*}
+            \begin{align*}
+                \beta_1 &= \frac{\langle r^{(1)}, r^{(1)}\rangle}{\langle r^{(0)}, r^{(0)}\rangle}\\
+                &= \frac{17}{4}
+            \end{align*}
+            \begin{align*}
+                d^{(1)} &= -r^{(1)} + \beta_1 d^{(0)}\\
+                &= \begin{pmatrix}
+                    \frac{11}{4}\\ -\frac{7}{4}
+                \end{pmatrix}
+            \end{align*}
+        \end{enumerate}
+    \end{homeworkSubsection}
+\end{homeworkProblem}
 \end{document}
