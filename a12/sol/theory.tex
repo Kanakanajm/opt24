@@ -207,7 +207,21 @@
         \end{enumerate}
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{3}
-        See appendix
+        \begin{enumerate}[(i)]
+            \item We have 
+            \[
+                \nabla f(x, y) = \begin{pmatrix}
+                    4x^3 - 1 \\ 4y^3 - 1
+                \end{pmatrix}
+            \] and 
+            \[
+                \nabla^2 f(x, y) = \begin{pmatrix}
+                    12x^2 & 0\\
+                    0 & 12y^2
+                \end{pmatrix}
+            \]
+            which is positive semi-definite everywhere implies the function is convex thus coercive.
+        \end{enumerate}
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{4}
         \begin{align*}
@@ -334,18 +348,18 @@
         with $\tau_k$ that satisfies the Armijo condition.
     \end{homeworkSubsection}
 \end{homeworkProblem}
-
+\pagebreak
 \appendix
 \section{Appendix A: Handwritten Solution for Exercise 3}\label{appendixA}
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{images/ex3_statement.jpeg}
 \end{figure}
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{images/ex3_forward_mode_1.jpeg}
 \end{figure}
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{images/ex3_forward_mode_2.jpeg}
 \end{figure}
