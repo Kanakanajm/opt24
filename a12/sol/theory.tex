@@ -168,6 +168,10 @@
     \begin{homeworkSubsection}{1}
         \begin{enumerate}[(i)]
             \item Not convex. Consider $p = 3$ we have $f(x) = x^3$ and $f''(x) = 6x \leq 0$ when $x \leq 0$.
+            {
+                \color{red}
+                \textbf{Note:} The function is convex when $p$ is even and not convex when $p$ is odd.
+            }
             \item Convex. $f''(x) = x^{-2} \geq 0$
             \item Convex. $f''(x) = \alpha^2 e^{\alpha x} \geq 0$
             \item Convex. $f''(x) = \frac{1}{(1-x)} \geq 0$ when $x \in (0, 1)$
@@ -203,7 +207,29 @@
                 0 \\ 0
             \end{pmatrix}||_{\infty} = 0 \neq 1$.
             \item Convex.
-            Similar to (i).
+            Similar to (i).\\
+            {
+                \color{red}
+                Take $x, y \in C$:
+                \[
+                    x = \begin{pmatrix}
+                        x_1 \\ x_2
+                    \end{pmatrix} \text{ and } y = \begin{pmatrix}
+                        y_1 \\ y_2
+                    \end{pmatrix}
+                \] s.t.
+                \[
+                    |x_1| + |x_2| \leq 1 \text{ and } |y_1| + |y_2| \leq 1
+                \]
+                Consider $z = (1-\lambda)x + \lambda y$ where $\lambda \in [0, 1]$:
+                \begin{align*}
+                    ||z||_1 &= |(1-\lambda)x_1 + \lambda y_1| + |(1-\lambda)x_2 + \lambda y_2|\\
+                    &\leq (1-\lambda)|x_1| + \lambda |y_1| + (1-\lambda)|x_2| + \lambda |y_2|\\
+                    &= (1-\lambda)\underbrace{(|x_1| + |x_2|)}_{\leq 1} + \lambda \underbrace{(|y_1| + |y_2|)}_{\leq 1}
+                    \tag*{interpolate between 2 numbers less and equal to 1}\\
+                    &\leq 1
+                \end{align*}
+            }
         \end{enumerate}
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{3}
@@ -221,6 +247,17 @@
                 \end{pmatrix}
             \]
             which is positive semi-definite everywhere implies the function is convex thus coercive.
+            {
+                \color{red}
+                \textbf{Note:} This is not the definition of coercive. To prove coerciveness, we need to show that the function goes to infinity as the norm of the input goes to infinity. On the other hand, to prove non-coerciveness, we need to find a sequence of inputs such that the norms of the inputs tend to infinity but the function values do not.
+                
+                \[
+                    x^4 + y^4 - x- y = \underbrace{(x^4 + y^4)}_{\underset{\sqrt{x^2 + y^2}\to \infty}{\to \infty}}(1 - \underbrace{\frac{x + y}{x^4 + y^4}}_{\underset{\sqrt{x^2 + y^2}\to \infty}{\to 0}})
+                \]
+                \item Consider the sequence $(x^{(k)}, y^{(k)}) := (k, -k)$. Clearly $\norm{(x^{(k)}, y^{(k)})}_2 = \sqrt{2k^2} \to \infty$ when $k \to \infty$.
+                
+                However, $f(x^{(k)}, y^{(k)}) = ak - bk + c = (a-b)k + c \to c$ when $k \to \infty$ if $a = b$ or $(a-b)k + c \to \infty^-$ if $a \leq b$.
+            }
         \end{enumerate}
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{4}
@@ -240,6 +277,26 @@
                 \end{pmatrix} \in \mathbb{R}^2 \mid x_1 \geq 1, x_2 \geq 1
             \right\}\\
         \end{align*}
+        {
+            \color{red}
+            \textbf{Note:} Both the tangent and normal cones are set of directions which have angles and magnitudes. In case of tangent and normal cones, their magnitudes don't matter. So, the correct answer should be:
+            \begin{align*}
+                T_C(\begin{pmatrix}
+                    1 & 1
+                \end{pmatrix}^\top) &= \left\{
+                    \begin{pmatrix}
+                        x_1 \\ x_2
+                    \end{pmatrix} \in \mathbb{R}^2 \mid x_1 \leq 0, x_2 \leq 0
+                \right\}\\
+                N_C(\begin{pmatrix}
+                    1 & 1
+                \end{pmatrix}^\top) &= \left\{
+                    \begin{pmatrix}
+                        x_1 \\ x_2
+                    \end{pmatrix} \in \mathbb{R}^2 \mid x_1 \geq 0, x_2 \geq 0
+                \right\}\\
+            \end{align*}
+        }
     \end{homeworkSubsection}
 \end{homeworkProblem}
 \begin{homeworkProblem}[2]
@@ -259,6 +316,19 @@
         By choosing $\alpha = (\nabla^2 f(x^{(k)}))^{-1}$, we can cancel the affect of rescaling of the Hessian matrix.
         
         Thus we arrive at the Newton's method: $x^{(k+1)} = x^{(k)} - (\nabla^2 f(x^{(k)}))^{-1} \nabla f(x^{(k)})$.
+
+        {
+            \color{red}
+            \textbf{Corrected Answer (Direction)}\\
+            For a quadratic function $f(x) = \frac{1}{2}x^\top Qx + b^\top x$. Suppose $Q$ is symmetric and positive definite. We can decompose $Q$ as $Q = LL^\top$ where $L$ is a lower triangular matrix. Let $y = L^\top x$, we reformulate the optimization problem to solve for $y$:
+            \[
+                \min_{y} \frac{1}{2}y^\top y + b^\top L^{-\top}y
+            \]
+            Perform steepest descent on $y$:
+            \[
+                y^{(k+1)} = y^{(k)} - \alpha \nabla f(y^{(k)}) = y^{(k)} - \alpha (y^{(k)} + L^{-1}b)
+            \]
+        }
     \end{homeworkSubsection}
     \begin{homeworkSubsection}{(B)}
         \begin{enumerate}[Step 1]
